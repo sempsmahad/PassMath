@@ -19,31 +19,27 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
-    private Context context;
+    private Context        context;
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "the_city";
+    private static final String DATABASE_NAME = "pass_math";
 
     // Main Table Name
-    private static final String TABLE_PLACE         = "place";
-    private static final String TABLE_IMAGES        = "images";
-    private static final String TABLE_CATEGORY      = "category";
-    private static final String TABLE_NEWS_INFO     = "news_info";
+    private static final String TABLE_QUESTION  = "question";
 
     // Relational table Place to Category ( N to N )
     private static final String TABLE_PLACE_CATEGORY = "place_category";
 
     // table only for android client
-    private static final String TABLE_FAVORITES     = "favorites_table";
+    private static final String TABLE_FAVORITES = "favorites_table";
 
     // Table Columns names TABLE_PLACE
     private static final String KEY_PLACE_ID    = "place_id";
@@ -59,42 +55,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LAST_UPDATE = "last_update";
 
     // Table Columns names TABLE_IMAGES
-    private static final String KEY_IMG_PLACE_ID    = "place_id";
-    private static final String KEY_IMG_NAME        = "name";
+    private static final String KEY_IMG_PLACE_ID = "place_id";
+    private static final String KEY_IMG_NAME     = "name";
 
     // Table Columns names TABLE_CATEGORY
-    private static final String KEY_CAT_ID      = "cat_id";
-    private static final String KEY_CAT_NAME    = "name";
-    private static final String KEY_CAT_ICON    = "icon";
+    private static final String KEY_CAT_ID   = "cat_id";
+    private static final String KEY_CAT_NAME = "name";
+    private static final String KEY_CAT_ICON = "icon";
 
     // Table Columns names TABLE_NEWS_INFO
-    private static final String KEY_NEWS_ID             = "id";
-    private static final String KEY_NEWS_TITLE          = "title";
-    private static final String KEY_NEWS_BRIEF_CONTENT  = "brief_content";
-    private static final String KEY_NEWS_FULL_CONTENT   = "full_content";
-    private static final String KEY_NEWS_IMAGE          = "image";
-    private static final String KEY_NEWS_LAST_UPDATE    = "last_update";
+    private static final String KEY_NEWS_ID            = "id";
+    private static final String KEY_NEWS_TITLE         = "title";
+    private static final String KEY_NEWS_BRIEF_CONTENT = "brief_content";
+    private static final String KEY_NEWS_FULL_CONTENT  = "full_content";
+    private static final String KEY_NEWS_IMAGE         = "image";
+    private static final String KEY_NEWS_LAST_UPDATE   = "last_update";
 
-	// Table Relational Columns names TABLE_PLACE_CATEGORY
+    // Table Relational Columns names TABLE_PLACE_CATEGORY
     private static final String KEY_RELATION_PLACE_ID = KEY_PLACE_ID;
-    private static final String KEY_RELATION_CAT_ID = KEY_CAT_ID;
+    private static final String KEY_RELATION_CAT_ID   = KEY_CAT_ID;
 
-    private int cat_id[]; // category id
-    private String cat_name[]; // category name
+    private int        cat_id[]; // category id
+    private String     cat_name[]; // category name
     private TypedArray cat_icon; // category name
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-        this.db = getWritableDatabase();
+        this.db      = getWritableDatabase();
 
         // get data from res/values/category.xml
-        cat_id = context.getResources().getIntArray(R.array.id_category);
+        cat_id   = context.getResources().getIntArray(R.array.id_category);
         cat_name = context.getResources().getStringArray(R.array.category_name);
         cat_icon = context.getResources().obtainTypedArray(R.array.category_icon);
 
         // if length not equal refresh table category
-        if(getCategorySize() != cat_id.length) {
+        if (getCategorySize() != cat_id.length) {
             defineCategory(this.db);  // define table category
         }
 
@@ -165,7 +161,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-	// Table Relational place_category
+    // Table Relational place_category
     private void createTableRelational(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_PLACE_CATEGORY + "("
                 + KEY_RELATION_PLACE_ID + " INTEGER, "      // id from table place
@@ -176,13 +172,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     private void createTableNewsInfo(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_NEWS_INFO+ " ("
-                + KEY_NEWS_ID+ " INTEGER PRIMARY KEY, "
-                + KEY_NEWS_TITLE+ " TEXT, "
-                + KEY_NEWS_BRIEF_CONTENT+ " TEXT, "
-                + KEY_NEWS_FULL_CONTENT+ " TEXT, "
-                + KEY_NEWS_IMAGE+ " TEXT, "
-                + KEY_NEWS_LAST_UPDATE+ " NUMERIC "
+        String CREATE_TABLE = "CREATE TABLE " + TABLE_NEWS_INFO + " ("
+                + KEY_NEWS_ID + " INTEGER PRIMARY KEY, "
+                + KEY_NEWS_TITLE + " TEXT, "
+                + KEY_NEWS_BRIEF_CONTENT + " TEXT, "
+                + KEY_NEWS_FULL_CONTENT + " TEXT, "
+                + KEY_NEWS_IMAGE + " TEXT, "
+                + KEY_NEWS_LAST_UPDATE + " NUMERIC "
                 + ")";
         db.execSQL(CREATE_TABLE);
     }
@@ -190,8 +186,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("DB ", "onUpgrade "+oldVersion+" to "+newVersion);
-        if(oldVersion < newVersion) {
+        Log.d("DB ", "onUpgrade " + oldVersion + " to " + newVersion);
+        if (oldVersion < newVersion) {
             // Drop older table if existed
             truncateDB(db);
         }
@@ -210,7 +206,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // refresh table place and place_category
-    public void refreshTablePlace(){
+    public void refreshTablePlace() {
         db.execSQL("DELETE FROM " + TABLE_PLACE_CATEGORY);
         db.execSQL("VACUUM");
         db.execSQL("DELETE FROM " + TABLE_IMAGES);
@@ -220,7 +216,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // refresh table place and place_category
-    public void refreshTableNewsInfo(){
+    public void refreshTableNewsInfo() {
         db.execSQL("DELETE FROM " + TABLE_NEWS_INFO);
         db.execSQL("VACUUM");
     }
@@ -246,9 +242,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Insert List place with asynchronous scheme
     public void insertListPlaceAsync(List<Place> modelList) {
-        String sql = "INSERT OR REPLACE INTO "+TABLE_PLACE + " ";
-        sql = sql + "("+KEY_PLACE_ID+", "+KEY_NAME+","+KEY_IMAGE+", "+KEY_ADDRESS+", "+KEY_PHONE +", "
-                +KEY_WEBSITE+", "+KEY_DESCRIPTION+", "+KEY_LNG+", "+KEY_LAT+", "+KEY_DISTANCE+", "+KEY_LAST_UPDATE+") ";
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PLACE + " ";
+        sql = sql + "(" + KEY_PLACE_ID + ", " + KEY_NAME + "," + KEY_IMAGE + ", " + KEY_ADDRESS + ", " + KEY_PHONE + ", "
+                + KEY_WEBSITE + ", " + KEY_DESCRIPTION + ", " + KEY_LNG + ", " + KEY_LAT + ", " + KEY_DISTANCE + ", " + KEY_LAST_UPDATE + ") ";
         sql = sql + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         db.beginTransaction();
 
@@ -292,13 +288,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Place> objcs = new ArrayList<>();
         objcs.add(place);
         insertListPlace(objcs);
-        if(isPlaceExist(place.place_id)){
+        if (isPlaceExist(place.place_id)) {
             return getPlace(place.place_id);
         }
         return null;
     }
 
-    private ContentValues getPlaceValue(Place model){
+    private ContentValues getPlaceValue(Place model) {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_ID, model.place_id);
         values.put(KEY_NAME, model.name);
@@ -314,7 +310,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return values;
     }
 
-    private ContentValues getNewsInfoValue(NewsInfo model){
+    private ContentValues getNewsInfoValue(NewsInfo model) {
         ContentValues values = new ContentValues();
         values.put(KEY_NEWS_ID, model.id);
         values.put(KEY_NEWS_TITLE, model.title);
@@ -328,13 +324,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Adding new location by Category
     public List<Place> searchAllPlace(String keyword) {
         List<Place> locList = new ArrayList<>();
-        Cursor cur;
+        Cursor      cur;
         if (keyword.equals("")) {
-            cur = db.rawQuery("SELECT p.* FROM "+TABLE_PLACE+" p ORDER BY " + KEY_LAST_UPDATE + " DESC", null);
+            cur = db.rawQuery("SELECT p.* FROM " + TABLE_PLACE + " p ORDER BY " + KEY_LAST_UPDATE + " DESC", null);
         } else {
             keyword = keyword.toLowerCase();
-            cur = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE LOWER(" + KEY_NAME + ") LIKE ? OR LOWER("+ KEY_ADDRESS + ") LIKE ? OR LOWER("+ KEY_DESCRIPTION + ") LIKE ? ",
-                  new String[]{"%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%"});
+            cur     = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE LOWER(" + KEY_NAME + ") LIKE ? OR LOWER(" + KEY_ADDRESS + ") LIKE ? OR LOWER(" + KEY_DESCRIPTION + ") LIKE ? ",
+                    new String[]{"%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%"});
         }
         locList = getListPlaceByCursor(cur);
         return locList;
@@ -345,18 +341,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<Place> getPlacesByPage(int c_id, int limit, int offset) {
-        List<Place> locList = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT DISTINCT p.* FROM "+TABLE_PLACE+" p ");
-        if(c_id == -2) {
-            sb.append(", "+TABLE_FAVORITES+" f ");
-            sb.append(" WHERE p." +KEY_PLACE_ID+ " = f." +KEY_PLACE_ID+" ");
-        } else if(c_id != -1){
-            sb.append(", "+TABLE_PLACE_CATEGORY+" pc ");
-            sb.append(" WHERE pc." +KEY_RELATION_PLACE_ID+ " = p." +KEY_PLACE_ID+ " AND pc." +KEY_RELATION_CAT_ID+ "=" +c_id+ " ");
+        List<Place>   locList = new ArrayList<>();
+        StringBuilder sb      = new StringBuilder();
+        sb.append(" SELECT DISTINCT p.* FROM " + TABLE_PLACE + " p ");
+        if (c_id == -2) {
+            sb.append(", " + TABLE_FAVORITES + " f ");
+            sb.append(" WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID + " ");
+        } else if (c_id != -1) {
+            sb.append(", " + TABLE_PLACE_CATEGORY + " pc ");
+            sb.append(" WHERE pc." + KEY_RELATION_PLACE_ID + " = p." + KEY_PLACE_ID + " AND pc." + KEY_RELATION_CAT_ID + "=" + c_id + " ");
         }
-        sb.append(" ORDER BY p."+KEY_DISTANCE+" ASC, p."+KEY_LAST_UPDATE+" DESC ");
-        sb.append(" LIMIT "+limit+" OFFSET "+ offset+" ");
+        sb.append(" ORDER BY p." + KEY_DISTANCE + " ASC, p." + KEY_LAST_UPDATE + " DESC ");
+        sb.append(" LIMIT " + limit + " OFFSET " + offset + " ");
         Cursor cursor = db.rawQuery(sb.toString(), null);
         if (cursor.moveToFirst()) {
             locList = getListPlaceByCursor(cursor);
@@ -365,17 +361,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<Place> getAllPlaceByCategory(int c_id) {
-        List<Place> locList = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT DISTINCT p.* FROM "+TABLE_PLACE+" p ");
-        if(c_id == -2) {
-            sb.append(", "+TABLE_FAVORITES+" f ");
-            sb.append(" WHERE p." +KEY_PLACE_ID+ " = f." +KEY_PLACE_ID+" ");
-        } else if(c_id != -1){
-            sb.append(", "+TABLE_PLACE_CATEGORY+" pc ");
-            sb.append(" WHERE pc." +KEY_RELATION_PLACE_ID+ " = p." +KEY_PLACE_ID+ " AND pc." +KEY_RELATION_CAT_ID+ "=" +c_id+ " ");
+        List<Place>   locList = new ArrayList<>();
+        StringBuilder sb      = new StringBuilder();
+        sb.append(" SELECT DISTINCT p.* FROM " + TABLE_PLACE + " p ");
+        if (c_id == -2) {
+            sb.append(", " + TABLE_FAVORITES + " f ");
+            sb.append(" WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID + " ");
+        } else if (c_id != -1) {
+            sb.append(", " + TABLE_PLACE_CATEGORY + " pc ");
+            sb.append(" WHERE pc." + KEY_RELATION_PLACE_ID + " = p." + KEY_PLACE_ID + " AND pc." + KEY_RELATION_CAT_ID + "=" + c_id + " ");
         }
-        sb.append(" ORDER BY p."+KEY_LAST_UPDATE+" DESC ");
+        sb.append(" ORDER BY p." + KEY_LAST_UPDATE + " DESC ");
         Cursor cursor = db.rawQuery(sb.toString(), null);
         if (cursor.moveToFirst()) {
             locList = getListPlaceByCursor(cursor);
@@ -384,9 +380,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Place getPlace(int place_id) {
-        Place p = new Place();
-        String query = "SELECT * FROM " + TABLE_PLACE + " p WHERE p." + KEY_PLACE_ID + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{place_id+""});
+        Place  p      = new Place();
+        String query  = "SELECT * FROM " + TABLE_PLACE + " p WHERE p." + KEY_PLACE_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{place_id + ""});
         p.place_id = place_id;
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
@@ -419,8 +415,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    private Place getPlaceByCursor(Cursor cur){
-        Place p       = new Place();
+    private Place getPlaceByCursor(Cursor cur) {
+        Place p = new Place();
         p.place_id    = cur.getInt(cur.getColumnIndex(KEY_PLACE_ID));
         p.name        = cur.getString(cur.getColumnIndex(KEY_NAME));
         p.image       = cur.getString(cur.getColumnIndex(KEY_IMAGE));
@@ -435,8 +431,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return p;
     }
 
-    private NewsInfo getNewsInfoByCursor(Cursor cur){
-        NewsInfo n      = new NewsInfo();
+    private NewsInfo getNewsInfoByCursor(Cursor cur) {
+        NewsInfo n = new NewsInfo();
         n.id            = cur.getInt(cur.getColumnIndex(KEY_NEWS_ID));
         n.title         = cur.getString(cur.getColumnIndex(KEY_NEWS_TITLE));
         n.brief_content = cur.getString(cur.getColumnIndex(KEY_NEWS_BRIEF_CONTENT));
@@ -448,28 +444,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Get LIst Images By Place Id
     public List<Images> getListImageByPlaceId(int place_id) {
-        List<Images> imageList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_IMAGES + " WHERE " + KEY_IMG_PLACE_ID + " = ?";
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{place_id + ""});
+        List<Images> imageList   = new ArrayList<>();
+        String       selectQuery = "SELECT * FROM " + TABLE_IMAGES + " WHERE " + KEY_IMG_PLACE_ID + " = ?";
+        Cursor       cursor      = db.rawQuery(selectQuery, new String[]{place_id + ""});
         if (cursor.moveToFirst()) {
             do {
                 Images img = new Images();
                 img.place_id = cursor.getInt(0);
-                img.name = cursor.getString(1);
+                img.name     = cursor.getString(1);
                 imageList.add(img);
             } while (cursor.moveToNext());
         }
         return imageList;
     }
 
-    public Category getCategory(int c_id){
+    public Category getCategory(int c_id) {
         Category category = new Category();
         try {
             Cursor cur = db.rawQuery("SELECT * FROM " + TABLE_CATEGORY + " WHERE " + KEY_CAT_ID + " = ?", new String[]{c_id + ""});
             cur.moveToFirst();
             category.cat_id = cur.getInt(0);
-            category.name = cur.getString(1);
-            category.icon = cur.getInt(2);
+            category.name   = cur.getString(1);
+            category.icon   = cur.getInt(2);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("Db Error", e.toString());
@@ -485,10 +481,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d("DB", "Size : " + getNewsInfoSize());
         Log.d("DB", "Limit : " + limit + " Offset : " + offset);
         List<NewsInfo> list = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT DISTINCT n.* FROM "+TABLE_NEWS_INFO+" n ");
-        sb.append(" ORDER BY n."+KEY_NEWS_ID+" DESC ");
-        sb.append(" LIMIT "+limit+" OFFSET "+ offset+" ");
+        StringBuilder  sb   = new StringBuilder();
+        sb.append(" SELECT DISTINCT n.* FROM " + TABLE_NEWS_INFO + " n ");
+        sb.append(" ORDER BY n." + KEY_NEWS_ID + " DESC ");
+        sb.append(" LIMIT " + limit + " OFFSET " + offset + " ");
         Cursor cursor = db.rawQuery(sb.toString(), null);
         if (cursor.moveToFirst()) {
             list = getListNewsInfoByCursor(cursor);
@@ -509,8 +505,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Insert new imagesList with asynchronous scheme
     public void insertListImagesAsync(List<Images> images) {
-        String sql = "INSERT OR REPLACE INTO "+TABLE_IMAGES+ " ";
-        sql = sql + "("+KEY_IMG_PLACE_ID+", "+KEY_IMG_NAME +") VALUES (?, ?)";
+        String sql = "INSERT OR REPLACE INTO " + TABLE_IMAGES + " ";
+        sql = sql + "(" + KEY_IMG_PLACE_ID + ", " + KEY_IMG_NAME + ") VALUES (?, ?)";
         SQLiteStatement stmt = db.compileStatement(sql);
         for (Images i : images) {
             stmt.bindLong(1, i.place_id);
@@ -533,8 +529,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Inserting new Table PLACE_CATEGORY relational with asynchronous scheme
     public void insertListPlaceCategoryAsync(int place_id, List<Category> categories) {
-        String sql = "INSERT OR REPLACE INTO "+TABLE_PLACE_CATEGORY+ " ";
-        sql = sql + "("+KEY_RELATION_PLACE_ID+", "+KEY_RELATION_CAT_ID +") VALUES (?, ?)";
+        String sql = "INSERT OR REPLACE INTO " + TABLE_PLACE_CATEGORY + " ";
+        sql = sql + "(" + KEY_RELATION_PLACE_ID + ", " + KEY_RELATION_CAT_ID + ") VALUES (?, ?)";
         SQLiteStatement stmt = db.compileStatement(sql);
         for (Category c : categories) {
             stmt.bindLong(1, place_id);
@@ -555,20 +551,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // all Favorites
     public List<Place> getAllFavorites() {
         List<Place> locList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT p.* FROM " + TABLE_PLACE + " p, " + TABLE_FAVORITES + " f" +" WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID, null);
+        Cursor      cursor  = db.rawQuery("SELECT p.* FROM " + TABLE_PLACE + " p, " + TABLE_FAVORITES + " f" + " WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID, null);
         locList = getListPlaceByCursor(cursor);
         return locList;
     }
 
     public void deleteFavorites(int id) {
         if (isFavoritesExist(id)) {
-            db.delete(TABLE_FAVORITES, KEY_PLACE_ID + " = ?", new String[]{id+""});
+            db.delete(TABLE_FAVORITES, KEY_PLACE_ID + " = ?", new String[]{id + ""});
         }
     }
 
     public boolean isFavoritesExist(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_FAVORITES + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id+""});
-        int count = cursor.getCount();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_FAVORITES + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
+        int    count  = cursor.getCount();
         if (count > 0) {
             return true;
         } else {
@@ -578,7 +574,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private boolean isPlaceExist(int id) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
-        int count = cursor.getCount();
+        int    count  = cursor.getCount();
         cursor.close();
         if (count > 0) {
             return true;
@@ -588,24 +584,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getPlacesSize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_PLACE);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_PLACE);
         return count;
     }
 
     public int getNewsInfoSize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_NEWS_INFO);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_NEWS_INFO);
         return count;
     }
 
     public int getPlacesSize(int c_id) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT COUNT(DISTINCT p."+KEY_PLACE_ID+") FROM "+TABLE_PLACE+" p ");
-        if(c_id == -2) {
-            sb.append(", "+TABLE_FAVORITES+" f ");
-            sb.append(" WHERE p." +KEY_PLACE_ID+ " = f." +KEY_PLACE_ID+" ");
-        } else if(c_id != -1){
-            sb.append(", "+TABLE_PLACE_CATEGORY+" pc ");
-            sb.append(" WHERE pc." +KEY_RELATION_PLACE_ID+ " = p." +KEY_PLACE_ID+ " AND pc." +KEY_RELATION_CAT_ID+ "=" +c_id+ " ");
+        sb.append("SELECT COUNT(DISTINCT p." + KEY_PLACE_ID + ") FROM " + TABLE_PLACE + " p ");
+        if (c_id == -2) {
+            sb.append(", " + TABLE_FAVORITES + " f ");
+            sb.append(" WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID + " ");
+        } else if (c_id != -1) {
+            sb.append(", " + TABLE_PLACE_CATEGORY + " pc ");
+            sb.append(" WHERE pc." + KEY_RELATION_PLACE_ID + " = p." + KEY_PLACE_ID + " AND pc." + KEY_RELATION_CAT_ID + "=" + c_id + " ");
         }
         Cursor cursor = db.rawQuery(sb.toString(), null);
         cursor.moveToFirst();
@@ -615,35 +611,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getCategorySize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_CATEGORY);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_CATEGORY);
         return count;
     }
 
     public int getFavoritesSize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_FAVORITES);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_FAVORITES);
         return count;
     }
 
     public int getImagesSize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_IMAGES);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_IMAGES);
         return count;
     }
 
     public int getPlaceCategorySize() {
-        int count = (int)DatabaseUtils.queryNumEntries(db, TABLE_PLACE_CATEGORY);
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_PLACE_CATEGORY);
         return count;
     }
 
     // to export database file
     // for debugging only
-    private void exportDatabase(){
+    private void exportDatabase() {
         try {
             File sd = Environment.getExternalStorageDirectory();
             if (sd.canWrite()) {
-                String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/"+DATABASE_NAME;
-                String backupDBPath = "backup_"+DATABASE_NAME+".db";
-                File currentDB = new File(currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
+                String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/" + DATABASE_NAME;
+                String backupDBPath  = "backup_" + DATABASE_NAME + ".db";
+                File   currentDB     = new File(currentDBPath);
+                File   backupDB      = new File(sd, backupDBPath);
 
                 if (currentDB.exists()) {
                     FileChannel src = new FileInputStream(currentDB).getChannel();
