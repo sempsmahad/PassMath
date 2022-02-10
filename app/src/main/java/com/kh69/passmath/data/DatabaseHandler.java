@@ -33,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "pass_math";
 
     // Main Table Name
-    private static final String TABLE_QUESTION  = "question";
+    private static final String TABLE_QUESTION = "question";
 
     // Relational table Place to Category ( N to N )
     private static final String TABLE_PLACE_CATEGORY = "place_category";
@@ -42,17 +42,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_FAVORITES = "favorites_table";
 
     // Table Columns names TABLE_PLACE
-    private static final String KEY_PLACE_ID    = "place_id";
-    private static final String KEY_NAME        = "name";
-    private static final String KEY_IMAGE       = "image";
-    private static final String KEY_ADDRESS     = "address";
-    private static final String KEY_PHONE       = "phone";
-    private static final String KEY_WEBSITE     = "website";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_LNG         = "lng";
-    private static final String KEY_LAT         = "lat";
-    private static final String KEY_DISTANCE    = "distance";
-    private static final String KEY_LAST_UPDATE = "last_update";
+    private static final String KEY_QUESTION_ID    = "question_id";
+    private static final String KEY_TEXT           = "text";
+    private static final String KEY_YEAR           = "year";
+    private static final String KEY_PAPER          = "paper";
+    private static final String KEY_SECTION        = "section";
+    private static final String KEY_TOPIC          = "topic";
+    private static final String KEY_ANSWER         = "answer";
+    private static final String KEY_KATEX_QUESTION = "katex_question";
+    private static final String KEY_KATEX_ANSWER   = "katex_answer";
+    private static final String KEY_EDITED         = "edited";
 
     // Table Columns names TABLE_IMAGES
     private static final String KEY_IMG_PLACE_ID = "place_id";
