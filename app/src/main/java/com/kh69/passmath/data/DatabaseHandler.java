@@ -35,13 +35,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Main Table Name
     private static final String TABLE_QUESTION = "question";
 
-    // Relational table Place to Category ( N to N )
-    private static final String TABLE_PLACE_CATEGORY = "place_category";
 
     // table only for android client
     private static final String TABLE_FAVORITES = "favorites_table";
 
-    // Table Columns names TABLE_PLACE
+    // Table Columns names TABLE_QUESTION
     private static final String KEY_QUESTION_ID    = "question_id";
     private static final String KEY_TEXT           = "text";
     private static final String KEY_YEAR           = "year";
@@ -53,26 +51,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_KATEX_ANSWER   = "katex_answer";
     private static final String KEY_EDITED         = "edited";
 
-    // Table Columns names TABLE_IMAGES
-    private static final String KEY_IMG_PLACE_ID = "place_id";
-    private static final String KEY_IMG_NAME     = "name";
-
-    // Table Columns names TABLE_CATEGORY
-    private static final String KEY_CAT_ID   = "cat_id";
-    private static final String KEY_CAT_NAME = "name";
-    private static final String KEY_CAT_ICON = "icon";
-
-    // Table Columns names TABLE_NEWS_INFO
-    private static final String KEY_NEWS_ID            = "id";
-    private static final String KEY_NEWS_TITLE         = "title";
-    private static final String KEY_NEWS_BRIEF_CONTENT = "brief_content";
-    private static final String KEY_NEWS_FULL_CONTENT  = "full_content";
-    private static final String KEY_NEWS_IMAGE         = "image";
-    private static final String KEY_NEWS_LAST_UPDATE   = "last_update";
-
-    // Table Relational Columns names TABLE_PLACE_CATEGORY
-    private static final String KEY_RELATION_PLACE_ID = KEY_PLACE_ID;
-    private static final String KEY_RELATION_CAT_ID   = KEY_CAT_ID;
 
     private int        cat_id[]; // category id
     private String     cat_name[]; // category name
@@ -83,10 +61,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         this.context = context;
         this.db      = getWritableDatabase();
 
-        // get data from res/values/category.xml
-        cat_id   = context.getResources().getIntArray(R.array.id_category);
-        cat_name = context.getResources().getStringArray(R.array.category_name);
-        cat_icon = context.getResources().obtainTypedArray(R.array.category_icon);
 
         // if length not equal refresh table category
         if (getCategorySize() != cat_id.length) {
