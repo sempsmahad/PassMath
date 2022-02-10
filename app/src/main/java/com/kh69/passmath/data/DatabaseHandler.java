@@ -174,26 +174,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return values;
     }
 
-    private ContentValues getNewsInfoValue(NewsInfo model) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_NEWS_ID, model.id);
-        values.put(KEY_NEWS_TITLE, model.title);
-        values.put(KEY_NEWS_BRIEF_CONTENT, model.brief_content);
-        values.put(KEY_NEWS_FULL_CONTENT, model.full_content);
-        values.put(KEY_NEWS_IMAGE, model.image);
-        values.put(KEY_LAST_UPDATE, model.last_update);
-        return values;
-    }
 
     // Adding new location by Category
-    public List<Place> searchAllPlace(String keyword) {
-        List<Place> locList = new ArrayList<>();
-        Cursor      cur;
+    public List<Question> searchAllQuestion(String keyword) {
+        List<Question> locList = new ArrayList<>();
+        Cursor         cur;
         if (keyword.equals("")) {
-            cur = db.rawQuery("SELECT p.* FROM " + TABLE_PLACE + " p ORDER BY " + KEY_LAST_UPDATE + " DESC", null);
+            cur = db.rawQuery("SELECT p.* FROM " + TABLE_QUESTION + " p ORDER BY " + KEY_YEAR + " DESC", null);
         } else {
             keyword = keyword.toLowerCase();
-            cur     = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE LOWER(" + KEY_NAME + ") LIKE ? OR LOWER(" + KEY_ADDRESS + ") LIKE ? OR LOWER(" + KEY_DESCRIPTION + ") LIKE ? ",
+            cur     = db.rawQuery("SELECT * FROM " + TABLE_QUESTION + " WHERE LOWER(" + KEY_NAME + ") LIKE ? OR LOWER(" + KEY_ADDRESS + ") LIKE ? OR LOWER(" + KEY_DESCRIPTION + ") LIKE ? ",
                     new String[]{"%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%"});
         }
         locList = getListPlaceByCursor(cur);
@@ -279,28 +269,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return p;
     }
 
-    private List<Place> getListPlaceByCursor(Cursor cur) {
-        List<Place> locList = new ArrayList<>();
+    private List<Question> getListQuestionByCursor(Cursor cur) {
+        List<Question> locList = new ArrayList<>();
         // looping through all rows and adding to list
         if (cur.moveToFirst()) {
             do {
                 // Adding place to list
-                locList.add(getPlaceByCursor(cur));
+                locList.add(getQuestionByCursor(cur));
             } while (cur.moveToNext());
         }
         return locList;
-    }
-
-    private List<NewsInfo> getListNewsInfoByCursor(Cursor cur) {
-        List<NewsInfo> list = new ArrayList<>();
-        // looping through all rows and adding to list
-        if (cur.moveToFirst()) {
-            do {
-                // Adding place to list
-                list.add(getNewsInfoByCursor(cur));
-            } while (cur.moveToNext());
-        }
-        return list;
     }
 
     private Question getQuestionByCursor(Cursor cur) {
@@ -318,96 +296,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return p;
     }
 
-    // Insert new imagesList
-    public void insertListImages(List<Images> images) {
-        for (int i = 0; i < images.size(); i++) {
-            ContentValues values = new ContentValues();
-            values.put(KEY_IMG_PLACE_ID, images.get(i).place_id);
-            values.put(KEY_IMG_NAME, images.get(i).name);
-            // Inserting or Update Row
-            db.insertWithOnConflict(TABLE_IMAGES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        }
-    }
-
-    // Insert new imagesList with asynchronous scheme
-    public void insertListImagesAsync(List<Images> images) {
-        String sql = "INSERT OR REPLACE INTO " + TABLE_IMAGES + " ";
-        sql = sql + "(" + KEY_IMG_PLACE_ID + ", " + KEY_IMG_NAME + ") VALUES (?, ?)";
-        SQLiteStatement stmt = db.compileStatement(sql);
-        for (Images i : images) {
-            stmt.bindLong(1, i.place_id);
-            stmt.bindString(2, i.name);
-            stmt.execute();
-            stmt.clearBindings();
-        }
-    }
-
-    // Inserting new Table PLACE_CATEGORY relational
-    public void insertListPlaceCategory(int place_id, List<Category> categories) {
-        for (Category c : categories) {
-            ContentValues values = new ContentValues();
-            values.put(KEY_RELATION_PLACE_ID, place_id);
-            values.put(KEY_RELATION_CAT_ID, c.cat_id);
-            // Inserting or Update Row
-            db.insertWithOnConflict(TABLE_PLACE_CATEGORY, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        }
-    }
-
-    // Inserting new Table PLACE_CATEGORY relational with asynchronous scheme
-    public void insertListPlaceCategoryAsync(int place_id, List<Category> categories) {
-        String sql = "INSERT OR REPLACE INTO " + TABLE_PLACE_CATEGORY + " ";
-        sql = sql + "(" + KEY_RELATION_PLACE_ID + ", " + KEY_RELATION_CAT_ID + ") VALUES (?, ?)";
-        SQLiteStatement stmt = db.compileStatement(sql);
-        for (Category c : categories) {
-            stmt.bindLong(1, place_id);
-            stmt.bindLong(2, c.cat_id);
-            stmt.execute();
-            stmt.clearBindings();
-        }
-    }
-
-    // Adding new Connector
-    public void addFavorites(int id) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_PLACE_ID, id);
-        // Inserting Row
-        db.insert(TABLE_FAVORITES, null, values);
-    }
-
-    // all Favorites
-    public List<Place> getAllFavorites() {
-        List<Place> locList = new ArrayList<>();
-        Cursor      cursor  = db.rawQuery("SELECT p.* FROM " + TABLE_PLACE + " p, " + TABLE_FAVORITES + " f" + " WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID, null);
-        locList = getListPlaceByCursor(cursor);
-        return locList;
-    }
-
-    public void deleteFavorites(int id) {
-        if (isFavoritesExist(id)) {
-            db.delete(TABLE_FAVORITES, KEY_PLACE_ID + " = ?", new String[]{id + ""});
-        }
-    }
-
-    public boolean isFavoritesExist(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_FAVORITES + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
-        int    count  = cursor.getCount();
-        if (count > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isPlaceExist(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
-        int    count  = cursor.getCount();
-        cursor.close();
-        if (count > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private boolean isQuestionExist(String id) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_QUESTION + " WHERE " + KEY_QUESTION_ID + " = ?", new String[]{id + ""});
@@ -420,51 +308,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public int getPlacesSize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_PLACE);
+    public int getQuestionsSize() {
+        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_QUESTION);
         return count;
     }
 
-    public int getNewsInfoSize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_NEWS_INFO);
-        return count;
-    }
 
-    public int getPlacesSize(int c_id) {
+
+    public int getQuestionsSize(int c_id) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT COUNT(DISTINCT p." + KEY_PLACE_ID + ") FROM " + TABLE_PLACE + " p ");
-        if (c_id == -2) {
-            sb.append(", " + TABLE_FAVORITES + " f ");
-            sb.append(" WHERE p." + KEY_PLACE_ID + " = f." + KEY_PLACE_ID + " ");
-        } else if (c_id != -1) {
-            sb.append(", " + TABLE_PLACE_CATEGORY + " pc ");
-            sb.append(" WHERE pc." + KEY_RELATION_PLACE_ID + " = p." + KEY_PLACE_ID + " AND pc." + KEY_RELATION_CAT_ID + "=" + c_id + " ");
-        }
+        sb.append("SELECT COUNT(DISTINCT p." + KEY_QUESTION_ID + ") FROM " + TABLE_QUESTION + " p ");
+
         Cursor cursor = db.rawQuery(sb.toString(), null);
         cursor.moveToFirst();
         int size = cursor.getInt(0);
         cursor.close();
         return size;
-    }
-
-    public int getCategorySize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_CATEGORY);
-        return count;
-    }
-
-    public int getFavoritesSize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_FAVORITES);
-        return count;
-    }
-
-    public int getImagesSize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_IMAGES);
-        return count;
-    }
-
-    public int getPlaceCategorySize() {
-        int count = (int) DatabaseUtils.queryNumEntries(db, TABLE_PLACE_CATEGORY);
-        return count;
     }
 
     // to export database file
