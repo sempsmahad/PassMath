@@ -154,24 +154,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         objcs.add(Question);
         insertListQuestion(objcs);
         if (isQuestionExist(question.getId())) {
-            return getPlace(question.getId());
+            return getQuestion(question.getId());
         }
         return null;
     }
 
-    private ContentValues getPlaceValue(Place model) {
+    private ContentValues getQuestionValue(Question model) {
         ContentValues values = new ContentValues();
-        values.put(KEY_PLACE_ID, model.place_id);
-        values.put(KEY_NAME, model.name);
-        values.put(KEY_IMAGE, model.image);
-        values.put(KEY_ADDRESS, model.address);
-        values.put(KEY_PHONE, model.phone);
-        values.put(KEY_WEBSITE, model.website);
-        values.put(KEY_DESCRIPTION, model.description);
-        values.put(KEY_LNG, model.lng);
-        values.put(KEY_LAT, model.lat);
-        values.put(KEY_DISTANCE, model.distance);
-        values.put(KEY_LAST_UPDATE, model.last_update);
+        values.put(KEY_QUESTION_ID, model.getId());
+        values.put(KEY_TEXT, model.getText());
+        values.put(KEY_YEAR, model.getYear());
+        values.put(KEY_PAPER, model.getPaper());
+        values.put(KEY_SECTION, model.getSection());
+        values.put(KEY_TOPIC, model.getTopic());
+        values.put(KEY_ANSWER, model.getAnswer());
+        values.put(KEY_KATEX_QUESTION, model.getKatex_question());
+        values.put(KEY_KATEX_ANSWER, model.getKatex_answer());
+        values.put(KEY_EDITED, model.getEdited());
         return values;
     }
 
@@ -304,38 +303,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return list;
     }
 
-    private Place getPlaceByCursor(Cursor cur) {
-        Place p = new Place();
-        p.place_id    = cur.getInt(cur.getColumnIndex(KEY_PLACE_ID));
-        p.name        = cur.getString(cur.getColumnIndex(KEY_NAME));
-        p.image       = cur.getString(cur.getColumnIndex(KEY_IMAGE));
-        p.address     = cur.getString(cur.getColumnIndex(KEY_ADDRESS));
-        p.phone       = cur.getString(cur.getColumnIndex(KEY_PHONE));
-        p.website     = cur.getString(cur.getColumnIndex(KEY_WEBSITE));
-        p.description = cur.getString(cur.getColumnIndex(KEY_DESCRIPTION));
-        p.lng         = cur.getDouble(cur.getColumnIndex(KEY_LNG));
-        p.lat         = cur.getDouble(cur.getColumnIndex(KEY_LAT));
-        p.distance    = cur.getFloat(cur.getColumnIndex(KEY_DISTANCE));
-        p.last_update = cur.getLong(cur.getColumnIndex(KEY_LAST_UPDATE));
+    private Question getQuestionByCursor(Cursor cur) {
+        Question p = new Question();
+        p.setId(cur.getString(cur.getColumnIndex(KEY_QUESTION_ID)));
+        p.setText(cur.getString(cur.getColumnIndex(KEY_TEXT)));
+        p.setYear(cur.getString(cur.getColumnIndex(KEY_YEAR)));
+        p.setPaper(cur.getString(cur.getColumnIndex(KEY_PAPER)));
+        p.setSection(cur.getString(cur.getColumnIndex(KEY_SECTION)));
+        p.setTopic(cur.getString(cur.getColumnIndex(KEY_TOPIC)));
+        p.setAnswer(cur.getString(cur.getColumnIndex(KEY_ANSWER)));
+        p.setKatex_question(cur.getString(cur.getColumnIndex(KEY_KATEX_QUESTION)));
+        p.setKatex_answer(cur.getString(cur.getColumnIndex(KEY_KATEX_ANSWER)));
+        p.setEdited(cur.getString(cur.getColumnIndex(KEY_EDITED)));
         return p;
     }
-
-    private Place getPlaceByCursor(Cursor cur) {
-        Place p = new Place();
-        p.place_id    = cur.getInt(cur.getColumnIndex(KEY_PLACE_ID));
-        p.name        = cur.getString(cur.getColumnIndex(KEY_NAME));
-        p.image       = cur.getString(cur.getColumnIndex(KEY_IMAGE));
-        p.address     = cur.getString(cur.getColumnIndex(KEY_ADDRESS));
-        p.phone       = cur.getString(cur.getColumnIndex(KEY_PHONE));
-        p.website     = cur.getString(cur.getColumnIndex(KEY_WEBSITE));
-        p.description = cur.getString(cur.getColumnIndex(KEY_DESCRIPTION));
-        p.lng         = cur.getDouble(cur.getColumnIndex(KEY_LNG));
-        p.lat         = cur.getDouble(cur.getColumnIndex(KEY_LAT));
-        p.distance    = cur.getFloat(cur.getColumnIndex(KEY_DISTANCE));
-        p.last_update = cur.getLong(cur.getColumnIndex(KEY_LAST_UPDATE));
-        return p;
-    }
-
 
     // Insert new imagesList
     public void insertListImages(List<Images> images) {
