@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.Environment;
 import android.util.Log;
 
+import com.kh69.passmath.Question;
 import com.kh69.passmath.Tools;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -33,10 +35,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Main Table Name
     private static final String TABLE_QUESTION = "questions";
-
-
-    // table only for android client
-    private static final String TABLE_FAVORITES = "favorites_table";
 
     // Table Columns names TABLE_QUESTION
     private static final String KEY_QUESTION_ID    = "question_id";
@@ -85,21 +83,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
     }
 
-
-
-    private void defineCategory(SQLiteDatabase db) {
-        db.execSQL("DELETE FROM " + TABLE_CATEGORY); // refresh table content
-        db.execSQL("VACUUM");
-        for (int i = 0; i < cat_id.length; i++) {
-            ContentValues values = new ContentValues();
-            values.put(KEY_CAT_ID, cat_id[i]);
-            values.put(KEY_CAT_NAME, cat_name[i]);
-            values.put(KEY_CAT_ICON, cat_icon.getResourceId(i, 0));
-            db.insert(TABLE_CATEGORY, null, values); // Inserting Row
-        }
-    }
-
-
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -111,30 +94,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void truncateDB(SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLACE_CATEGORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NEWS_INFO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
 
         // Create tables again
         onCreate(db);
     }
 
     // refresh table place and place_category
-    public void refreshTablePlace() {
-        db.execSQL("DELETE FROM " + TABLE_PLACE_CATEGORY);
-        db.execSQL("VACUUM");
-        db.execSQL("DELETE FROM " + TABLE_IMAGES);
-        db.execSQL("VACUUM");
-        db.execSQL("DELETE FROM " + TABLE_PLACE);
-        db.execSQL("VACUUM");
-    }
-
-    // refresh table place and place_category
-    public void refreshTableNewsInfo() {
-        db.execSQL("DELETE FROM " + TABLE_NEWS_INFO);
+    public void refreshTableQuestion() {
+        db.execSQL("DELETE FROM " + TABLE_QUESTION);
         db.execSQL("VACUUM");
     }
 
@@ -144,25 +112,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
 
     // Insert List place
-    public void insertListPlace(List<Place> modelList) {
-        modelList = Tools.itemsWithDistance(context, modelList);
-        for (Place p : modelList) {
+    public void insertListQuestion(List<Question> modelList) {
+        for (Question question : modelList) {
             ContentValues values = getPlaceValue(p);
             // Inserting or Update Row
-            db.insertWithOnConflict(TABLE_PLACE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-            // Insert relational place with category
-            insertListPlaceCategory(p.place_id, p.categories);
-            // Insert Images places
-            insertListImages(p.images);
+            db.insertWithOnConflict(TABLE_QUESTION, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
     }
 
     // Insert List place with asynchronous scheme
-    public void insertListPlaceAsync(List<Place> modelList) {
-        String sql = "INSERT OR REPLACE INTO " + TABLE_PLACE + " ";
-        sql = sql + "(" + KEY_PLACE_ID + ", " + KEY_NAME + "," + KEY_IMAGE + ", " + KEY_ADDRESS + ", " + KEY_PHONE + ", "
-                + KEY_WEBSITE + ", " + KEY_DESCRIPTION + ", " + KEY_LNG + ", " + KEY_LAT + ", " + KEY_DISTANCE + ", " + KEY_LAST_UPDATE + ") ";
-        sql = sql + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void insertListQuestionAsync(List<Question> modelList) {
+        String sql = "INSERT OR REPLACE INTO " + TABLE_QUESTION + " ";
+        sql = sql + "(" + KEY_QUESTION_ID + ", " + KEY_TEXT + "," + KEY_YEAR + ", " + KEY_PAPER + ", " + KEY_SECTION + ", "
+                + KEY_TOPIC + ", " + KEY_ANSWER + ", " + KEY_KATEX_QUESTION + ", " + KEY_KATEX_ANSWER + ", " + KEY_EDITED + ") ";
+        sql = sql + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         db.beginTransaction();
 
         SQLiteStatement stmt = db.compileStatement(sql);
