@@ -28,10 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuizListActivity extends AppCompatActivity {
-    private List<Question> mQuestions = new ArrayList<>();
-    QuestionService mQuestionService;
-    RecyclerView rv_questions;
-    private Toolbar toolbar;
+    private List<Question>  mQuestions = new ArrayList<>();
+    private QuestionService mQuestionService;
+    private RecyclerView    rv_questions;
+    private Toolbar         toolbar;
     private QuestionAdapter mQuestionAdapter;
 
     @Override
@@ -42,14 +42,13 @@ public class QuizListActivity extends AppCompatActivity {
         initToolbar();
         initComponent();
     }
+
     private void initComponent() {
         mQuestionService = APIUtils.getQuestionService();
-        rv_questions = findViewById(R.id.rv_question_list);
+        rv_questions     = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
 
-//        mQuestionAdapter = new QuestionAdapter(mQuestions);
-//        rv_questions.setAdapter(mQuestionAdapter);
         getQuestionsList();
 
 
@@ -61,11 +60,10 @@ public class QuizListActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<com.kh69.passmath.Response> call, Response<com.kh69.passmath.Response> response) {
-                if(response.isSuccessful()){
-                    mQuestions = response.body().getAlldata();
+                if (response.isSuccessful()) {
+                    mQuestions       = response.body().getAlldata();
                     mQuestionAdapter = new QuestionAdapter(mQuestions);
                     rv_questions.setAdapter(mQuestionAdapter);
-
                 }
             }
 
@@ -79,7 +77,6 @@ public class QuizListActivity extends AppCompatActivity {
 
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
-        
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Math Quiz");
@@ -87,7 +84,7 @@ public class QuizListActivity extends AppCompatActivity {
         setSystemBarColor(this, R.color.indigo_700);
     }
 
-    private void setSystemBarColor(Activity act,int color ) {
+    private void setSystemBarColor(Activity act, int color) {
         Window window = act.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

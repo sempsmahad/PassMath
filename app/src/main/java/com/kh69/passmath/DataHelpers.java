@@ -10,24 +10,25 @@ import java.util.List;
 
 public class DataHelpers {
     private static final String TAG = "DATA";
-    public static String getMathWithDisplayStyle(){
+
+    public static String getMathWithDisplayStyle() {
         return "$\\displaystyle {1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots }= \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert&lt;1.</annotation>$";
     }
 
-    public static String getScrollableData(){
+    public static String getScrollableData() {
         return "<p>(a) $\\frac{1}{18}$</p> <p>(b) $\\frac{7}{18}$</p> <p>(c) $\\frac{5}{18}$</p> <p>(d) $\\frac{1}{9}$</p> <p><!--more--></p> <p><strong>Ans: $\\frac{5}{18}$</strong></p> <p><strong>Solution</strong></p> <p>Hints : &#8211; Let, C be the event that &#8216;the difference of nos. shown is 1&#8217;</p> <p>$C = \\left \\{ \\left ( 1, 2 \\right )\\left ( 2, 1 \\right )\\left ( 2, 3 \\right )\\left ( 3, 2 \\right )\\left ( 3, 4 \\right )\\left ( 4, 3 \\right )\\left ( 4, 5 \\right )\\left ( 5, 4 \\right )\\left ( 5, 6 \\right )\\left ( 6, 5 \\right ) \\right \\}$</p> <p>∴ $n\\left ( C \\right ) = 10$ , $n\\left ( S \\right ) = 36$</p> <p>∴ $P\\left ( C \\right ) = \\frac{n\\left ( C \\right )}{n\\left ( S \\right )}$</p> <p>$=\\frac{10}{36}$</p> <p>$=\\frac{5}{18}$</p> <p><strong>Table Example:</strong></p> <table border=\"1\" style=\"border-collapse: collapse; width: 596px;\"> <tbody> <tr> <td style=\"width: 101px; text-align: center;\">$2x+y^{2}$</td> <td style=\"width: 127px; text-align: center;\">$C = \\left \\{ \\left ( 1, 2 \\right )\\left ( 2, 1 \\right )\\left ( 2, 3 \\right )\\left ( 3, 2 \\right )\\left ( 3, 4 \\right )\\left ( 4, 3 \\right )\\left ( 4, 5 \\right )\\left ( 5, 4 \\right )\\left ( 5, 6 \\right )\\left ( 6, 5 \\right ) \\right \\}$</td> <td style=\"width: 168px; text-align: center;\">$\\large \\frac{12-n+5}{30\\left ( n-5 \\right )}=\\frac{1}{\\left ( n-4 \\right )\\left ( n-5 \\right )}$</td> <td style=\"width: 131px; text-align: center;\">$\\large \\frac{2}{5\\left ( n-5 \\right )}=\\frac{1}{\\left ( n-4 \\right )\\left ( n-5 \\right )}+\\frac{1}{30}$</td> </tr> <tr> <td style=\"width: 101px; text-align: center;\">Row 2 Column 1</td> <td style=\"width: 127px; text-align: center;\">Row 2 Column 2</td> <td style=\"width: 168px; text-align: center;\">Row 2 Column 3</td> <td style=\"width: 131px; text-align: center;\">Row 2 Column 4</td> </tr> <tr> <td style=\"width: 101px; text-align: center;\">Test</td> <td style=\"width: 127px; text-align: center;\">Test</td> <td style=\"width: 168px; text-align: center;\">$\\frac{5}{18}$</td> <td style=\"width: 131px; text-align: center;\"></td> </tr> </tbody> </table>";
     }
 
-    public static String getSimpleMath(){
+    public static String getSimpleMath() {
         return "${\rm{Mn}}{{\rm{O}}_{\rm{2}}}$";
     }
 
-    public static String getPlainTextWithMath(){
+    public static String getPlainTextWithMath() {
         return "This formula $f(x) = x^2$ is an example.";
 
     }
 
-    public static  String getNormalHtmlData() {
+    public static String getNormalHtmlData() {
         return "<p>\n"
                 + "    As Xenophanes recognized as long ago as the sixth century before Christ,\n"
                 + "    whether or not God made man in His own image, it is certain that man makes\n"
@@ -59,7 +60,7 @@ public class DataHelpers {
                 + "</p>";
     }
 
-    public static String getMathQuestionWithHtmlTags(){
+    public static String getMathQuestionWithHtmlTags() {
         return "<p>\n"
                 + "\t<span class=\"note-math-description\">\n"
                 + "\t\t<span class=\"katex\">\n"
@@ -204,10 +205,11 @@ public class DataHelpers {
         formulas.add(getPlainTextWithMath());
         formulas.add(getNormalHtmlData());
         formulas.add(getMathQuestionWithHtmlTags());
-        Log.d(TAG,formulas.toArray().toString());
+        Log.d(TAG, formulas.toArray().toString());
         return formulas;
 
     }
+
     public static List<String> getQuestions(Context context) {
         List<String> formulas = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.questions)));
 //        formulas.add(getMathWithDisplayStyle());
@@ -219,6 +221,7 @@ public class DataHelpers {
         return formulas;
 
     }
+
     public static List<String> getQuestionsPlainTex(Context context) {
         List<String> formulas = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.questions)));
 //        formulas.add(getMathWithDisplayStyle());

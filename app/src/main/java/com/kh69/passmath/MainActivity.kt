@@ -21,38 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question_list) //TODO create question list activity separately
         initToolbar()
-
         val formulas = DataHelpers.getFormulas(this)
         val questions_text = DataHelpers.getQuestions(this)
-        val text = "$$ c = \\pm\\sqrt{a^2 + b^2} $$"
-        val text3 = " \$\n" +
-                "    \\begin{array}{r}\n" +
-                "    4 \\cos x-2\\left(2 \\cos ^{2} x-1\\right)=3 \\\\\n" +
-                "    4 \\cos x-4 \\cos ^{2} x+2=3 \\\\\n" +
-                "    4 \\cos x-4 \\cos ^{2} x-1=0 \\\\\n" +
-                "    4 \\cos ^{2} x-4 \\cos x+1=0 \\\\\n" +
-                "    4 \\cos ^{2} x-2 \\cos x-2 \\cos x+1=0 \\\\\n" +
-                "    2 \\cos x(2 \\cos x-1)-1(2 \\cos x-1)=0 \\\\\n" +
-                "    (2 \\cos x-1)(2 \\cos x-1)=0 \\\\\n" +
-                "    \\Rightarrow 2 \\cos x-1=0 \\\\\n" +
-                "    2 \\cos x=1 \\\\\n" +
-                "    \\cos x=\\dfrac{1}{2} \\\\\n" +
-                "    x=60^{\\circ}, 300^{\\circ}\n" +
-                "    \\end{array}\n" +
-                "    \$"
 
-
-//        mQuestions.add(
-//            Question(
-//                1,
-//                formulas.get(1),
-//                1997,
-//                Paper.PAPER_ONE,
-//                Section.SECTION_A,
-//                "Alegebra",
-//                null
-//            )
-//        )
         mQuestionRecyclerView = findViewById(R.id.rv_question_list)
         mQuestionRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -90,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             window.statusBarColor = act.resources.getColor(color)
         }
     }
-
 
 
 }
