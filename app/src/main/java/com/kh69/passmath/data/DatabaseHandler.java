@@ -147,20 +147,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
-    // Insert List place
-    public void insertListNewsInfo(List<NewsInfo> modelList) {
-        for (NewsInfo n : modelList) {
-            ContentValues values = getNewsInfoValue(n);
-            // Inserting or Update Row
-            db.insertWithOnConflict(TABLE_NEWS_INFO, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        }
-    }
 
-    // Update one place
-    public Place updatePlace(Place place) {
-        List<Place> objcs = new ArrayList<>();
-        objcs.add(place);
-        insertListPlace(objcs);
+
+    // Update one Question
+    public Question updateQuestion(Question question) {
+        List<Question> objcs = new ArrayList<>();
+        objcs.add(Question);
+        insertListQuestion(objcs);
         if (isPlaceExist(place.place_id)) {
             return getPlace(place.place_id);
         }
@@ -445,6 +438,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    private boolean isPlaceExist(int id) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
+        int    count  = cursor.getCount();
+        cursor.close();
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     private boolean isPlaceExist(int id) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
         int    count  = cursor.getCount();
