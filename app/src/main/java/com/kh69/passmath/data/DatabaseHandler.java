@@ -129,26 +129,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.beginTransaction();
 
         SQLiteStatement stmt = db.compileStatement(sql);
-        modelList = Tools.itemsWithDistance(context, modelList);
-        for (Place p : modelList) {
-            stmt.bindLong(1, p.place_id);
-            stmt.bindString(2, p.name);
-            stmt.bindString(3, p.image);
-            stmt.bindString(4, p.address);
-            stmt.bindString(5, p.phone);
-            stmt.bindString(6, p.website);
-            stmt.bindString(7, p.description);
-            stmt.bindDouble(8, p.lng);
-            stmt.bindDouble(9, p.lat);
-            stmt.bindDouble(10, p.distance);
-            stmt.bindDouble(11, p.last_update);
+        for (Question q : modelList) {
+            stmt.bindString(1, q.getId());
+            stmt.bindString(2, q.getText());
+            stmt.bindString(3, q.getYear()+"");
+            stmt.bindString(4, q.getPaper()+"");
+            stmt.bindString(5, q.getSection());
+            stmt.bindString(6, q.getTopic());
+            stmt.bindString(7, q.getAnswer());
+            stmt.bindString(8, q.getKatex_question());
+            stmt.bindString(9, q.getKatex_answer());
+            stmt.bindString(10, String.valueOf(q.getEdited()));
             stmt.execute();
             stmt.clearBindings();
-
-            // Insert relational place with category
-            insertListPlaceCategoryAsync(p.place_id, p.categories);
-            // Insert Images places
-            insertListImagesAsync(p.images);
         }
         db.setTransactionSuccessful();
         db.endTransaction();
