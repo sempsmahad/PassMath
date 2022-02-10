@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.Environment;
 import android.util.Log;
 
-import com.kh69.passmath.R;
 import com.kh69.passmath.Tools;
 
 import java.io.File;
@@ -33,7 +32,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "pass_math";
 
     // Main Table Name
-    private static final String TABLE_QUESTION = "question";
+    private static final String TABLE_QUESTION = "questions";
 
 
     // table only for android client
@@ -61,66 +60,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         this.context = context;
         this.db      = getWritableDatabase();
 
-
-        // if length not equal refresh table category
-        if (getCategorySize() != cat_id.length) {
-            defineCategory(this.db);  // define table category
-        }
-
     }
 
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase d) {
-        createTablePlace(d);
-        createTableImages(d);
-        createTableCategory(d);
-        createTableRelational(d);
-        createTableFavorites(d);
-        createTableNewsInfo(d);
+        createTableQuestion(d);
+
     }
 
-    private void createTablePlace(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_PLACE + " ("
-                + KEY_PLACE_ID + " INTEGER PRIMARY KEY, "
-                + KEY_NAME + " TEXT, "
-                + KEY_IMAGE + " TEXT, "
-                + KEY_ADDRESS + " TEXT, "
-                + KEY_PHONE + " TEXT, "
-                + KEY_WEBSITE + " TEXT, "
-                + KEY_DESCRIPTION + " TEXT, "
-                + KEY_LNG + " REAL, "
-                + KEY_LAT + " REAL, "
-                + KEY_DISTANCE + " REAL, "
-                + KEY_LAST_UPDATE + " NUMERIC "
+    private void createTableQuestion(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE " + TABLE_QUESTION + " ("
+                + KEY_QUESTION_ID + " INTEGER PRIMARY KEY, "
+                + KEY_TEXT + " TEXT, "
+                + KEY_YEAR + " NUMERIC, "
+                + KEY_PAPER + " NUMERIC, "
+                + KEY_SECTION + " TEXT, "
+                + KEY_TOPIC + " TEXT, "
+                + KEY_ANSWER + " TEXT, "
+                + KEY_KATEX_QUESTION + " TEXT, "
+                + KEY_KATEX_ANSWER + " TEXT, "
+                + KEY_EDITED + " TEXT"
                 + ")";
         db.execSQL(CREATE_TABLE);
     }
 
-    private void createTableImages(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_IMAGES + " ("
-                + KEY_IMG_PLACE_ID + " INTEGER, "
-                + KEY_IMG_NAME + " TEXT, "
-                + " FOREIGN KEY(" + KEY_IMG_PLACE_ID + ") REFERENCES " + TABLE_PLACE + "(" + KEY_PLACE_ID + ")"
-                + " )";
-        db.execSQL(CREATE_TABLE);
-    }
 
-    private void createTableCategory(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
-                + KEY_CAT_ID + " INTEGER PRIMARY KEY, "
-                + KEY_CAT_NAME + " TEXT, "
-                + KEY_CAT_ICON + " INTEGER"
-                + ")";
-        db.execSQL(CREATE_TABLE);
-    }
-
-    private void createTableFavorites(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_FAVORITES + "("
-                + KEY_PLACE_ID + " INTEGER PRIMARY KEY "
-                + ")";
-        db.execSQL(CREATE_TABLE);
-    }
 
     private void defineCategory(SQLiteDatabase db) {
         db.execSQL("DELETE FROM " + TABLE_CATEGORY); // refresh table content
@@ -134,27 +99,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    // Table Relational place_category
-    private void createTableRelational(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_PLACE_CATEGORY + "("
-                + KEY_RELATION_PLACE_ID + " INTEGER, "      // id from table place
-                + KEY_RELATION_CAT_ID + " INTEGER "        // id from table category
-                + ")";
-        db.execSQL(CREATE_TABLE);
-    }
-
-
-    private void createTableNewsInfo(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_NEWS_INFO + " ("
-                + KEY_NEWS_ID + " INTEGER PRIMARY KEY, "
-                + KEY_NEWS_TITLE + " TEXT, "
-                + KEY_NEWS_BRIEF_CONTENT + " TEXT, "
-                + KEY_NEWS_FULL_CONTENT + " TEXT, "
-                + KEY_NEWS_IMAGE + " TEXT, "
-                + KEY_NEWS_LAST_UPDATE + " NUMERIC "
-                + ")";
-        db.execSQL(CREATE_TABLE);
-    }
 
     // Upgrading database
     @Override
