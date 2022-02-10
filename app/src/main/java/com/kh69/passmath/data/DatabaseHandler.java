@@ -132,8 +132,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         for (Question q : modelList) {
             stmt.bindString(1, q.getId());
             stmt.bindString(2, q.getText());
-            stmt.bindString(3, q.getYear()+"");
-            stmt.bindString(4, q.getPaper()+"");
+            stmt.bindString(3, q.getYear() + "");
+            stmt.bindString(4, q.getPaper() + "");
             stmt.bindString(5, q.getSection());
             stmt.bindString(6, q.getTopic());
             stmt.bindString(7, q.getAnswer());
@@ -148,14 +148,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-
     // Update one Question
     public Question updateQuestion(Question question) {
         List<Question> objcs = new ArrayList<>();
         objcs.add(Question);
         insertListQuestion(objcs);
-        if (isPlaceExist(place.place_id)) {
-            return getPlace(place.place_id);
+        if (isQuestionExist(question.getId())) {
+            return getPlace(question.getId());
         }
         return null;
     }
@@ -243,6 +242,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             locList = getListPlaceByCursor(cursor);
         }
         return locList;
+    }
+
+    public Question getQuestion(String question_id) {
+        Question p      = new Question();
+        String   query  = "SELECT * FROM " + TABLE_QUESTION + " p WHERE p." + KEY_QUESTION_ID + " = ?";
+        Cursor   cursor = db.rawQuery(query, new String[]{question_id + ""});
+        p.getId() = question_id;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            p = getPlaceByCursor(cursor);
+        }
+        return p;
     }
 
     public Place getPlace(int place_id) {
@@ -448,8 +459,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return false;
         }
     }
-    private boolean isPlaceExist(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PLACE + " WHERE " + KEY_PLACE_ID + " = ?", new String[]{id + ""});
+
+    private boolean isQuestionExist(String id) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_QUESTION + " WHERE " + KEY_QUESTION_ID + " = ?", new String[]{id + ""});
         int    count  = cursor.getCount();
         cursor.close();
         if (count > 0) {
