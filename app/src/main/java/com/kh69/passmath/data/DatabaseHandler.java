@@ -256,6 +256,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return p;
     }
 
+    public Question getQuestion(String question_id) {
+        Question p      = new Question();
+        String   query  = "SELECT * FROM " + TABLE_QUESTION + " p WHERE p." + KEY_QUESTION_ID + " = ?";
+        Cursor   cursor = db.rawQuery(query, new String[]{question_id + ""});
+        p.getId() = question_id;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            p = getPlaceByCursor(cursor);
+        }
+        return p;
+    }
+
     public Place getPlace(int place_id) {
         Place  p      = new Place();
         String query  = "SELECT * FROM " + TABLE_PLACE + " p WHERE p." + KEY_PLACE_ID + " = ?";
@@ -308,66 +320,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return p;
     }
 
-    private NewsInfo getNewsInfoByCursor(Cursor cur) {
-        NewsInfo n = new NewsInfo();
-        n.id            = cur.getInt(cur.getColumnIndex(KEY_NEWS_ID));
-        n.title         = cur.getString(cur.getColumnIndex(KEY_NEWS_TITLE));
-        n.brief_content = cur.getString(cur.getColumnIndex(KEY_NEWS_BRIEF_CONTENT));
-        n.full_content  = cur.getString(cur.getColumnIndex(KEY_NEWS_FULL_CONTENT));
-        n.image         = cur.getString(cur.getColumnIndex(KEY_NEWS_IMAGE));
-        n.last_update   = cur.getLong(cur.getColumnIndex(KEY_NEWS_LAST_UPDATE));
-        return n;
+    private Place getPlaceByCursor(Cursor cur) {
+        Place p = new Place();
+        p.place_id    = cur.getInt(cur.getColumnIndex(KEY_PLACE_ID));
+        p.name        = cur.getString(cur.getColumnIndex(KEY_NAME));
+        p.image       = cur.getString(cur.getColumnIndex(KEY_IMAGE));
+        p.address     = cur.getString(cur.getColumnIndex(KEY_ADDRESS));
+        p.phone       = cur.getString(cur.getColumnIndex(KEY_PHONE));
+        p.website     = cur.getString(cur.getColumnIndex(KEY_WEBSITE));
+        p.description = cur.getString(cur.getColumnIndex(KEY_DESCRIPTION));
+        p.lng         = cur.getDouble(cur.getColumnIndex(KEY_LNG));
+        p.lat         = cur.getDouble(cur.getColumnIndex(KEY_LAT));
+        p.distance    = cur.getFloat(cur.getColumnIndex(KEY_DISTANCE));
+        p.last_update = cur.getLong(cur.getColumnIndex(KEY_LAST_UPDATE));
+        return p;
     }
 
-    // Get LIst Images By Place Id
-    public List<Images> getListImageByPlaceId(int place_id) {
-        List<Images> imageList   = new ArrayList<>();
-        String       selectQuery = "SELECT * FROM " + TABLE_IMAGES + " WHERE " + KEY_IMG_PLACE_ID + " = ?";
-        Cursor       cursor      = db.rawQuery(selectQuery, new String[]{place_id + ""});
-        if (cursor.moveToFirst()) {
-            do {
-                Images img = new Images();
-                img.place_id = cursor.getInt(0);
-                img.name     = cursor.getString(1);
-                imageList.add(img);
-            } while (cursor.moveToNext());
-        }
-        return imageList;
-    }
-
-    public Category getCategory(int c_id) {
-        Category category = new Category();
-        try {
-            Cursor cur = db.rawQuery("SELECT * FROM " + TABLE_CATEGORY + " WHERE " + KEY_CAT_ID + " = ?", new String[]{c_id + ""});
-            cur.moveToFirst();
-            category.cat_id = cur.getInt(0);
-            category.name   = cur.getString(1);
-            category.icon   = cur.getInt(2);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("Db Error", e.toString());
-            return null;
-        }
-        return category;
-    }
-
-
-    // get list News Info
-    public List<NewsInfo> getNewsInfoByPage(int limit, int offset) {
-
-        Log.d("DB", "Size : " + getNewsInfoSize());
-        Log.d("DB", "Limit : " + limit + " Offset : " + offset);
-        List<NewsInfo> list = new ArrayList<>();
-        StringBuilder  sb   = new StringBuilder();
-        sb.append(" SELECT DISTINCT n.* FROM " + TABLE_NEWS_INFO + " n ");
-        sb.append(" ORDER BY n." + KEY_NEWS_ID + " DESC ");
-        sb.append(" LIMIT " + limit + " OFFSET " + offset + " ");
-        Cursor cursor = db.rawQuery(sb.toString(), null);
-        if (cursor.moveToFirst()) {
-            list = getListNewsInfoByCursor(cursor);
-        }
-        return list;
-    }
 
     // Insert new imagesList
     public void insertListImages(List<Images> images) {
