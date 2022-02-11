@@ -4,13 +4,13 @@ import android.app.Activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kh69.passmath.data.cache.Question
 
 class MainActivity : AppCompatActivity() {
     private var mQuestions = ArrayList<Question>()

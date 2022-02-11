@@ -2,6 +2,7 @@ package com.kh69.passmath;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.kh69.passmath.data.cache.Question;
 
 import java.util.ArrayList;
 

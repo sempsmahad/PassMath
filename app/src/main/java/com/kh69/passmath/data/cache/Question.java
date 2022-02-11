@@ -1,4 +1,4 @@
-package com.kh69.passmath;
+package com.kh69.passmath.data.cache;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
