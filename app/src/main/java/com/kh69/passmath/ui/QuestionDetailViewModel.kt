@@ -23,8 +23,6 @@ class QuestionDetailViewModel() : ViewModel() {
     fun loadQuestion(questionId: UUID) {
         questionIdLiveData.value = questionId
     }
-    fun loadNodes(questionId: UUID) {
-    }
 
     fun saveQuestion(question: Question) {
         questionRepository.updateQuestion(question)
@@ -34,6 +32,5 @@ class QuestionDetailViewModel() : ViewModel() {
         questionRepository.addQuestion(question)
     }
 
-//    val nodeListLiveData = questionRepository.getNodes()
 
 }
