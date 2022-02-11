@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken
 
 
 class DbTypeConverters {
-
     @TypeConverter
     fun toUUID(uuid: String?): UUID? {
         return UUID.fromString(uuid)
