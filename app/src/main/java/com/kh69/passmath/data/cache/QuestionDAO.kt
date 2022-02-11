@@ -1,21 +1,24 @@
 package com.kh69.passmath.data.cache
 
 import androidx.lifecycle.LiveData
-import retrofit2.http.Query
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import java.util.*
+
 
 @Dao
 interface QuestionDAO {
+    @Query("SELECT * FROM question")
+    fun getQuestions(): LiveData<List<Question>>
 
-    @Query("SELECT * FROM pattern")
-    fun getPatterns(): LiveData<List<Pattern>>
-
-    @Query("SELECT * FROM pattern WHERE id=(:id)")
-    fun getPattern(id: UUID): LiveData<Pattern?>
+    @Query("SELECT * FROM question WHERE id=(:id)")
+    fun getQuestion(id: UUID): LiveData<Question?>
 
     @Update
-    fun updatePattern(pattern: Pattern)
+    fun updateQuestion(question: Question)
 
     @Insert
-    fun addPattern(pattern: Pattern)
+    fun addQuestion(question: Question)
 }
