@@ -114,7 +114,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Insert List place
     public void insertListQuestion(List<Question> modelList) {
         for (Question question : modelList) {
-            ContentValues values = getPlaceValue(p);
+            ContentValues values = getQuestionValue(question);
             // Inserting or Update Row
             db.insertWithOnConflict(TABLE_QUESTION, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
@@ -186,10 +186,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cur     = db.rawQuery("SELECT * FROM " + TABLE_QUESTION + " WHERE LOWER(" + KEY_NAME + ") LIKE ? OR LOWER(" + KEY_ADDRESS + ") LIKE ? OR LOWER(" + KEY_DESCRIPTION + ") LIKE ? ",
                     new String[]{"%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%"});
         }
-        locList = getListPlaceByCursor(cur);
+        locList = getListQuestionByCursor(cur);
         return locList;
     }
 
+    public List<Question> getAllQuestion() {
+        return getAllPlaceByCategory(-1);
+    }
     public List<Place> getAllPlace() {
         return getAllPlaceByCategory(-1);
     }
