@@ -48,7 +48,7 @@ class QuestionRepository private constructor(context: Context) {
 
         fun get(): QuestionRepository {
             return INSTANCE ?:
-            throw IllegalStateException("PatternRepository must be initialized")
+            throw IllegalStateException("QuestionRepository must be initialized")
         }
     }
 }

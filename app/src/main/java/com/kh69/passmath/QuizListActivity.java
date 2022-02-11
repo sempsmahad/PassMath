@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.cache.QuestionRepository;
 import com.kh69.passmath.remote.APIUtils;
 import com.kh69.passmath.remote.QuestionService;
 
@@ -24,11 +25,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuizListActivity extends AppCompatActivity {
-    private List<Question>  mQuestions = new ArrayList<>();
-    private QuestionService mQuestionService;
-    private RecyclerView    rv_questions;
-    private Toolbar         toolbar;
-    private QuestionAdapter mQuestionAdapter;
+    private List<Question>     mQuestions = new ArrayList<>();
+    private QuestionService    mQuestionService;
+    private RecyclerView       rv_questions;
+    private Toolbar            toolbar;
+    private QuestionAdapter    mQuestionAdapter;
+    private QuestionRepository mQuestionRepository;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class QuizListActivity extends AppCompatActivity {
         rv_questions     = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
+        mQuestionRepository = new QuestionRepository();
 
         getQuestionsList();
 

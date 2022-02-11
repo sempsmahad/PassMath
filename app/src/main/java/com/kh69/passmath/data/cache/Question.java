@@ -1,12 +1,15 @@
 package com.kh69.passmath.data.cache;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
 @Entity
 public class Question {
+    @PrimaryKey
     @SerializedName("_id")
     @Expose
     private String id;
@@ -48,15 +51,15 @@ public class Question {
     private boolean edited;
 
     public Question(String text, int year, int paper, String section, String topic, String answer, String katex_question, String katex_answer, boolean edited) {
-        this.text = text;
-        this.year = year;
-        this.paper = paper;
-        this.section = section;
-        this.topic = topic;
-        this.answer = answer;
+        this.text           = text;
+        this.year           = year;
+        this.paper          = paper;
+        this.section        = section;
+        this.topic          = topic;
+        this.answer         = answer;
         this.katex_question = katex_question;
-        this.katex_answer = katex_answer;
-        this.edited = edited;
+        this.katex_answer   = katex_answer;
+        this.edited         = edited;
     }
 
     public boolean getEdited() {
