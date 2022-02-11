@@ -1,8 +1,11 @@
 package com.kh69.passmath.data.cache;
 
+import androidx.room.Entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+@Entity
 public class Question {
     @SerializedName("_id")
     @Expose
