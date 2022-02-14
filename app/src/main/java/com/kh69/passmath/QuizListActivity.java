@@ -9,6 +9,9 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +19,7 @@ import com.kh69.passmath.data.cache.Question;
 import com.kh69.passmath.data.cache.QuestionRepository;
 import com.kh69.passmath.remote.APIUtils;
 import com.kh69.passmath.remote.QuestionService;
+import com.kh69.passmath.ui.QuestionListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +29,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuizListActivity extends AppCompatActivity {
-    private List<Question>     mQuestions = new ArrayList<>();
-    private QuestionService    mQuestionService;
-    private RecyclerView       rv_questions;
-    private Toolbar            toolbar;
-    private QuestionAdapter    mQuestionAdapter;
-    private QuestionRepository mQuestionRepository;
-
+    private List<Question>        mQuestions = new ArrayList<>();
+    private QuestionService       mQuestionService;
+    private RecyclerView          rv_questions;
+    private Toolbar               toolbar;
+    private QuestionAdapter       mQuestionAdapter;
+    private QuestionRepository    mQuestionRepository;
+    private QuestionListViewModel mQuestionListViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,16 +46,24 @@ public class QuizListActivity extends AppCompatActivity {
         initComponent();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mQuestionListViewModel.getQuestionListLiveData().observe(this, questions -> updateUI(questions));
+    }
+
+    private void updateUI(List<Question> questions) {
+        mQuestionAdapter = new QuestionAdapter(questions);
+        rv_questions.setAdapter(mQuestionAdapter);
+    }
+
     private void initComponent() {
-        mQuestionService = APIUtils.getQuestionService();
-        rv_questions     = findViewById(R.id.rv_question_list);
+        mQuestionListViewModel = new ViewModelProvider(this).get(QuestionListViewModel.class);
+        mQuestionService       = APIUtils.getQuestionService();
+        rv_questions           = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
-        mQuestionRepository = new QuestionRepository();
-
         getQuestionsList();
-
-
     }
 
     private void getQuestionsList() {
