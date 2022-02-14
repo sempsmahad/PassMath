@@ -2,6 +2,7 @@
 buildscript {
     def versions = [:]
     versions.android_room = '2.3.0'
+    versions.moshi_version = '1.9.3'
     ext.versions = versions
 
     repositories {
