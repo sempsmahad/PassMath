@@ -1,5 +1,6 @@
 package com.kh69.passmath.data.api
 
+import com.kh69.passmath.data.api.model.ApiPaginatedQuestions
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,7 +12,7 @@ interface PassMathApi {
         @Query(ApiParameters.LIMIT) pageSize: Int,
         @Query(ApiParameters.LOCATION) postcode: String,
         @Query(ApiParameters.DISTANCE) maxDistance: Int
-    ): ApiPaginatedAnimals
+    ): ApiPaginatedQuestions
 
     @GET(ApiConstants.ANIMALS_ENDPOINT)
     suspend fun searchAnimalsBy(
@@ -22,5 +23,5 @@ interface PassMathApi {
         @Query(ApiParameters.LIMIT) pageSize: Int,
         @Query(ApiParameters.LOCATION) postcode: String,
         @Query(ApiParameters.DISTANCE) maxDistance: Int
-    ): ApiPaginatedAnimals
+    ): ApiPaginatedQuestions
 }
