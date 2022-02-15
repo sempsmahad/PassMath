@@ -1,6 +1,8 @@
 package com.kh69.passmath.data
 
 import com.kh69.passmath.data.api.PassMathApi
+import com.kh69.passmath.data.api.model.mappers.ApiPaginationMapper
+import com.kh69.passmath.data.api.model.mappers.ApiQuestionMapper
 import okhttp3.Cache
 import javax.inject.Inject
 
