@@ -7,7 +7,7 @@ import javax.inject.Inject
 class PassMathQuestionRepository @Inject constructor(
     private val api: PassMathApi,
     private val cache: Cache,
-    private val apiAnimalMapper: ApiAnimalMapper,
+    private val apiQuestionMapper: ApiQuestionMapper,
     private val apiPaginationMapper: ApiPaginationMapper,
     dispatchersProvider: DispatchersProvider
 ): AnimalRepository {}
