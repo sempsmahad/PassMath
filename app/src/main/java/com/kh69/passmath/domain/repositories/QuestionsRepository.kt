@@ -3,7 +3,7 @@ package com.kh69.passmath.domain.repositories
 import android.app.appsearch.SearchResults
 import io.reactivex.Flowable
 
-interface AnimalRepository {
+interface QuestionsRepository {
 
     fun getAnimals(): Flowable<List<Animal>>
     suspend fun requestMoreAnimals(pageToLoad: Int, numberOfItems: Int): PaginatedAnimals
