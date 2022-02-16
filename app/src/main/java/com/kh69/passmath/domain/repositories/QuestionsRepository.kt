@@ -1,9 +1,9 @@
 package com.kh69.passmath.domain.repositories
 
-import android.app.appsearch.SearchResults
 import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.domain.model.pagination.PaginatedQuestions
 import com.kh69.passmath.search.domain.model.SearchParameters
+import com.kh69.passmath.search.domain.model.SearchResults
 import io.reactivex.Flowable
 
 interface QuestionsRepository {
@@ -13,9 +13,9 @@ interface QuestionsRepository {
     suspend fun storeQuestions(questions: List<Question>)
     fun searchCachedQuestionsBy(searchParameters: SearchParameters): Flowable<SearchResults>
 
-    suspend fun searchAnimalsRemotely(
+    suspend fun searchQuestionsRemotely(
         pageToLoad: Int,
         searchParameters: SearchParameters,
         numberOfItems: Int
-    ): PaginatedAnimals
+    ): PaginatedQuestions
 }
