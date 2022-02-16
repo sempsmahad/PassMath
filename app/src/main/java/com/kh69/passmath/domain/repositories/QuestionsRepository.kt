@@ -3,6 +3,7 @@ package com.kh69.passmath.domain.repositories
 import android.app.appsearch.SearchResults
 import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.domain.model.pagination.PaginatedQuestions
+import com.kh69.passmath.search.domain.model.SearchParameters
 import io.reactivex.Flowable
 
 interface QuestionsRepository {
