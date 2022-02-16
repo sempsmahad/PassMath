@@ -1,10 +1,9 @@
 package com.kh69.passmath.data.api
 
 object ApiConstants {
-    const val BASE_ENDPOINT = "https://api.petfinder.com/v2/"
+    const val BASE_ENDPOINT = "http://192.168.43.134:5000/api/v1/"
     const val AUTH_ENDPOINT = "oauth2/token/"
-    const val ANIMALS_ENDPOINT = "animals"
-    const val QUESTIONS_ENDPOINT = "animals"
+    const val QUESTIONS_ENDPOINT = "questions"
 
     const val KEY = "INSERT_YOUR_KEY_HERE"
     const val SECRET = "INSERT_YOUR_SECRET_HERE"

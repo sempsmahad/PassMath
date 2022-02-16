@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface PassMathApi {
 
-    @GET(ApiConstants.ANIMALS_ENDPOINT)
+    @GET(ApiConstants.QUESTIONS_ENDPOINT)
     suspend fun getNearbyAnimals(
         @Query(ApiParameters.PAGE) pageToLoad: Int,
         @Query(ApiParameters.LIMIT) pageSize: Int,
@@ -14,7 +14,7 @@ interface PassMathApi {
         @Query(ApiParameters.DISTANCE) maxDistance: Int
     ): ApiPaginatedQuestions
 
-    @GET(ApiConstants.ANIMALS_ENDPOINT)
+    @GET(ApiConstants.QUESTIONS_ENDPOINT)
     suspend fun searchAnimalsBy(
         @Query(ApiParameters.NAME) name: String,
         @Query(ApiParameters.AGE) age: String,
