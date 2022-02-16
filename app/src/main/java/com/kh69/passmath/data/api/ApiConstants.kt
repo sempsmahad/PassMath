@@ -24,6 +24,10 @@ object ApiParameters {
 
     const val PAGE = "page"
     const val LIMIT = "limit"
+    const val YEAR = "year"
+    const val TOPIC = "topic"
+    const val SECTION = "section"
+    const val PAPER = "paper"
     const val LOCATION = "location"
     const val DISTANCE = "distance"
     const val NAME = "name"
