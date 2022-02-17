@@ -35,23 +35,16 @@ data class CachedQuestion(
 
     fun toDomain(): Question {
         return Question(
+            questionId,
             text,
             year.toInt(),
-            paper,
+            paper.toInt(),
             section,
             topic,
             answer,
             katex_question,
             katex_answer,
-            edited,
-            questionId,
-            Media(
-                photos = photos.map { it.toDomain() },
-                videos = videos.map { it.toDomain() }
-            ),
-            tags.map { it.tag },
-            AdoptionStatus.valueOf(adoptionStatus),
-            DateTimeUtils.parse(publishedAt)
+            edited.toBoolean()
         )
     }
 }
