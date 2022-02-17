@@ -14,9 +14,10 @@ interface PassMathApi {
 
     @GET(ApiConstants.QUESTIONS_ENDPOINT)
     suspend fun searchQuestions(
-        @Query(ApiParameters.NAME) name: String,
-        @Query(ApiParameters.AGE) age: String,
-        @Query(ApiParameters.TYPE) type: String,
+        @Query(ApiParameters.YEAR) name: String,
+        @Query(ApiParameters.TOPIC) topic: String,
+        @Query(ApiParameters.SECTION) section: String,
+        @Query(ApiParameters.PAPER) paper: String,
         @Query(ApiParameters.PAGE) pageToLoad: Int,
         @Query(ApiParameters.LIMIT) pageSize: Int
     ): ApiPaginatedQuestions
