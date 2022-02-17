@@ -33,11 +33,18 @@ data class CachedQuestion(
         }
     }
 
-    fun toDomain(photos: List<CachedPhoto>, videos: List<CachedVideo>, tags: List<CachedTag>): Animal {
-        return Animal(
-            animalId,
-            name,
-            type,
+    fun toDomain(): Question {
+        return Question(
+            text,
+            year.toInt(),
+            paper,
+            section,
+            topic,
+            answer,
+            katex_question,
+            katex_answer,
+            edited,
+            questionId,
             Media(
                 photos = photos.map { it.toDomain() },
                 videos = videos.map { it.toDomain() }

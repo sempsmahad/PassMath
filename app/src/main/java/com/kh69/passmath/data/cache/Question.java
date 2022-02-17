@@ -62,6 +62,19 @@ public class Question {
         this.edited         = edited;
     }
 
+    public Question(String id, String text, int year, int paper, String section, String topic, String answer, String katex_question, String katex_answer, boolean edited) {
+        this.id             = id;
+        this.text           = text;
+        this.year           = year;
+        this.paper          = paper;
+        this.section        = section;
+        this.topic          = topic;
+        this.answer         = answer;
+        this.katex_question = katex_question;
+        this.katex_answer   = katex_answer;
+        this.edited         = edited;
+    }
+
     public boolean getEdited() {
         return edited;
     }
