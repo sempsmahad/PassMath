@@ -1,16 +1,16 @@
 package com.kh69.passmath.data.cache
 
 import io.reactivex.Flowable
+import java.time.Year
 
 interface Cache {
-    fun getQuestions(): Flowable<List<CachedAnimalAggregate>>
-    fun storeOrganizations(organizations: List<CachedOrganization>)
-    fun storeNearbyAnimals(animals: List<CachedAnimalAggregate>)
-    suspend fun getAllTypes(): List<String>
+    fun getQuestions(): Flowable<List<CachedQuestionAggregate>>
+    fun storeQuestions(questions: List<CachedQuestionAggregate>)
 
-    fun searchAnimalsBy(
-        nameOrBreed: String,
-        age: String,
-        type: String
-    ): Flowable<List<CachedAnimalAggregate>>
+    fun searchQuestionsBy(
+        year: Int,
+        paper: String,
+        section: String,
+        topic: String
+    ): Flowable<List<CachedQuestionAggregate>>
 }
