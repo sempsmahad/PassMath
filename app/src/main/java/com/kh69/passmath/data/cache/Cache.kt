@@ -1,7 +1,7 @@
 package com.kh69.passmath.data.cache
 
+import com.kh69.passmath.data.cache.model.cachedquestion.CachedQuestionAggregate
 import io.reactivex.Flowable
-import java.time.Year
 
 interface Cache {
     fun getQuestions(): Flowable<List<CachedQuestionAggregate>>
