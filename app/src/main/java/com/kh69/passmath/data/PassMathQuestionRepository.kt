@@ -32,7 +32,7 @@ class PassMathQuestionRepository @Inject constructor(
 
 
     override fun getQuestions(): Flowable<List<Question>> {
-        return cache.getNearbyAnimals()
+        return cache.getQuestions()
             .distinctUntilChanged()
             .map { animalList ->
                 animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
