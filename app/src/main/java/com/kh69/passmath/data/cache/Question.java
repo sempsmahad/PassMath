@@ -1,5 +1,6 @@
 package com.kh69.passmath.data.cache;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,6 +13,7 @@ public class Question {
     @PrimaryKey
     @SerializedName("_id")
     @Expose
+    @NonNull
     private String id;
 
     @SerializedName("qtn_text")

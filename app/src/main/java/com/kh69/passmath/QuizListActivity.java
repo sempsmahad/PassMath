@@ -47,7 +47,7 @@ public class QuizListActivity extends AppCompatActivity {
         rv_questions     = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
-        mQuestionRepository = new QuestionRepository();
+//        mQuestionRepository = new QuestionRepository();
 
         getQuestionsList();
 
