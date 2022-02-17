@@ -4,13 +4,15 @@ import android.app.appsearch.SearchResults
 import com.kh69.passmath.data.api.PassMathApi
 import com.kh69.passmath.data.api.model.mappers.ApiPaginationMapper
 import com.kh69.passmath.data.api.model.mappers.ApiQuestionMapper
+import com.kh69.passmath.data.cache.Cache
 import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.domain.model.pagination.PaginatedQuestions
 import com.kh69.passmath.domain.repositories.QuestionsRepository
 import com.kh69.passmath.search.domain.model.SearchParameters
 import com.kh69.passmath.utils.DispatchersProvider
 import io.reactivex.Flowable
-import okhttp3.Cache
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
 class PassMathQuestionRepository @Inject constructor(
@@ -20,8 +22,21 @@ class PassMathQuestionRepository @Inject constructor(
     private val apiPaginationMapper: ApiPaginationMapper,
     dispatchersProvider: DispatchersProvider
 ): QuestionsRepository {
+
+    private val parentJob = SupervisorJob()
+    private val repositoryScope = CoroutineScope(parentJob + dispatchersProvider.io())
+
+    // fetch these from shared preferences, after storing them in onboarding screen
+    private val postcode = "07097"
+    private val maxDistanceMiles = 100
+
+
     override fun getQuestions(): Flowable<List<Question>> {
-        TODO("Not yet implemented")
+        return cache.getNearbyAnimals()
+            .distinctUntilChanged()
+            .map { animalList ->
+                animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
+            }
     }
 
     override suspend fun requestMoreQuestions(
