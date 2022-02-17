@@ -34,8 +34,8 @@ class PassMathQuestionRepository @Inject constructor(
     override fun getQuestions(): Flowable<List<Question>> {
         return cache.getQuestions()
             .distinctUntilChanged()
-            .map { animalList ->
-                animalList.map { it.animal.toAnimalDomain(it.photos, it.videos, it.tags) }
+            .map { questionList ->
+                questionList.map { it.question.toDomain() }
             }
     }
 
@@ -43,7 +43,15 @@ class PassMathQuestionRepository @Inject constructor(
         pageToLoad: Int,
         numberOfItems: Int
     ): PaginatedQuestions {
-        TODO("Not yet implemented")
+        val (apiQuestions, apiPagination) = api.getQuestions(
+            pageToLoad,
+            numberOfItems
+        )
+
+        return PaginatedQuestions(
+            apiQuestions?.map { apiQuestionMapper.mapToDomain(it) }.orEmpty(),
+            apiPaginationMapper.mapToDomain(apiPagination)
+        )
     }
 
     override suspend fun storeQuestions(questions: List<Question>) {
