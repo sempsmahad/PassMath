@@ -2,6 +2,7 @@ package com.kh69.passmath.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kh69.passmath.data.QuizRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

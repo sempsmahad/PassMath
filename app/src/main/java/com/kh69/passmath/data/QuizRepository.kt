@@ -12,8 +12,8 @@ interface QuizRepository {
     fun getSavedQuestions(): LiveData<List<Question>>
     suspend fun saveQuestion(question: Question)
     suspend fun saveAnswer(answer: Answer)
-    fun getQuestionAndAllAnswers():
-            LiveData<List<QuestionAndAllAnswers>>
+//    fun getQuestionAndAllAnswers():
+//            LiveData<List<QuestionAndAllAnswers>>
 
     suspend fun deleteQuestions()
 }
