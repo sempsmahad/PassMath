@@ -63,6 +63,12 @@ dependencies {
     testImplementation "androidx.room:room-testing:$versions.android_room"
     kapt "androidx.room:room-compiler:$versions.android_room"
 
+    // architecture components
+    implementation "androidx.arch.core:core-common:2.1.0"
+    implementation "androidx.lifecycle:lifecycle-common:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+
 
 
 }
