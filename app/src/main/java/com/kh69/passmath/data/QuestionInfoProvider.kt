@@ -1,29 +1,39 @@
 package com.kh69.passmath.data
 
+import android.util.Log
 import com.kh69.passmath.Answer
+import com.kh69.passmath.QuestionAdapter
+import com.kh69.passmath.Response
 import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.remote.APIUtils
 import com.raywenderlich.android.droidquiz.data.model.Answer
 import com.raywenderlich.android.droidquiz.data.model.Question
+import retrofit2.Call
+import retrofit2.Callback
 
 object QuestionInfoProvider {
 
     val questionList = initQuestionList()
-    val answerList = initAnswersList()
 
     private fun initQuestionList(): MutableList<Question> {
-        val questions = mutableListOf<Question>()
-        questions.add(
-            Question(
-                1,
-                "Which of the following languages is not commonly used to develop Android Apps"
-            )
-        )
-        questions.add(
-            Question(
-                2,
-                "What is the meaning of life?"
-            )
-        )
+        var questions = mutableListOf<Question>()
+
+        val call: Call<Response> = APIUtils.getQuestionService().questions
+        call.enqueue(object : Callback<Response> {
+            override fun onResponse(
+                call: Call<Response>,
+                response: retrofit2.Response<Response>
+            ) {
+                if (response.isSuccessful) {
+                    questions = response.body()!!.alldata
+                }
+            }
+
+            override fun onFailure(call: Call<Response>, t: Throwable) {
+                Log.e("ERROR: ", t.message!!)
+            }
+        })
+
         return questions
     }
 
