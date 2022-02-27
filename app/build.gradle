@@ -44,7 +44,8 @@ dependencies {
 
     /*katex math latex view*/
 //    implementation 'com.github.judemanutd:katexview:1.0.2'           // Katex - outsted halfbaked and buggy
-    implementation 'in.hourglass.mathrender:katexmathview:1.0.3'       // Katex fork 2 https://github.com/lingarajsankaravelu/Katex
+    implementation 'in.hourglass.mathrender:katexmathview:1.0.3'
+    // Katex fork 2 https://github.com/lingarajsankaravelu/Katex
 //    implementation 'com.github.gregcockroft:AndroidMath:v1.0.0'         // AndroidMath  https://github.com/gregcockroft/AndroidMath
 
     implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
@@ -68,7 +69,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common:2.4.1"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
-
 
 
 }
