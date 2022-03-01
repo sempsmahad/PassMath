@@ -18,6 +18,7 @@ import com.kh69.passmath.data.cache.QuestionRepository;
 import com.kh69.passmath.remote.APIUtils;
 import com.kh69.passmath.remote.QuestionService;
 import com.kh69.passmath.ui.QuestionListViewModel;
+import com.kh69.passmath.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class QuizListActivity extends AppCompatActivity {
     private QuestionAdapter       mQuestionAdapter;
     private QuestionRepository    mQuestionRepository;
     private QuestionListViewModel mQuestionListViewModel;
+    private MainViewModel         mMainViewModel;
+
 
     @Override
     protected void onStart() {
@@ -57,31 +60,36 @@ public class QuizListActivity extends AppCompatActivity {
 
     private void initComponent() {
         mQuestionListViewModel = new ViewModelProvider(this).get(QuestionListViewModel.class);
+        mMainViewModel         = new ViewModelProvider(this).get(MainViewModel.class);
         mQuestionService       = APIUtils.getQuestionService();
         rv_questions           = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
         getQuestionsList();
     }
+    private void populateQuestions(){
+        mMainViewModel.prepopulateQuestions();
+    }
 
     private void getQuestionsList() {
-        Call<com.kh69.passmath.Response> call = mQuestionService.getQuestions();
-        call.enqueue(new Callback<com.kh69.passmath.Response>() {
-
-            @Override
-            public void onResponse(Call<com.kh69.passmath.Response> call, Response<com.kh69.passmath.Response> response) {
-                if (response.isSuccessful()) {
-                    mQuestions       = response.body().getAlldata();
-                    mQuestionAdapter = new QuestionAdapter(mQuestions);
-                    rv_questions.setAdapter(mQuestionAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<com.kh69.passmath.Response> call, Throwable t) {
-                Log.e("ERROR: ", t.getMessage());
-            }
-        });
+        populateQuestions();
+//        Call<com.kh69.passmath.Response> call = mQuestionService.getQuestions();
+//        call.enqueue(new Callback<com.kh69.passmath.Response>() {
+//
+//            @Override
+//            public void onResponse(Call<com.kh69.passmath.Response> call, Response<com.kh69.passmath.Response> response) {
+//                if (response.isSuccessful()) {
+//                    mQuestions       = response.body().getAlldata();
+//                    mQuestionAdapter = new QuestionAdapter(mQuestions);
+//                    rv_questions.setAdapter(mQuestionAdapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<com.kh69.passmath.Response> call, Throwable t) {
+//                Log.e("ERROR: ", t.getMessage());
+//            }
+//        });
 
     }
 
