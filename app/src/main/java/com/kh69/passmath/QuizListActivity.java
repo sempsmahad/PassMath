@@ -19,6 +19,7 @@ import com.kh69.passmath.remote.APIUtils;
 import com.kh69.passmath.remote.QuestionService;
 import com.kh69.passmath.ui.QuestionListViewModel;
 import com.kh69.passmath.viewmodel.MainViewModel;
+import com.kh69.passmath.viewmodel.QuestionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class QuizListActivity extends AppCompatActivity {
     private QuestionRepository    mQuestionRepository;
     private QuestionListViewModel mQuestionListViewModel;
     private MainViewModel         mMainViewModel;
+    private QuestionsViewModel    mQuestionsViewModel;
 
 
     @Override
@@ -61,18 +63,27 @@ public class QuizListActivity extends AppCompatActivity {
     private void initComponent() {
         mQuestionListViewModel = new ViewModelProvider(this).get(QuestionListViewModel.class);
         mMainViewModel         = new ViewModelProvider(this).get(MainViewModel.class);
+        mQuestionsViewModel    = new ViewModelProvider(this).get(QuestionsViewModel.class);
         mQuestionService       = APIUtils.getQuestionService();
         rv_questions           = findViewById(R.id.rv_question_list);
         rv_questions.setLayoutManager(new LinearLayoutManager(this));
         rv_questions.setHasFixedSize(true);
         getQuestionsList();
     }
-    private void populateQuestions(){
+
+    private void populateQuestions() {
         mMainViewModel.prepopulateQuestions();
     }
 
     private void getQuestionsList() {
+//        mQuestionsViewModel.getCurrentState().observe(this) {
+//            render(it)
+//        }
+
         populateQuestions();
+        mQuestionAdapter = new QuestionAdapter(mQuestions);
+        rv_questions.setAdapter(mQuestionAdapter);
+
 //        Call<com.kh69.passmath.Response> call = mQuestionService.getQuestions();
 //        call.enqueue(new Callback<com.kh69.passmath.Response>() {
 //

@@ -15,9 +15,7 @@ class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
     private val currentQuestion = MutableLiveData<Int>()
     private var score: Int = 0
 
-
     fun getCurrentState(): LiveData<QuizState> = currentState
-
 
     private fun addStateSources() {
         currentState.addSource(currentQuestion)
@@ -45,5 +43,34 @@ class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
         }
     }
 
+    private fun addQuestionSources() {
+        questionAndAnswers.addSource(currentQuestion)
+        { currentQuestionNumber ->
+            val questions = allQuestionAndAllAnswers.value
+            if (questions != null && currentQuestionNumber <
+                questions.size
+            ) {
+                questionAndAnswers.postValue(questions[currentQuestionNumber])
+            }
+        }
+        questionAndAnswers.addSource(allQuestionAndAllAnswers)
+        { questionsAndAnswers ->
+            val currentQuestionNumber = currentQuestion.value
+            if (currentQuestionNumber != null &&
+                questionsAndAnswers.isNotEmpty()
+            ) {
+                questionAndAnswers.postValue(
+                    questionsAndAnswers[currentQuestionNumber]
+                )
+            }
+        }
+    }
+
+    init {
+        currentState.postValue(QuizState.LoadingState)
+        addStateSources()
+        addQuestionSources()
+        currentQuestion.postValue(0)
+    }
 
 }
