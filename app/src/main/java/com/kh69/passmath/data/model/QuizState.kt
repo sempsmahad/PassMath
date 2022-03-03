@@ -4,12 +4,11 @@ import com.kh69.passmath.data.cache.Question
 
 sealed class QuizState {
     object LoadingState : QuizState()
-    data class DataState(val data: Question) :
+    data class DataState(val data: List<Question>) :
         QuizState()
 
     object EmptyState : QuizState()
-    data class FinishState(
-        val numberOfQuestions: Int, val score:
-        Int
+    data class SelectedState(
+        val position: Int
     ) : QuizState()
 }

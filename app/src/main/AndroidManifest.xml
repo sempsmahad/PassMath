@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
 >
         <activity
-            android:name="com.kh69.passmath.QuizListActivity"
+            android:name="com.kh69.passmath.view.QuestionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

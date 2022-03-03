@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kh69.passmath.QuestionAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Repository
 import com.kh69.passmath.data.model.QuizState
@@ -27,6 +31,9 @@ class QuestionsActivity : AppCompatActivity() {
 
         binding = ActivityQuestionListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.rvQuestionList.layoutManager = LinearLayoutManager(this)
+        getQuestions()
     }
 
 
@@ -54,15 +61,11 @@ class QuestionsActivity : AppCompatActivity() {
     }
 
     private fun renderDataState(quizState: QuizState.DataState) {
+
         binding.progressBar.visibility = View.GONE
         displayQuestionsView()
-        binding.questionsRadioGroup.clearCheck()
-        binding.questionTextView.text = quizState.data.question?.text
-        binding.questionsRadioGroup.forEachIndexed { index, view ->
-            if (index < quizState.data.answers.size)
-                (view as RadioButton).text =
-                    quizState.data.answers[index].text
-        }
+        binding.rvQuestionList.adapter = QuestionAdapter(quizState.data)
+        Toast.makeText(this,""+quizState.data.size,Toast.LENGTH_SHORT).show()
     }
 
     private fun displayQuestionsView() {

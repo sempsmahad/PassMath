@@ -9,68 +9,39 @@ import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.data.model.QuizState
 
 class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
-    private val questionAndAnswers = MediatorLiveData<Question>()
-    private val allQuestionAndAllAnswers = repository.getSavedQuestions()
+    private val questionList = repository.getSavedQuestions()
+    private val selectedQuestion = MutableLiveData<Int>()
     private val currentState = MediatorLiveData<QuizState>()
-    private val currentQuestion = MutableLiveData<Int>()
-    private var score: Int = 0
 
     fun getCurrentState(): LiveData<QuizState> = currentState
 
+    private fun setSelectedQuestionTo(position: Int) {
+        selectedQuestion.postValue(position)
+    }
+
     private fun addStateSources() {
-        currentState.addSource(currentQuestion)
-        { currentQuestionNumber ->
-            if (currentQuestionNumber ==
-                allQuestionAndAllAnswers.value?.size
-            ) {
-                currentState.postValue(
-                    QuizState.FinishState(
-                        currentQuestionNumber, score
-                    )
-                )
-            }
+        currentState.addSource(selectedQuestion)
+        { currentQuestionPosition ->
+            currentState.postValue(QuizState.SelectedState(currentQuestionPosition))
         }
-        currentState.addSource(allQuestionAndAllAnswers)
-        { allQuestionsAndAnswers ->
-            if (allQuestionsAndAnswers.isEmpty()) {
+
+        currentState.addSource(questionList)
+        { questions ->
+            if (questions.isEmpty()) {
                 currentState.postValue(QuizState.EmptyState)
-            }
-        }
-
-        currentState.addSource(questionAndAnswers)
-        { questionAndAnswers ->
-            currentState.postValue(QuizState.DataState(questionAndAnswers))
-        }
-    }
-
-    private fun addQuestionSources() {
-        questionAndAnswers.addSource(currentQuestion)
-        { currentQuestionNumber ->
-            val questions = allQuestionAndAllAnswers.value
-            if (questions != null && currentQuestionNumber <
-                questions.size
-            ) {
-                questionAndAnswers.postValue(questions[currentQuestionNumber])
-            }
-        }
-        questionAndAnswers.addSource(allQuestionAndAllAnswers)
-        { questionsAndAnswers ->
-            val currentQuestionNumber = currentQuestion.value
-            if (currentQuestionNumber != null &&
-                questionsAndAnswers.isNotEmpty()
-            ) {
-                questionAndAnswers.postValue(
-                    questionsAndAnswers[currentQuestionNumber]
-                )
+            } else {
+                currentState.postValue(QuizState.DataState(questions))
             }
         }
     }
+    fun nextQuestion(position: Int) {
+        setSelectedQuestionTo(position)
+    }
+
 
     init {
         currentState.postValue(QuizState.LoadingState)
         addStateSources()
-        addQuestionSources()
-        currentQuestion.postValue(0)
     }
 
 }

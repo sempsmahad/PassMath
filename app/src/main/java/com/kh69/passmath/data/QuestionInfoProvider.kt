@@ -1,6 +1,9 @@
 package com.kh69.passmath.data
 
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
 import com.kh69.passmath.Response
 import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.remote.APIUtils
@@ -9,9 +12,15 @@ import retrofit2.Callback
 
 object QuestionInfoProvider {
 
-    val questionList = initQuestionList()
+//    val questionList = initQuestionList()
+    var questionList = mutableListOf<Question>()
 
-    private fun initQuestionList(): MutableList<Question> {
+    init {
+        initQuestionList()
+    }
+
+
+    fun initQuestionList(){
         var questions = mutableListOf<Question>()
 
         val call: Call<Response> = APIUtils.getQuestionService().questions
@@ -22,6 +31,9 @@ object QuestionInfoProvider {
             ) {
                 if (response.isSuccessful) {
                     questions = response.body()!!.alldata
+                    questionList = questions
+                    Log.e("ERROR: ", ""+ questionList.size)
+
                 }
             }
 
@@ -29,8 +41,6 @@ object QuestionInfoProvider {
                 Log.e("ERROR: ", t.message!!)
             }
         })
-
-        return questions
     }
 
 }
