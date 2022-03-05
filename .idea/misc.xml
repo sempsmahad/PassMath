@@ -18,8 +18,13 @@
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable-v24/ic_receipt.xml" value="0.156" />
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable-v24/ic_swap_horiz.xml" value="0.156" />
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable-v24/shape_circle_outline_2dp.xml" value="0.156" />
+        <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable/ic_chat.xml" value="0.156" />
+        <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable/ic_data_usage.xml" value="0.156" />
+        <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable/ic_home.xml" value="0.156" />
+        <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/drawable/ic_search.xml" value="0.156" />
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/layout/activity_dashboard_finance.xml" value="0.25" />
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/layout/activity_question_list.xml" value="0.3625" />
+        <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/menu/menu_search_setting.xml" value="0.25" />
       </map>
     </option>
   </component>

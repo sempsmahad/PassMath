@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.tabs.TabLayout;
-import com.material.components.R;
-import com.material.components.utils.Tools;
+import com.kh69.passmath.R;
+import com.kh69.passmath.Tools2;
 
 public class DashboardFinance extends AppCompatActivity {
 
@@ -58,8 +58,8 @@ public class DashboardFinance extends AppCompatActivity {
             }
         });
 
-        Tools.setSystemBarColor(this, R.color.grey_5);
-        Tools.setSystemBarLight(this);
+        Tools2.setSystemBarColor(this, R.color.grey_5);
+        Tools2.setSystemBarLight(this);
     }
 
     private void onTabClicked(TabLayout.Tab tab){
@@ -83,7 +83,7 @@ public class DashboardFinance extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search_setting, menu);
-        Tools.changeMenuIconColor(menu, getResources().getColor(R.color.grey_60));
+        Tools2.changeMenuIconColor(menu, getResources().getColor(R.color.grey_60));
         return true;
     }
 

@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
 >
+        <activity android:name=".view.QuestionsActivity"/>
         <activity
-            android:name="com.kh69.passmath.view.QuestionsActivity"
+            android:name=".ui.DashboardFinance"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
