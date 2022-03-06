@@ -1,22 +1,29 @@
 package com.kh69.passmath.ui;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kh69.passmath.R;
 import com.kh69.passmath.Tools2;
+import com.kh69.passmath.view.QuestionsActivity;
 
 public class DashboardFinance extends AppCompatActivity {
 
-    private TabLayout tab_layout;
+    private TabLayout        tab_layout;
     private NestedScrollView nested_scroll_view;
+    private LinearLayout     card_form_6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +34,12 @@ public class DashboardFinance extends AppCompatActivity {
 
     private void initComponent() {
         nested_scroll_view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
-        tab_layout = (TabLayout) findViewById(R.id.tab_layout);
+        tab_layout         = (TabLayout) findViewById(R.id.tab_layout);
+        card_form_6        = findViewById(R.id.card_form_6);
+
+        card_form_6.setOnClickListener(view -> {
+            startActivity(new Intent(DashboardFinance.this, QuestionsActivity.class));
+        });
 
         tab_layout.addTab(tab_layout.newTab().setIcon(R.drawable.ic_home), 0);
         tab_layout.addTab(tab_layout.newTab().setIcon(R.drawable.ic_data_usage), 1);
@@ -62,7 +74,7 @@ public class DashboardFinance extends AppCompatActivity {
         Tools2.setSystemBarLight(this);
     }
 
-    private void onTabClicked(TabLayout.Tab tab){
+    private void onTabClicked(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
             case 0:
                 Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
