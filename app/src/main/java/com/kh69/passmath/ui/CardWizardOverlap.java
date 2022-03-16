@@ -15,29 +15,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.material.components.R;
-import com.material.components.utils.Tools;
+import com.kh69.passmath.R;
+import com.kh69.passmath.Tools;
+import com.kh69.passmath.Tools2;
+
 
 public class CardWizardOverlap extends AppCompatActivity {
 
     private static final int MAX_STEP = 4;
 
-    private ViewPager viewPager;
-    private Button btnNext;
+    private ViewPager          viewPager;
+    private Button             btnNext;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private String about_title_array[] = {
+    private String             about_title_array[]       = {
             "Ready to Travel",
             "Pick the Ticket",
             "Flight to Destination",
             "Enjoy Holiday"
     };
-    private String about_description_array[] = {
+    private String             about_description_array[] = {
             "Choose your destination, plan Your trip. Pick the best place for Your holiday",
             "Select the day, pick Your ticket. We give you the best prices. We guarantee!",
             "Safe and Comfort flight is our priority. Professional crew and services.",
             "Enjoy your holiday, Don't forget to feel the moment and take a photo!",
     };
-    private int about_images_array[] = {
+    private int                about_images_array[]      = {
             R.drawable.img_wizard_1,
             R.drawable.img_wizard_2,
             R.drawable.img_wizard_3,
@@ -50,7 +52,7 @@ public class CardWizardOverlap extends AppCompatActivity {
         setContentView(R.layout.activity_card_wizard_overlap);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        btnNext   = (Button) findViewById(R.id.btn_next);
 
         // adding bottom dots
         bottomProgressDots(0);
@@ -96,20 +98,20 @@ public class CardWizardOverlap extends AppCompatActivity {
             }
         });
 
-        Tools.setSystemBarColor(this, R.color.grey_10);
-        Tools.setSystemBarLight(this);
+        Tools2.setSystemBarColor(this, R.color.grey_10);
+        Tools2.setSystemBarLight(this);
     }
 
 
     private void bottomProgressDots(int current_index) {
         LinearLayout dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        ImageView[] dots = new ImageView[MAX_STEP];
+        ImageView[]  dots       = new ImageView[MAX_STEP];
 
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new ImageView(this);
-            int width_height = 15;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width_height, width_height));
+            int                       width_height = 15;
+            LinearLayout.LayoutParams params       = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width_height, width_height));
             params.setMargins(10, 10, 10, 10);
             dots[i].setLayoutParams(params);
             dots[i].setImageResource(R.drawable.shape_circle);
