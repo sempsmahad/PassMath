@@ -20,10 +20,10 @@ class QuestionAdapter(private val mList: List<Question>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val ItemsViewModel = mList[position]
+        val itemsViewModel = mList[position]
 
-        holder.kv_question.setDisplayText(ItemsViewModel.katex_question)
-        holder.kv_answer.setDisplayText(ItemsViewModel.katex_answer)
+        holder.kv_question.setDisplayText(itemsViewModel.katex_question)
+        holder.kv_answer.setDisplayText(itemsViewModel.katex_answer)
         holder.btn_show.setOnClickListener {
             if (holder.kv_answer.visibility == GONE) holder.kv_answer.visibility =
                 VISIBLE else holder.kv_answer.visibility =
@@ -43,6 +43,14 @@ class QuestionAdapter(private val mList: List<Question>) : RecyclerView.Adapter<
         val kv_answer: MathView = itemView.findViewById(R.id.kv_answer)
         val btn_show: View = itemView.findViewById(R.id.btn_show)
 
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }
 

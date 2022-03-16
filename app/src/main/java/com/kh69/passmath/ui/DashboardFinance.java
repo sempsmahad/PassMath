@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.tabs.TabLayout;
