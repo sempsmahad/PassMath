@@ -18,6 +18,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.kh69.passmath.R;
 import com.kh69.passmath.Tools;
 import com.kh69.passmath.Tools2;
+import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.model.QuizState;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import katex.hourglass.in.mathlib.MathView;
 
 
 public class CardWizardOverlap extends AppCompatActivity {
@@ -51,8 +58,8 @@ public class CardWizardOverlap extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_wizard_overlap);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        btnNext   = (Button) findViewById(R.id.btn_next);
+        viewPager = findViewById(R.id.view_pager);
+        btnNext   = findViewById(R.id.btn_next);
 
         // adding bottom dots
         bottomProgressDots(0);
@@ -63,7 +70,7 @@ public class CardWizardOverlap extends AppCompatActivity {
 
         viewPager.setClipToPadding(false);
         viewPager.setPadding(0, 0, 0, 0);
-        viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin_overlap));
+//        viewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin_overlap));
         viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -85,16 +92,13 @@ public class CardWizardOverlap extends AppCompatActivity {
         });
 
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int current = viewPager.getCurrentItem() + 1;
-                if (current < MAX_STEP) {
-                    // move to next screen
-                    viewPager.setCurrentItem(current);
-                } else {
-                    finish();
-                }
+        btnNext.setOnClickListener(v -> {
+            int current = viewPager.getCurrentItem() + 1;
+            if (current < MAX_STEP) {
+                // move to next screen
+                viewPager.setCurrentItem(current);
+            } else {
+                finish();
             }
         });
 
@@ -102,9 +106,15 @@ public class CardWizardOverlap extends AppCompatActivity {
         Tools2.setSystemBarLight(this);
     }
 
+    private void renderDataState(QuizState.DataState quizState) {
+        viewPager.setAdapter(new MyViewPagerAdapter(new ArrayList<>(quizState.getData())));
+//        displayQuestionsView()
+//        binding.rvQuestionList.adapter = QuestionAdapter(quizState.data)
+//        Toast.makeText(this,""+quizState.data.size,Toast.LENGTH_SHORT).show()
+    }
 
     private void bottomProgressDots(int current_index) {
-        LinearLayout dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        LinearLayout dotsLayout = findViewById(R.id.layoutDots);
         ImageView[]  dots       = new ImageView[MAX_STEP];
 
         dotsLayout.removeAllViews();
@@ -149,18 +159,24 @@ public class CardWizardOverlap extends AppCompatActivity {
      */
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
+        private List<Question> mQuestions = new ArrayList<>();
 
         public MyViewPagerAdapter() {
         }
 
+        public MyViewPagerAdapter(ArrayList<Question> questions) {
+            mQuestions = questions;
+        }
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            Question question = mQuestions.get(position);
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = layoutInflater.inflate(R.layout.item_card_wizard, container, false);
+            View view = layoutInflater.inflate(R.layout.item_card_question, container, false);
+            ((MathView) view.findViewById(R.id.kv_question)).setDisplayText(question.getKatex_question());
             ((TextView) view.findViewById(R.id.title)).setText(about_title_array[position]);
             ((TextView) view.findViewById(R.id.description)).setText(about_description_array[position]);
-            ((ImageView) view.findViewById(R.id.image)).setImageResource(about_images_array[position]);
 
             container.addView(view);
             return view;

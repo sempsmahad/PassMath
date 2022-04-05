@@ -16,6 +16,8 @@
         android:theme="@style/AppTheme"
 >
         <activity android:name=".view.QuestionsActivity"/>
+        <activity android:name=".ui.QuestionCards"/>
+        <activity android:name=".ui.CardWizardOverlap"/>
         <activity
             android:name=".ui.DashboardFinance"
             android:exported="true">

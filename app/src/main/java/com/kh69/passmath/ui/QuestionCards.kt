@@ -1,43 +1,34 @@
-package com.kh69.passmath.view
+package com.kh69.passmath.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
-import android.widget.RadioButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.kh69.passmath.QuestionAdapter
+import com.kh69.passmath.MyViewPagerAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Repository
+import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.data.model.QuizState
-import com.kh69.passmath.databinding.ActivityQuestionListBinding
+import com.kh69.passmath.databinding.ActivityCardWizardOverlapBinding
 import com.kh69.passmath.getViewModel
 import com.kh69.passmath.viewmodel.MainViewModel
 import com.kh69.passmath.viewmodel.QuestionsViewModel
 
-
-class QuestionsActivity : AppCompatActivity() {
-
+class QuestionCards:AppCompatActivity() {
+    private lateinit var binding: ActivityCardWizardOverlapBinding
     private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
     private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }
 
-    private lateinit var binding: ActivityQuestionListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_question_list)
+        setContentView(R.layout.activity_card_wizard_overlap)
 
-        binding = ActivityQuestionListBinding.inflate(layoutInflater)
+        binding = ActivityCardWizardOverlapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvQuestionList.layoutManager = LinearLayoutManager(this)
         getQuestions()
     }
-
-
     private fun prepopulateQuestions() = viewModel.prepopulateQuestions()
+
 
     private fun getQuestions() {
         prepopulateQuestions()
@@ -45,9 +36,7 @@ class QuestionsActivity : AppCompatActivity() {
         {
             render(it)
         }
-
     }
-
     private fun render(state: QuizState) {
         when (state) {
 //            is QuizState.EmptyState   -> renderEmptyState()
@@ -57,22 +46,10 @@ class QuestionsActivity : AppCompatActivity() {
     }
 
     private fun renderLoadingState() {
-        binding.progressBar.visibility = View.VISIBLE
+
     }
 
     private fun renderDataState(quizState: QuizState.DataState) {
-
-        binding.progressBar.visibility = View.GONE
-        displayQuestionsView()
-        binding.rvQuestionList.adapter = QuestionAdapter(quizState.data)
-//        Toast.makeText(this,""+quizState.data.size,Toast.LENGTH_SHORT).show()
+        binding.viewPager.adapter = MyViewPagerAdapter(quizState.data as ArrayList<Question>,this)
     }
-
-    private fun displayQuestionsView() {
-        binding.postsTopBar.visibility = View.VISIBLE
-        binding.rvQuestionList.visibility = View.VISIBLE
-
-    }
-
-
 }

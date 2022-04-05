@@ -32,12 +32,12 @@ public class DashboardFinance extends AppCompatActivity {
     }
 
     private void initComponent() {
-        nested_scroll_view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
-        tab_layout         = (TabLayout) findViewById(R.id.tab_layout);
+        nested_scroll_view = findViewById(R.id.nested_scroll_view);
+        tab_layout         = findViewById(R.id.tab_layout);
         card_form_6        = findViewById(R.id.card_form_6);
 
         card_form_6.setOnClickListener(view -> {
-            startActivity(new Intent(DashboardFinance.this, QuestionsActivity.class));
+            startActivity(new Intent(DashboardFinance.this, QuestionCards.class));
         });
 
         tab_layout.addTab(tab_layout.newTab().setIcon(R.drawable.ic_home), 0);
