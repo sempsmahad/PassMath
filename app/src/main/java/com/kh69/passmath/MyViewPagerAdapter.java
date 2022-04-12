@@ -39,8 +39,6 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
         View view = layoutInflater.inflate(R.layout.item_card_question, container, false);
         ((MathView) view.findViewById(R.id.kv_question)).setDisplayText(question.getKatex_question());
-        ((TextView) view.findViewById(R.id.title)).setText("Ready to Travel");
-        ((TextView) view.findViewById(R.id.description)).setText("Find Featured and Premium \\nItem From Our Store");
 
         container.addView(view);
         return view;
