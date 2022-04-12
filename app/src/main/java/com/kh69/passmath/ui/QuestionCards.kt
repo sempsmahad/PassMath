@@ -12,10 +12,12 @@ import com.kh69.passmath.getViewModel
 import com.kh69.passmath.viewmodel.MainViewModel
 import com.kh69.passmath.viewmodel.QuestionsViewModel
 
-class QuestionCards:AppCompatActivity() {
+class QuestionCards : AppCompatActivity() {
+
     private lateinit var binding: ActivityCardWizardOverlapBinding
     private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
     private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }
+    private val MAX_QUESTIONS = 8
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +27,23 @@ class QuestionCards:AppCompatActivity() {
         binding = ActivityCardWizardOverlapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpViews()
+
         getQuestions()
     }
+
+    private fun setUpViews() {
+        binding.btnNext.setOnClickListener {
+            val current = binding.viewPager.currentItem + 1
+            if (current < MAX_QUESTIONS) {
+                binding.viewPager.currentItem = current
+            } else {
+                finish()
+            }
+
+        }
+    }
+
     private fun prepopulateQuestions() = viewModel.prepopulateQuestions()
 
 
@@ -37,6 +54,7 @@ class QuestionCards:AppCompatActivity() {
             render(it)
         }
     }
+
     private fun render(state: QuizState) {
         when (state) {
 //            is QuizState.EmptyState   -> renderEmptyState()
@@ -50,6 +68,6 @@ class QuestionCards:AppCompatActivity() {
     }
 
     private fun renderDataState(quizState: QuizState.DataState) {
-        binding.viewPager.adapter = MyViewPagerAdapter(quizState.data as ArrayList<Question>,this)
+        binding.viewPager.adapter = MyViewPagerAdapter(quizState.data as ArrayList<Question>, this)
     }
 }
