@@ -19,10 +19,13 @@ import com.kh69.passmath.viewmodel.QuestionsViewModel
 
 class QuestionCards : AppCompatActivity() {
 
+    companion object {
+        const val MAX_QUESTIONS = 8
+    }
+
     private lateinit var binding: ActivityCardWizardOverlapBinding
     private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
     private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }
-    private val MAX_QUESTIONS = 8
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

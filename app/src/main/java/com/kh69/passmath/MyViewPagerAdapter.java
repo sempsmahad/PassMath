@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.ui.QuestionCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mQuestions.size();
+        return QuestionCards.MAX_QUESTIONS;
     }
 
     @Override
