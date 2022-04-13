@@ -1,7 +1,12 @@
 package com.kh69.passmath.ui
 
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.kh69.passmath.MyViewPagerAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Repository
@@ -33,6 +38,7 @@ class QuestionCards : AppCompatActivity() {
     }
 
     private fun setUpViews() {
+        bottomProgressDots(0)
         binding.btnNext.setOnClickListener {
             val current = binding.viewPager.currentItem + 1
             if (current < MAX_QUESTIONS) {
@@ -41,6 +47,46 @@ class QuestionCards : AppCompatActivity() {
                 finish()
             }
 
+        }
+        binding.viewPager.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                bottomProgressDots(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+        })
+    }
+
+    private fun bottomProgressDots(current_index: Int) {
+        val dots = arrayOfNulls<ImageView>(MAX_QUESTIONS)
+        binding.layoutDots.removeAllViews()
+
+        for (i in dots.indices) {
+            dots[i] = ImageView(this)
+            val width_height = 15
+            val params =
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams(width_height, width_height))
+            params.setMargins(10, 10, 10, 10)
+            dots[i]!!.layoutParams = params
+            dots[i]!!.setImageResource(R.drawable.shape_circle)
+            dots[i]!!.setColorFilter(resources.getColor(R.color.grey_20), PorterDuff.Mode.SRC_IN)
+            binding.layoutDots.addView(dots[i])
+        }
+        if (dots.isNotEmpty()) {
+            dots[current_index]!!.setImageResource(R.drawable.shape_circle)
+            dots[current_index]!!.setColorFilter(
+                resources.getColor(R.color.light_green_600),
+                PorterDuff.Mode.SRC_IN
+            );
         }
     }
 
@@ -58,7 +104,7 @@ class QuestionCards : AppCompatActivity() {
     private fun render(state: QuizState) {
         when (state) {
 //            is QuizState.EmptyState   -> renderEmptyState()
-            is QuizState.DataState    -> renderDataState(state)
+            is QuizState.DataState -> renderDataState(state)
             is QuizState.LoadingState -> renderLoadingState()
         }
     }
