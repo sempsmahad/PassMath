@@ -25,6 +25,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        applicationVariants.all { variant ->
+            if (applicationId.endsWith("debug")) {
+                mergedFlavor.manifestPlaceholders = [app_debug_label: "PassMath debug"]
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

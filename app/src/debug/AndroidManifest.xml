@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.kh69.passmath"
+    android:installLocation="auto">
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_debug"
+        android:label="${app_debug_label}"
+        android:roundIcon="@drawable/ic_debug"
+        tools:replace="android:icon,android:roundIcon,android:label,android:name">
+
+        <activity android:name=".ui.DashboardFinance" />
+
+    </application>
+</manifest>
