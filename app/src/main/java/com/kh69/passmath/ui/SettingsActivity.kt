@@ -1,6 +1,5 @@
 package com.kh69.passmath.ui
 
-import android.R
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,7 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.kh69.passmath.Tools
+import com.kh69.passmath.R
+import com.kh69.passmath.Tools2
+
 
 class SettingsActivity: AppCompatActivity() {
 
@@ -22,9 +23,9 @@ class SettingsActivity: AppCompatActivity() {
     private fun initToolbar() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar!!.setTitle("Device Setting")
+        supportActionBar!!.title = "Settings"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        Tools.setSystemBarColor(this)
+        Tools2.setSystemBarColor(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
