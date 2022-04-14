@@ -19,7 +19,6 @@ class SettingsActivity: AppCompatActivity() {
         initToolbar()
     }
 
-
     private fun initToolbar() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)

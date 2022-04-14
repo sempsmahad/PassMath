@@ -40,6 +40,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
         View view = layoutInflater.inflate(R.layout.item_card_question, container, false);
         ((MathView) view.findViewById(R.id.kv_question)).setDisplayText(question.getKatex_question());
+        ((MathView) view.findViewById(R.id.kv_answer)).setDisplayText(question.getKatex_answer());
 
         container.addView(view);
         return view;
