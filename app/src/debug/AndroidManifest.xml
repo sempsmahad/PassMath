@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/ic_debug"
         tools:replace="android:icon,android:roundIcon,android:label,android:name">
 
-        <activity android:name=".ui.DashboardFinance" />
+        <activity android:name=".ui.DashboardActivity" />
 
     </application>
 </manifest>
