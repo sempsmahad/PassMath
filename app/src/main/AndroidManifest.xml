@@ -19,7 +19,7 @@
         <activity android:name=".ui.QuestionCards"/>
         <activity android:name=".ui.CardWizardOverlap"/>
         <activity
-            android:name=".ui.DashboardFinance"
+            android:name=".ui.DashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.SettingsActivity"/>
     </application>
 
 </manifest>
