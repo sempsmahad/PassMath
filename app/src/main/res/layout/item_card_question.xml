@@ -48,13 +48,29 @@
                     android:textColor="@color/grey_1000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
-                <katex.hourglass.in.mathlib.MathView
-                    android:id="@+id/kv_answer"
+                <com.kh69.passmath.ui.customviews.blur.BlurLayout
+                    android:id="@+id/ll_blurView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="@dimen/spacing_large"
                     android:layout_weight="1"
+                    android:layout_margin="@dimen/spacing_large"
+                    android:layout_gravity="bottom">
+
+                    <katex.hourglass.in.mathlib.MathView
+                        android:id="@+id/kv_answer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/spacing_small"
+                        app:setTextColor="@color/grey_95" />
+                </com.kh69.passmath.ui.customviews.blur.BlurLayout>
+
+                <katex.hourglass.in.mathlib.MathView
+                    android:id="@+id/kv_answer2"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/spacing_large"
                     app:setTextColor="@color/grey_95" />
 
                 <ImageView
