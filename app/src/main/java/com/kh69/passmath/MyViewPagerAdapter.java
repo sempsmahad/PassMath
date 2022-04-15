@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.kh69.passmath.ui.QuestionCards;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.blurry.Blurry;
 import katex.hourglass.in.mathlib.MathView;
 
 public class MyViewPagerAdapter extends PagerAdapter {
@@ -40,6 +42,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
         View view = layoutInflater.inflate(R.layout.item_card_question, container, false);
         ((MathView) view.findViewById(R.id.kv_question)).setDisplayText(question.getKatex_question());
+        Blurry.with(mContext).radius(25).sampling(2).onto(view.findViewById(R.id.llll));
         ((MathView) view.findViewById(R.id.kv_answer)).setDisplayText(question.getKatex_answer());
 
         container.addView(view);
