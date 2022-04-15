@@ -1,14 +1,14 @@
 package com.kh69.passmath;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.kh69.passmath.data.cache.Question;
@@ -17,17 +17,13 @@ import com.kh69.passmath.ui.QuestionCards;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.blurry.Blurry;
 import katex.hourglass.in.mathlib.MathView;
 
 public class MyViewPagerAdapter extends PagerAdapter {
 
     private LayoutInflater layoutInflater;
-    private List<Question> mQuestions = new ArrayList<>();
+    private List<Question> mQuestions;
     Context mContext;
-
-    public MyViewPagerAdapter() {
-    }
 
     public MyViewPagerAdapter(ArrayList<Question> questions, Context context) {
         mQuestions = questions;
@@ -40,22 +36,51 @@ public class MyViewPagerAdapter extends PagerAdapter {
         Question question = mQuestions.get(position);
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View     view         = layoutInflater.inflate(R.layout.item_card_question, container, false);
-        MathView questionView = ((MathView) view.findViewById(R.id.kv_question));
-        MathView answerView   = ((MathView) view.findViewById(R.id.kv_answer));
-        removeZoomControls(questionView);
-        removeZoomControls(answerView);
-        questionView.setDisplayText(question.getKatex_question());
-        Blurry.with(mContext).radius(25).sampling(2).onto(view.findViewById(R.id.llll));
-        ((MathView) view.findViewById(R.id.kv_answer)).setDisplayText(question.getKatex_answer());
+        View            view             = layoutInflater.inflate(R.layout.item_card_question, container, false);
+        MathView        questionView     = ((MathView) view.findViewById(R.id.kv_question));
+        MathView        answerView       = ((MathView) view.findViewById(R.id.kv_answer));
+        ImageButton     showAnswerButton = ((ImageButton) view.findViewById(R.id.show_answer));
+        ImageView       blurryImageView  = ((ImageView) view.findViewById(R.id.image_to_blur));
+        final boolean[] answerIsVisible  = {false};
 
+        removeZoomControls(new MathView[]{questionView, answerView});
+        questionView.setDisplayText(question.getKatex_question());
+        answerView.setDisplayText(question.getKatex_answer());
+
+        showAnswerButton.setOnClickListener(view1 -> {
+            answerIsVisible[0] = !answerIsVisible[0];
+            toggleAnswerVisibility(new View[]{blurryImageView, answerView}, answerIsVisible[0], showAnswerButton);
+        });
         container.addView(view);
         return view;
     }
 
-    private void removeZoomControls(MathView mathView) {
-        mathView.getSettings().setBuiltInZoomControls(true);
-        mathView.getSettings().setDisplayZoomControls(false);
+    private void toggleAnswerVisibility(View[] views, boolean ansVisible, ImageButton showAnswerBtn) {
+        if (ansVisible) {
+            showAnswerBtn.setColorFilter(
+                    mContext.getResources().getColor(R.color.light_green_600),
+                    PorterDuff.Mode.SRC_IN
+            );
+        } else {
+            showAnswerBtn.setColorFilter(
+                    mContext.getResources().getColor(R.color.grey_20),
+                    PorterDuff.Mode.SRC_IN
+            );
+        }
+        for (View view : views) {
+            if (view.getVisibility() == View.VISIBLE) {
+                view.setVisibility(View.GONE);
+            } else {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void removeZoomControls(MathView[] mathViews) {
+        for (MathView mathView : mathViews) {
+            mathView.getSettings().setBuiltInZoomControls(true);
+            mathView.getSettings().setDisplayZoomControls(false);
+        }
     }
 
     @Override

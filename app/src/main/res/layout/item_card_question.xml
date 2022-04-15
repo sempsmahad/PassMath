@@ -20,7 +20,6 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/llll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -63,9 +62,11 @@
                     android:id="@+id/image_to_blur"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/spacing_large"
-                    android:layout_height="150dp"
+                    android:layout_height="0dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/image_7" />
+                    android:src="@drawable/blur_answer"
+                    android:layout_weight="1"
+                    />
 
                 <ImageView
                     android:id="@+id/image"
@@ -91,7 +92,7 @@
                         android:layout_height="?attr/actionBarSize"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/ic_show_answer"
-                        app:tint="@color/grey_60" />
+                        app:tint="@color/grey_20" />
 
                     <ImageButton
                         android:id="@+id/share"
