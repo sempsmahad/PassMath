@@ -29,10 +29,43 @@
                 <katex.hourglass.in.mathlib.MathView
                     android:id="@+id/kv_question"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_large"
-                    app:setTextColor="@color/grey_95"
+                    app:setTextColor="@color/grey_95" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:fontFamily="monospace"
+                    android:text="Solution"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey_1000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <katex.hourglass.in.mathlib.MathView
+                    android:id="@+id/kv_answer"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/spacing_large"
+                    app:setTextColor="@color/grey_95" />
+
+                <ImageView
+                    android:id="@+id/image_to_blur"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/spacing_large"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/blur_answer"
+                    android:layout_weight="1"
                     />
 
                 <ImageView
@@ -44,9 +77,10 @@
                     android:layout_marginRight="@dimen/spacing_xlarge"
                     android:layout_weight="1"
                     android:padding="@dimen/spacing_xlarge"
-                    android:visibility="gone"
                     android:src="@drawable/img_wizard_1"
+                    android:visibility="gone"
                     app:tint="@color/light_green_600" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
@@ -58,7 +92,7 @@
                         android:layout_height="?attr/actionBarSize"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         app:srcCompat="@drawable/ic_show_answer"
-                        app:tint="@color/grey_60" />
+                        app:tint="@color/grey_20" />
 
                     <ImageButton
                         android:id="@+id/share"
