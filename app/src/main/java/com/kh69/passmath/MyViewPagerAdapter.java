@@ -31,7 +31,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
     public MyViewPagerAdapter(ArrayList<Question> questions, Context context) {
         mQuestions = questions;
-        mContext = context;
+        mContext   = context;
     }
 
     @NonNull
@@ -40,13 +40,22 @@ public class MyViewPagerAdapter extends PagerAdapter {
         Question question = mQuestions.get(position);
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = layoutInflater.inflate(R.layout.item_card_question, container, false);
-        ((MathView) view.findViewById(R.id.kv_question)).setDisplayText(question.getKatex_question());
+        View     view         = layoutInflater.inflate(R.layout.item_card_question, container, false);
+        MathView questionView = ((MathView) view.findViewById(R.id.kv_question));
+        MathView answerView   = ((MathView) view.findViewById(R.id.kv_answer));
+        removeZoomControls(questionView);
+        removeZoomControls(answerView);
+        questionView.setDisplayText(question.getKatex_question());
         Blurry.with(mContext).radius(25).sampling(2).onto(view.findViewById(R.id.llll));
         ((MathView) view.findViewById(R.id.kv_answer)).setDisplayText(question.getKatex_answer());
 
         container.addView(view);
         return view;
+    }
+
+    private void removeZoomControls(MathView mathView) {
+        mathView.getSettings().setBuiltInZoomControls(true);
+        mathView.getSettings().setDisplayZoomControls(false);
     }
 
     @Override
