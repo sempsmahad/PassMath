@@ -36,6 +36,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
         Question question = mQuestions.get(position);
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+
         View            view             = layoutInflater.inflate(R.layout.item_card_question, container, false);
         MathView        questionView     = ((MathView) view.findViewById(R.id.kv_question));
         MathView        answerView       = ((MathView) view.findViewById(R.id.kv_answer));
@@ -51,9 +52,11 @@ public class MyViewPagerAdapter extends PagerAdapter {
             answerIsVisible[0] = !answerIsVisible[0];
             toggleAnswerVisibility(new View[]{blurryImageView, answerView}, answerIsVisible[0], showAnswerButton);
         });
+
         container.addView(view);
         return view;
     }
+
 
     private void toggleAnswerVisibility(View[] views, boolean ansVisible, ImageButton showAnswerBtn) {
         if (ansVisible) {
@@ -81,6 +84,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
             mathView.getSettings().setBuiltInZoomControls(true);
             mathView.getSettings().setDisplayZoomControls(false);
         }
+
     }
 
     @Override
