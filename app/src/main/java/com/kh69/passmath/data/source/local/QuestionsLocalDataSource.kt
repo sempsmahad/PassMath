@@ -18,11 +18,13 @@ package com.kh69.passmath.data.source.local
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.kh69.passmath.data.Question
-
 import com.kh69.passmath.data.source.QuestionsDataSource
+import com.kh69.passmath.data.Result
+import com.kh69.passmath.data.Result.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 
 /**
  * Concrete implementation of a data source as a db.
@@ -60,42 +62,24 @@ class QuestionsLocalDataSource internal constructor(
         }
     }
 
-    override suspend fun getQuestion(questionId: String): Result<Question> = withContext(ioDispatcher) {
-        try {
-            val question = questionsDao.getQuestionById(questionId)
-            if (question != null) {
-                return@withContext Success(question)
-            } else {
-                return@withContext Error(Exception("Question not found!"))
+    override suspend fun getQuestion(questionId: String): Result<Question> =
+        withContext(ioDispatcher) {
+            try {
+                val question = questionsDao.getQuestionById(questionId)
+                if (question != null) {
+                    return@withContext Success(question)
+                } else {
+                    return@withContext Error(Exception("Question not found!"))
+                }
+            } catch (e: Exception) {
+                return@withContext Error(e)
             }
-        } catch (e: Exception) {
-            return@withContext Error(e)
         }
-    }
 
     override suspend fun saveQuestion(question: Question) = withContext(ioDispatcher) {
         questionsDao.insertQuestion(question)
     }
 
-    override suspend fun completeQuestion(question: Question) = withContext(ioDispatcher) {
-        questionsDao.updateCompleted(question.questionId, true)
-    }
-
-    override suspend fun completeQuestion(questionId: String) {
-        questionsDao.updateCompleted(questionId, true)
-    }
-
-    override suspend fun activateQuestion(question: Question) = withContext(ioDispatcher) {
-        questionsDao.updateCompleted(question.questionId, false)
-    }
-
-    override suspend fun activateQuestion(questionId: String) {
-        questionsDao.updateCompleted(questionId, false)
-    }
-
-    override suspend fun clearCompletedQuestions() = withContext<Unit>(ioDispatcher) {
-        questionsDao.deleteCompletedQuestions()
-    }
 
     override suspend fun deleteAllQuestions() = withContext(ioDispatcher) {
         questionsDao.deleteQuestions()
