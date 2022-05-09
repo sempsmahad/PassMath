@@ -22,6 +22,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.kh69.passmath.data.Result
+import com.kh69.passmath.data.Result.*
+import com.kh69.passmath.util.wrapEspressoIdlingResource
 
 /**
  * Default implementation of [QuestionsRepository]. Single entry point for managing questions' data.
@@ -40,7 +43,7 @@ class DefaultQuestionsRepository(
                 try {
                     updateQuestionsFromRemoteDataSource()
                 } catch (ex: Exception) {
-                    return Result.Error(ex)
+                    return Error(ex)
                 }
             }
             return questionsLocalDataSource.getQuestions()
@@ -68,7 +71,7 @@ class DefaultQuestionsRepository(
             remoteQuestions.data.forEach { question ->
                 questionsLocalDataSource.saveQuestion(question)
             }
-        } else if (remoteQuestions is Result.Error) {
+        } else if (remoteQuestions is Error) {
             throw remoteQuestions.exception
         }
     }
@@ -105,42 +108,6 @@ class DefaultQuestionsRepository(
         }
     }
 
-    override suspend fun completeQuestion(question: Question) {
-        coroutineScope {
-            launch { questionsRemoteDataSource.completeQuestion(question) }
-            launch { questionsLocalDataSource.completeQuestion(question) }
-        }
-    }
-
-    override suspend fun completeQuestion(questionId: String) {
-        withContext(ioDispatcher) {
-            (getQuestionWithId(questionId) as? Success)?.let { it ->
-                completeQuestion(it.data)
-            }
-        }
-    }
-
-    override suspend fun activateQuestion(question: Question) = withContext<Unit>(ioDispatcher) {
-        coroutineScope {
-            launch { questionsRemoteDataSource.activateQuestion(question) }
-            launch { questionsLocalDataSource.activateQuestion(question) }
-        }
-    }
-
-    override suspend fun activateQuestion(questionId: String) {
-        withContext(ioDispatcher) {
-            (getQuestionWithId(questionId) as? Success)?.let { it ->
-                activateQuestion(it.data)
-            }
-        }
-    }
-
-    override suspend fun clearCompletedQuestions() {
-        coroutineScope {
-            launch { questionsRemoteDataSource.clearCompletedQuestions() }
-            launch { questionsLocalDataSource.clearCompletedQuestions() }
-        }
-    }
 
     override suspend fun deleteAllQuestions() {
         withContext(ioDispatcher) {

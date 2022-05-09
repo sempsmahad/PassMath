@@ -2,6 +2,7 @@ package com.kh69.passmath.data.source
 
 import androidx.lifecycle.LiveData
 import com.kh69.passmath.data.Question
+import com.kh69.passmath.data.Result
 
 /**
  * Interface to the data layer.
@@ -21,16 +22,6 @@ interface QuestionsRepository {
     suspend fun refreshQuestion(questionId: String)
 
     suspend fun saveQuestion(question: Question)
-
-    suspend fun completeQuestion(question: Question)
-
-    suspend fun completeQuestion(questionId: String)
-
-    suspend fun activateQuestion(question: Question)
-
-    suspend fun activateQuestion(questionId: String)
-
-    suspend fun clearCompletedQuestions()
 
     suspend fun deleteAllQuestions()
 
