@@ -5,7 +5,7 @@
     android:installLocation="auto">
 
     <application
-        android:name=".App"
+        android:name=".MathApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_debug"
         android:label="${app_debug_label}"

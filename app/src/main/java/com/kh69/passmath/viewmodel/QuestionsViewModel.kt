@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kh69.passmath.data.QuizRepository
-import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.data.model.QuizState
 
 class QuestionsViewModel(repository: QuizRepository) : ViewModel() {

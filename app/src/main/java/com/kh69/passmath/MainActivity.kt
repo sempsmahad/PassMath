@@ -10,7 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 
 class MainActivity : AppCompatActivity() {
     private var mQuestions = ArrayList<Question>()

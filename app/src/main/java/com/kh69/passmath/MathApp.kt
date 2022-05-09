@@ -3,22 +3,27 @@ package com.kh69.passmath
 import android.app.Application
 import androidx.room.Room
 import com.kh69.passmath.data.QuestionDatabase
+import com.kh69.passmath.data.source.QuestionsRepository
 
 class MathApp : Application() {
-    private val DB_NAME = "quiz_database"
+//    private val DB_NAME = "quiz_database"
 
-    companion object {
-        lateinit var database: QuestionDatabase
-            private set
-    }
+    // Depends on the flavor,
+    val questionRepository: QuestionsRepository
+        get() = ServiceLocator.provideQuestionsRepository(this)
+
+//    companion object {
+//        lateinit var database: QuestionDatabase
+//            private set
+//    }
 
     override fun onCreate() {
         super.onCreate()
-        database = Room.databaseBuilder(
-            this,
-            QuestionDatabase::class.java,
-            DB_NAME
-        )
-            .build()
+//        database = Room.databaseBuilder(
+//            this,
+//            QuestionDatabase::class.java,
+//            DB_NAME
+//        )
+//            .build()
     }
 }

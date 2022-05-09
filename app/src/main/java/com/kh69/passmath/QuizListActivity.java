@@ -2,7 +2,6 @@ package com.kh69.passmath;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -13,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.Question;
 import com.kh69.passmath.data.cache.QuestionRepository;
 import com.kh69.passmath.remote.APIUtils;
 import com.kh69.passmath.remote.QuestionService;
@@ -23,10 +22,6 @@ import com.kh69.passmath.viewmodel.QuestionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class QuizListActivity extends AppCompatActivity {
     private List<Question>        mQuestions = new ArrayList<>();

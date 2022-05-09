@@ -1,7 +1,7 @@
 package com.kh69.passmath.ui
 
 import androidx.lifecycle.ViewModel
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.cache.QuestionRepository
 
 

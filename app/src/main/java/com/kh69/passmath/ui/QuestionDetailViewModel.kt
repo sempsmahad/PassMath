@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.cache.QuestionRepository
-import org.w3c.dom.Node
 import java.util.*
 
 class QuestionDetailViewModel() : ViewModel() {

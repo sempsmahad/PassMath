@@ -1,7 +1,6 @@
 package com.kh69.passmath.data
 
 import com.kh69.passmath.MathApp
-import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.data.cache.QuestionDAO
 
 class Repository : QuizRepository {

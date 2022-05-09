@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.kh69.passmath.MyViewPagerAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Repository
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.databinding.ActivityCardWizardOverlapBinding
 import com.kh69.passmath.getViewModel

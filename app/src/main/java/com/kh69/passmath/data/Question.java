@@ -1,4 +1,4 @@
-package com.kh69.passmath.data.cache;
+package com.kh69.passmath.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.Question;
 import com.kh69.passmath.ui.QuestionCards;
 
 import java.util.ArrayList;
