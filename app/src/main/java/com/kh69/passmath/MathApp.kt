@@ -4,14 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.kh69.passmath.data.QuestionDatabase
 
-class App : Application() {
+class MathApp : Application() {
     private val DB_NAME = "quiz_database"
-
-//    override fun onCreate() {
-//        super.onCreate()
-//        QuestionRepository.initialize(this)
-//    }
-
 
     companion object {
         lateinit var database: QuestionDatabase

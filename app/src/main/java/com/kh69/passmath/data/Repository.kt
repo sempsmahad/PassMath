@@ -1,12 +1,12 @@
 package com.kh69.passmath.data
 
-import com.kh69.passmath.App
+import com.kh69.passmath.MathApp
 import com.kh69.passmath.data.cache.Question
 import com.kh69.passmath.data.cache.QuestionDAO
 
 class Repository : QuizRepository {
     private val questionDAO: QuestionDAO by lazy {
-        App.database.questionDAO()
+        MathApp.database.questionDAO()
     }
 
     private val allQuestions by lazy {
