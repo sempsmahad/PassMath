@@ -8,13 +8,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-@Entity
+@Entity(tableName = "questions")
 public class Question {
     @PrimaryKey
     @SerializedName("_id")
     @Expose
     @NonNull
-    private String id;
+    private String questionId;
 
     @SerializedName("qtn_text")
     @Expose
@@ -72,12 +72,12 @@ public class Question {
         this.edited = edited;
     }
 
-    public String getId() {
-        return id;
+    public String getQuestionId() {
+        return questionId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;
     }
 
     public String getText() {

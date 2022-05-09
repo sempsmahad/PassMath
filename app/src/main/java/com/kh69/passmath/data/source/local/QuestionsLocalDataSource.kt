@@ -78,7 +78,7 @@ class QuestionsLocalDataSource internal constructor(
     }
 
     override suspend fun completeQuestion(question: Question) = withContext(ioDispatcher) {
-        questionsDao.updateCompleted(question.id, true)
+        questionsDao.updateCompleted(question.questionId, true)
     }
 
     override suspend fun completeQuestion(questionId: String) {
@@ -86,7 +86,7 @@ class QuestionsLocalDataSource internal constructor(
     }
 
     override suspend fun activateQuestion(question: Question) = withContext(ioDispatcher) {
-        questionsDao.updateCompleted(question.id, false)
+        questionsDao.updateCompleted(question.questionId, false)
     }
 
     override suspend fun activateQuestion(questionId: String) {

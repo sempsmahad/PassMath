@@ -67,12 +67,12 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
     }
 
     override suspend fun saveQuestion(question: Question) {
-        TASKS_SERVICE_DATA[question.id] = question
+        TASKS_SERVICE_DATA[question.questionId] = question
     }
 
     override suspend fun completeQuestion(question: Question) {
-        val completedQuestion = Question(question.title, question.description, true, question.id)
-        TASKS_SERVICE_DATA[question.id] = completedQuestion
+        val completedQuestion = Question(question.title, question.description, true, question.questionId)
+        TASKS_SERVICE_DATA[question.questionId] = completedQuestion
     }
 
     override suspend fun completeQuestion(questionId: String) {
@@ -80,8 +80,8 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
     }
 
     override suspend fun activateQuestion(question: Question) {
-        val activeQuestion = Question(question.title, question.description, false, question.id)
-        TASKS_SERVICE_DATA[question.id] = activeQuestion
+        val activeQuestion = Question(question.title, question.description, false, question.questionId)
+        TASKS_SERVICE_DATA[question.questionId] = activeQuestion
     }
 
     override suspend fun activateQuestion(questionId: String) {
