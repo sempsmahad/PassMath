@@ -18,52 +18,61 @@ package com.kh69.passmath
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
+import com.kh69.passmath.data.source.DefaultQuestionsRepository
+import com.kh69.passmath.data.source.FakeQuestionsRemoteDataSource
+import com.kh69.passmath.data.source.QuestionsDataSource
+import com.kh69.passmath.data.source.QuestionsRepository
+import com.kh69.passmath.data.source.local.MathDatabase
+import com.kh69.passmath.data.source.local.QuestionsLocalDataSource
 import kotlinx.coroutines.runBlocking
-
 /**
  * A Service Locator for the [QuestionsRepository]. This is the mock version, with a
- * [FakeTasksRemoteDataSource].
+ * [FakeQuestionsRemoteDataSource].
  */
 object ServiceLocator {
 
     private val lock = Any()
-    private var database: ToDoDatabase? = null
+    private var database: MathDatabase? = null
+
     @Volatile
-    var tasksRepository: TasksRepository? = null
+    var questionsRepository: QuestionsRepository? = null
         @VisibleForTesting set
 
-    fun provideTasksRepository(context: Context): TasksRepository {
+    fun provideQuestionsRepository(context: Context): QuestionsRepository {
         synchronized(this) {
-            return tasksRepository ?: tasksRepository ?: createTasksRepository(context)
+            return questionsRepository ?: questionsRepository ?: createQuestionsRepository(context)
         }
     }
 
-    private fun createTasksRepository(context: Context): TasksRepository {
-        val newRepo = DefaultTasksRepository(FakeTasksRemoteDataSource, createTaskLocalDataSource(context))
-        tasksRepository = newRepo
+    private fun createQuestionsRepository(context: Context): QuestionsRepository {
+        val newRepo = DefaultQuestionsRepository(
+            FakeQuestionsRemoteDataSource,
+            createQuestionLocalDataSource(context)
+        )
+        questionsRepository = newRepo
         return newRepo
     }
 
-    private fun createTaskLocalDataSource(context: Context): TasksDataSource {
+    private fun createQuestionLocalDataSource(context: Context): QuestionsDataSource {
         val database = database ?: createDataBase(context)
-        return TasksLocalDataSource(database.taskDao())
+        return QuestionsLocalDataSource(database.questionDao())
     }
 
     @VisibleForTesting
     fun createDataBase(
         context: Context,
         inMemory: Boolean = false
-    ): ToDoDatabase {
+    ): MathDatabase {
         val result = if (inMemory) {
             // Use a faster in-memory database for tests
-            Room.inMemoryDatabaseBuilder(context.applicationContext, ToDoDatabase::class.java)
+            Room.inMemoryDatabaseBuilder(context.applicationContext, MathDatabase::class.java)
                 .allowMainThreadQueries()
                 .build()
         } else {
             // Real database using SQLite
             Room.databaseBuilder(
                 context.applicationContext,
-                ToDoDatabase::class.java, "Tasks.db"
+                MathDatabase::class.java, "Questions.db"
             ).build()
         }
         database = result
@@ -74,7 +83,7 @@ object ServiceLocator {
     fun resetRepository() {
         synchronized(lock) {
             runBlocking {
-                FakeTasksRemoteDataSource.deleteAllTasks()
+                FakeQuestionsRemoteDataSource.deleteAllQuestions()
             }
             // Clear all data to avoid test pollution.
             database?.apply {
@@ -82,7 +91,7 @@ object ServiceLocator {
                 close()
             }
             database = null
-            tasksRepository = null
+            questionsRepository = null
         }
     }
 }

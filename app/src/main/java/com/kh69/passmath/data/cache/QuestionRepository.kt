@@ -17,7 +17,7 @@ class QuestionRepository private constructor(context: Context) {
         MathDatabase::class.java,
         DATABASE_NAME
     ).build()
-    private val questionDAO = mDatabase.questionDAO()
+    private val questionDAO = mDatabase.questionDao()
 
     private val executor = Executors.newSingleThreadExecutor()
 

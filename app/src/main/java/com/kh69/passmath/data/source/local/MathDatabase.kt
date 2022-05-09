@@ -5,11 +5,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.cache.DbTypeConverters
-import com.kh69.passmath.data.cache.QuestionDAO
 
-
+/**
+ * The Room Database that contains the Question table.
+ *
+ */
 @Database(entities = [Question::class], version = 1)
 @TypeConverters(DbTypeConverters::class)
 abstract class MathDatabase : RoomDatabase() {
-    abstract fun questionDAO(): QuestionDAO
+    abstract fun questionDao(): QuestionsDao
 }

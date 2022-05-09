@@ -1,4 +1,4 @@
-package com.kh69.passmath.data.cache
+package com.kh69.passmath.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -7,7 +7,7 @@ import java.util.*
 
 
 @Dao
-interface QuestionDAO {
+interface QuestionsDao {
     @Query("SELECT * FROM question")
     fun getQuestions(): LiveData<List<Question>>
 
