@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.kh69.passmath.data.Question
-import com.kh69.passmath.data.QuestionDatabase
+import com.kh69.passmath.data.source.local.MathDatabase
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -12,12 +12,12 @@ private const val DATABASE_NAME = "pattern-database"
 
 class QuestionRepository private constructor(context: Context) {
 
-    private val database : QuestionDatabase = Room.databaseBuilder(
+    private val mDatabase : MathDatabase = Room.databaseBuilder(
         context.applicationContext,
-        QuestionDatabase::class.java,
+        MathDatabase::class.java,
         DATABASE_NAME
     ).build()
-    private val questionDAO = database.questionDAO()
+    private val questionDAO = mDatabase.questionDAO()
 
     private val executor = Executors.newSingleThreadExecutor()
 

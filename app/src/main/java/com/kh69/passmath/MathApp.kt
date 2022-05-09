@@ -1,8 +1,6 @@
 package com.kh69.passmath
 
 import android.app.Application
-import androidx.room.Room
-import com.kh69.passmath.data.QuestionDatabase
 import com.kh69.passmath.data.source.QuestionsRepository
 
 class MathApp : Application() {
