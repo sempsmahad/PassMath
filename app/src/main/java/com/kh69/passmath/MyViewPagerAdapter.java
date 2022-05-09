@@ -21,8 +21,8 @@ import katex.hourglass.in.mathlib.MathView;
 
 public class MyViewPagerAdapter extends PagerAdapter {
 
-    private LayoutInflater layoutInflater;
-    private List<Question> mQuestions;
+    private       LayoutInflater layoutInflater;
+    private final List<Question> mQuestions;
     Context mContext;
 
     public MyViewPagerAdapter(ArrayList<Question> questions, Context context) {
@@ -38,10 +38,10 @@ public class MyViewPagerAdapter extends PagerAdapter {
 
 
         View            view             = layoutInflater.inflate(R.layout.item_card_question, container, false);
-        MathView        questionView     = ((MathView) view.findViewById(R.id.kv_question));
-        MathView        answerView       = ((MathView) view.findViewById(R.id.kv_answer));
-        ImageButton     showAnswerButton = ((ImageButton) view.findViewById(R.id.show_answer));
-        ImageView       blurryImageView  = ((ImageView) view.findViewById(R.id.image_to_blur));
+        MathView        questionView     = view.findViewById(R.id.kv_question);
+        MathView        answerView       = view.findViewById(R.id.kv_answer);
+        ImageButton     showAnswerButton = view.findViewById(R.id.show_answer);
+        ImageView       blurryImageView  = view.findViewById(R.id.image_to_blur);
         final boolean[] answerIsVisible  = {false};
 
         removeZoomControls(new MathView[]{questionView, answerView});

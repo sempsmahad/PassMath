@@ -1,6 +1,5 @@
 package com.kh69.passmath.viewmodel
 
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,7 +46,7 @@ class MainViewModel(private val repository: QuizRepository) :
             for (question in questions) {
                 repository.saveQuestion(question)
             }
-            
+
         }
     }
 

@@ -34,6 +34,7 @@ class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
             }
         }
     }
+
     fun nextQuestion(position: Int) {
         setSelectedQuestionTo(position)
     }
