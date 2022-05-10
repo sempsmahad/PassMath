@@ -1,6 +1,7 @@
 package com.kh69.passmath.data;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,10 +12,11 @@ import com.google.gson.annotations.SerializedName;
 @Entity(tableName = "questions")
 public class Question {
     @PrimaryKey
+    @ColumnInfo(name = "questionId")
     @SerializedName("_id")
     @Expose
     @NonNull
-    private String questionId;
+    private String id;
 
     @SerializedName("qtn_text")
     @Expose
@@ -72,12 +74,12 @@ public class Question {
         this.edited = edited;
     }
 
-    public String getQuestionId() {
-        return questionId;
+    public String getId() {
+        return id;
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getText() {

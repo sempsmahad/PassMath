@@ -17,8 +17,11 @@ package com.kh69.passmath.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.kh69.passmath.data.Question
 import java.util.LinkedHashMap
+import com.kh69.passmath.data.Result
+import com.kh69.passmath.data.Result.*
 
 /**
  * Implementation of a remote data source with static access to the data for easy testing.
@@ -30,7 +33,7 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
     private val observableQuestions = MutableLiveData<Result<List<Question>>>()
 
     override suspend fun refreshQuestions() {
-        observableQuestions.postValue(getQuestions())
+        observableQuestions.postValue(getQuestions()!!)
     }
 
     override suspend fun refreshQuestion(questionId: String) {
@@ -44,12 +47,12 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
     override fun observeQuestion(questionId: String): LiveData<Result<Question>> {
         return observableQuestions.map { questions ->
             when (questions) {
-                is Result.Loading -> Result.Loading
-                is Error -> Error(questions.exception)
+                is Loading -> Loading
+                is Error          -> Error(questions.exception)
                 is Success -> {
                     val question = questions.data.firstOrNull() { it.id == questionId }
                         ?: return@map Error(Exception("Not found"))
-                    Success(question)
+                    com.kh69.passmath.data.Result.Success(question)
                 }
             }
         }
@@ -67,31 +70,7 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
     }
 
     override suspend fun saveQuestion(question: Question) {
-        TASKS_SERVICE_DATA[question.questionId] = question
-    }
-
-    override suspend fun completeQuestion(question: Question) {
-        val completedQuestion = Question(question.title, question.description, true, question.questionId)
-        TASKS_SERVICE_DATA[question.questionId] = completedQuestion
-    }
-
-    override suspend fun completeQuestion(questionId: String) {
-        // Not required for the remote data source.
-    }
-
-    override suspend fun activateQuestion(question: Question) {
-        val activeQuestion = Question(question.title, question.description, false, question.questionId)
-        TASKS_SERVICE_DATA[question.questionId] = activeQuestion
-    }
-
-    override suspend fun activateQuestion(questionId: String) {
-        // Not required for the remote data source.
-    }
-
-    override suspend fun clearCompletedQuestions() {
-        TASKS_SERVICE_DATA = TASKS_SERVICE_DATA.filterValues {
-            !it.isCompleted
-        } as LinkedHashMap<String, Question>
+        TASKS_SERVICE_DATA[question.id] = question
     }
 
     override suspend fun deleteQuestion(questionId: String) {
