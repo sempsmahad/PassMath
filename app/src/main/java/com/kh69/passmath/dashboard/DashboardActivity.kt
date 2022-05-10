@@ -1,4 +1,4 @@
-package com.kh69.passmath.ui
+package com.kh69.passmath.dashboard
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.kh69.passmath.R
 import com.kh69.passmath.Tools2
 import com.kh69.passmath.extensions.launchSettings
+import com.kh69.passmath.ui.QuestionCards
 
 class DashboardActivity : AppCompatActivity() {
     private var tab_layout: TabLayout? = null
