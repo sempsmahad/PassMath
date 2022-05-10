@@ -18,13 +18,16 @@ package com.kh69.passmath
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
+import com.kh69.passmath.api.MathService
 import com.kh69.passmath.data.source.DefaultQuestionsRepository
-import com.kh69.passmath.data.source.FakeQuestionsRemoteDataSource
+import com.kh69.passmath.data.source.remote.FakeQuestionsRemoteDataSource
 import com.kh69.passmath.data.source.QuestionsDataSource
 import com.kh69.passmath.data.source.QuestionsRepository
 import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsLocalDataSource
+import com.kh69.passmath.remote.APIUtils
 import kotlinx.coroutines.runBlocking
+
 /**
  * A Service Locator for the [QuestionsRepository]. This is the mock version, with a
  * [FakeQuestionsRemoteDataSource].
@@ -33,6 +36,7 @@ object ServiceLocator {
 
     private val lock = Any()
     private var database: MathDatabase? = null
+
 
     @Volatile
     var questionsRepository: QuestionsRepository? = null
@@ -46,7 +50,7 @@ object ServiceLocator {
 
     private fun createQuestionsRepository(context: Context): QuestionsRepository {
         val newRepo = DefaultQuestionsRepository(
-            FakeQuestionsRemoteDataSource,
+            createQuestionRemoteDataSource(),
             createQuestionLocalDataSource(context)
         )
         questionsRepository = newRepo
@@ -56,6 +60,11 @@ object ServiceLocator {
     private fun createQuestionLocalDataSource(context: Context): QuestionsDataSource {
         val database = database ?: createDataBase(context)
         return QuestionsLocalDataSource(database.questionDao())
+    }
+
+    private fun createQuestionRemoteDataSource(): QuestionsDataSource {
+        val service = APIUtils.getMathService()
+        return FakeQuestionsRemoteDataSource(service)
     }
 
     @VisibleForTesting
@@ -79,19 +88,19 @@ object ServiceLocator {
         return result
     }
 
-    @VisibleForTesting
-    fun resetRepository() {
-        synchronized(lock) {
-            runBlocking {
-                FakeQuestionsRemoteDataSource.deleteAllQuestions()
-            }
-            // Clear all data to avoid test pollution.
-            database?.apply {
-                clearAllTables()
-                close()
-            }
-            database = null
-            questionsRepository = null
-        }
-    }
+//    @VisibleForTesting
+//    fun resetRepository() {
+//        synchronized(lock) {
+//            runBlocking {
+//                FakeQuestionsRemoteDataSource.deleteAllQuestions()
+//            }
+//            // Clear all data to avoid test pollution.
+//            database?.apply {
+//                clearAllTables()
+//                close()
+//            }
+//            database = null
+//            questionsRepository = null
+//        }
+//    }
 }

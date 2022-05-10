@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kh69.passmath.data.source
+package com.kh69.passmath.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,11 +24,18 @@ import com.kh69.passmath.data.Resource
 import java.util.LinkedHashMap
 import com.kh69.passmath.data.Result
 import com.kh69.passmath.data.Result.*
+import com.kh69.passmath.data.source.QuestionsDataSource
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Implementation of a remote data source with static access to the data for easy testing.
  */
-class FakeQuestionsRemoteDataSource internal constructor(private val mathService: MathService) :
+class FakeQuestionsRemoteDataSource internal constructor(
+    private val mathService: MathService,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) :
     QuestionsDataSource {
 
     private var TASKS_SERVICE_DATA: LinkedHashMap<String, Question> = LinkedHashMap()
@@ -66,27 +73,28 @@ class FakeQuestionsRemoteDataSource internal constructor(private val mathService
         }
     }
 
-    override suspend fun getQuestion(questionId: String): Result<Question> {
+    override suspend fun getQuestion(questionId: String): Result<Question> = withContext(ioDispatcher){
         mathService.getQuestion(questionId).let {
-            return Success(it)
+            return@withContext Success(it)
         }
 //        return Error(Exception("Could not find question"))
     }
 
-    override suspend fun getQuestions(): Result<List<Question>> {
-        return Success(mathService.getQuestions())
+    override suspend fun getQuestions(): Result<List<Question>> = withContext(ioDispatcher) {
+        return@withContext Success(mathService.getQuestions())
     }
 
-    override suspend fun saveQuestion(question: Question) {
+    override suspend fun saveQuestion(question: Question) = withContext(ioDispatcher) {
         mathService.createQuestion(question)
+        refreshQuestions()
     }
 
-    override suspend fun deleteQuestion(questionId: String) {
+    override suspend fun deleteQuestion(questionId: String) = withContext(ioDispatcher) {
         mathService.deleteQuestion(questionId)
         refreshQuestions()
     }
 
-    override suspend fun deleteAllQuestions() {
+    override suspend fun deleteAllQuestions() = withContext(ioDispatcher) {
         mathService.deleteQuestions()
         refreshQuestions()
     }
