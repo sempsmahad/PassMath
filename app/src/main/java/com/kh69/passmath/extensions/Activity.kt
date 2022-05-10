@@ -8,6 +8,10 @@ import android.os.Looper
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.Fragment
+import com.kh69.passmath.MathApp
+import com.kh69.passmath.ViewModelFactory
 import com.kh69.passmath.helpers.isOnMainThread
 import com.kh69.passmath.ui.SettingsActivity
 
@@ -31,4 +35,9 @@ fun Activity.hideKeyboardSync() {
     inputMethodManager.hideSoftInputFromWindow((currentFocus ?: View(this)).windowToken, 0)
     window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     currentFocus?.clearFocus()
+}
+
+fun Activity.getViewModelFactory(): ViewModelFactory {
+    val repository = (requireContext().applicationContext as MathApp).questionRepository
+    return ViewModelFactory(repository, it)
 }
