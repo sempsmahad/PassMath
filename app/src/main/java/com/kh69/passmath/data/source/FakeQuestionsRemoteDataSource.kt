@@ -18,7 +18,9 @@ package com.kh69.passmath.data.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.kh69.passmath.api.*
 import com.kh69.passmath.data.Question
+import com.kh69.passmath.data.Resource
 import java.util.LinkedHashMap
 import com.kh69.passmath.data.Result
 import com.kh69.passmath.data.Result.*
@@ -26,11 +28,17 @@ import com.kh69.passmath.data.Result.*
 /**
  * Implementation of a remote data source with static access to the data for easy testing.
  */
-object FakeQuestionsRemoteDataSource : QuestionsDataSource {
+class FakeQuestionsRemoteDataSource internal constructor(private val mathService: MathService) :
+    QuestionsDataSource {
 
     private var TASKS_SERVICE_DATA: LinkedHashMap<String, Question> = LinkedHashMap()
 
     private val observableQuestions = MutableLiveData<Result<List<Question>>>()
+
+
+    private val _liveData = MutableLiveData<Resource<Boolean>>()
+    val liveData: LiveData<Resource<Boolean>> = _liveData
+
 
     override suspend fun refreshQuestions() {
         observableQuestions.postValue(getQuestions()!!)
@@ -48,38 +56,38 @@ object FakeQuestionsRemoteDataSource : QuestionsDataSource {
         return observableQuestions.map { questions ->
             when (questions) {
                 is Loading -> Loading
-                is Error          -> Error(questions.exception)
+                is Error   -> Error(questions.exception)
                 is Success -> {
                     val question = questions.data.firstOrNull() { it.id == questionId }
                         ?: return@map Error(Exception("Not found"))
-                    com.kh69.passmath.data.Result.Success(question)
+                    Success(question)
                 }
             }
         }
     }
 
     override suspend fun getQuestion(questionId: String): Result<Question> {
-        TASKS_SERVICE_DATA[questionId]?.let {
+        mathService.getQuestion(questionId).let {
             return Success(it)
         }
-        return Error(Exception("Could not find question"))
+//        return Error(Exception("Could not find question"))
     }
 
     override suspend fun getQuestions(): Result<List<Question>> {
-        return Success(TASKS_SERVICE_DATA.values.toList())
+        return Success(mathService.getQuestions())
     }
 
     override suspend fun saveQuestion(question: Question) {
-        TASKS_SERVICE_DATA[question.id] = question
+        mathService.createQuestion(question)
     }
 
     override suspend fun deleteQuestion(questionId: String) {
-        TASKS_SERVICE_DATA.remove(questionId)
+        mathService.deleteQuestion(questionId)
         refreshQuestions()
     }
 
     override suspend fun deleteAllQuestions() {
-        TASKS_SERVICE_DATA.clear()
+        mathService.deleteQuestions()
         refreshQuestions()
     }
 }

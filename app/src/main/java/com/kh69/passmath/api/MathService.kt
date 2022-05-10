@@ -25,12 +25,22 @@ import retrofit2.http.*
  * REST API access points
  */
 interface MathService {
+//
+//    @GET("questions")
+//    fun getQuestions(): LiveData<ApiResponse<List<Question>>>
 
     @GET("questions")
-    fun getQuestions(): LiveData<ApiResponse<List<Question>>>
+    fun getQuestions(): List<Question>
+
+    @GET("questions/{id}")
+    fun getQuestion(@Path("id") id: String?): Question
+
+
+//    @POST("questions")
+//    fun createQuestion(@Body question: Question?): LiveData<ApiResponse<Question>>
 
     @POST("questions")
-    fun createQuestion(@Body question: Question?): LiveData<ApiResponse<Question>>
+    fun createQuestion(@Body question: Question?): Question
 
     @PATCH("questions/{id}")
     fun updateQuestion(
@@ -38,7 +48,13 @@ interface MathService {
         @Body question: Question?
     ): LiveData<ApiResponse<Question>>
 
+//    @DELETE("questions/{id}")
+//    fun deleteQuestion(@Path("id") id: String?): LiveData<ApiResponse<Question>>
+
     @DELETE("questions/{id}")
-    fun deleteQuestion(@Path("id") id: String?): LiveData<ApiResponse<Question>>
+    fun deleteQuestion(@Path("id") id: String?): Question
+
+    @DELETE("questions")
+    fun deleteQuestions(): Question
 
 }
