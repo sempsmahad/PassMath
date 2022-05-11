@@ -18,19 +18,17 @@ package com.kh69.passmath
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
-import com.kh69.passmath.api.MathService
 import com.kh69.passmath.data.source.DefaultQuestionsRepository
-import com.kh69.passmath.data.source.remote.FakeQuestionsRemoteDataSource
+import com.kh69.passmath.data.source.remote.QuestionsRemoteDataSource
 import com.kh69.passmath.data.source.QuestionsDataSource
 import com.kh69.passmath.data.source.QuestionsRepository
 import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsLocalDataSource
 import com.kh69.passmath.remote.APIUtils
-import kotlinx.coroutines.runBlocking
 
 /**
  * A Service Locator for the [QuestionsRepository]. This is the mock version, with a
- * [FakeQuestionsRemoteDataSource].
+ * [QuestionsRemoteDataSource].
  */
 object ServiceLocator {
 
@@ -64,7 +62,7 @@ object ServiceLocator {
 
     private fun createQuestionRemoteDataSource(): QuestionsDataSource {
         val service = APIUtils.getMathService()
-        return FakeQuestionsRemoteDataSource(service)
+        return QuestionsRemoteDataSource(service)
     }
 
     @VisibleForTesting

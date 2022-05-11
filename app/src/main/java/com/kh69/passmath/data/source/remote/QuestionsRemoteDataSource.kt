@@ -32,16 +32,13 @@ import kotlinx.coroutines.withContext
 /**
  * Implementation of a remote data source with static access to the data for easy testing.
  */
-class FakeQuestionsRemoteDataSource internal constructor(
+class QuestionsRemoteDataSource internal constructor(
     private val mathService: MathService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) :
     QuestionsDataSource {
 
-    private var TASKS_SERVICE_DATA: LinkedHashMap<String, Question> = LinkedHashMap()
-
     private val observableQuestions = MutableLiveData<Result<List<Question>>>()
-
 
     private val _liveData = MutableLiveData<Resource<Boolean>>()
     val liveData: LiveData<Resource<Boolean>> = _liveData

@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package com.kh69.passmath.api
+package com.kh69.passmath.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.kh69.passmath.AppExecutors
+import com.kh69.passmath.api.ApiEmptyResponse
+import com.kh69.passmath.api.ApiErrorResponse
+import com.kh69.passmath.api.ApiResponse
+import com.kh69.passmath.api.ApiSuccessResponse
 import com.kh69.passmath.data.Resource
 
 /**
