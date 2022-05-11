@@ -38,7 +38,7 @@ class QtnRepository constructor(
     private val service: MathService
 ) {
 
-    fun getQuestions(owner: String): LiveData<Resource<List<Question>>> {
+    fun getQuestions(): LiveData<Resource<List<Question>>> {
         return object : NetworkBoundResource<List<Question>, List<Question>>(appExecutors) {
             override fun saveCallResult(item: List<Question>) {
                 dao.insertQuestions(item)
@@ -70,20 +70,20 @@ class QtnRepository constructor(
         }.asLiveData()
     }
 
-    fun updateQuestion(question: Question): LiveData<Resource<Int>> {
-        return object : NetworkBoundResource<Int, Question>(appExecutors) {
-            override fun saveCallResult(item: Question) {
-                dao.updateQuestion(item)
-            }
-
-            override fun shouldFetch(data: Int?) = data == 1
-
-            override fun loadFromDb() = dao.updateQuestion(question)
-
-            override fun createCall() = service.updateQuestion(question.id, question)
-
-        }.asLiveData()
-    }
+//    fun updateQuestion(question: Question): LiveData<Resource<Int>> {
+//        return object : NetworkBoundResource<Int, Question>(appExecutors) {
+//            override fun saveCallResult(item: Question) {
+//                dao.updateQuestion(item)
+//            }
+//
+//            override fun shouldFetch(data: Int?) = data == 1
+//
+//            override fun loadFromDb() = dao.updateQuestion(question)
+//
+//            override fun createCall() = service.updateQuestion(question.id, question)
+//
+//        }.asLiveData()
+//    }
 
     fun deleteQuestion(id: String): LiveData<Resource<Int>> {
         return object : NetworkBoundResource<Int, Question>(appExecutors) {
@@ -100,20 +100,25 @@ class QtnRepository constructor(
         }.asLiveData()
     }
 
-    fun deleteQuestions(): LiveData<Resource<Int>> {
-        return object : NetworkBoundResource<Int, List<Question>>(appExecutors) {
-            override fun saveCallResult(item: List<Question>) {
-                dao.deleteQuestions()
-            }
-
-            override fun shouldFetch(data: Int?) = data == 1
-
-            override fun loadFromDb() = dao.deleteQuestions()
-
-            override fun createCall() = service.deleteQuestions()
-
-
-        }.asLiveData()
-    }
+//    fun deleteQuestions(): LiveData<Resource<Int>> {
+//        return object : NetworkBoundResource<Int, List<Question>>(appExecutors) {
+//            override fun saveCallResult(item: List<Question>) {
+//                dao.deleteQuestions()
+//            }
+//
+//            override fun shouldFetch(data: Int?) = data == 1
+//
+//            override fun loadFromDb() {
+//                return when (dao.deleteQuestions() == 1) {
+//                    1    -> LiveData(1)
+//                    else -> LiveData < Int(0) >
+//                }
+//            }
+//
+//            override fun createCall() = service.deleteQuestions()
+//
+//
+//        }.asLiveData()
+//    }
 
 }

@@ -73,8 +73,8 @@ interface QuestionsDao {
      */
 //    @Update
 //    fun updateQuestion(question: Question): Int
-    @Update
-    fun updateQuestion(question: Question): LiveData<Int>
+//    @Update
+//    fun updateQuestion(question: Question): LiveData<Int>
 
 //    @Update
 //    suspend fun updateQuestion(question: Question): Int
@@ -87,15 +87,15 @@ interface QuestionsDao {
 //    @Query("DELETE FROM Questions WHERE questionId = :questionId")
 //    suspend fun deleteQuestionById(questionId: String): Int
 //
-    @Query("DELETE FROM Questions WHERE questionId = :questionId")
-    fun deleteQuestionById(questionId: String): LiveData<Int>
+//    @Query("DELETE FROM Questions WHERE questionId = :questionId")
+//    fun deleteQuestionById(questionId: String): LiveData<Int>
 
     /**
      * Delete all questions.
      */
 //    @Query("DELETE FROM Questions")
 //    suspend fun deleteQuestions()
-    @Query("DELETE FROM Questions")
-    fun deleteQuestions():LiveData<Int>
+//    @Query("DELETE FROM Questions")
+//    fun deleteQuestions():Int
 
 }

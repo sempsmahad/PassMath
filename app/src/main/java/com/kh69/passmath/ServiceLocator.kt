@@ -18,51 +18,36 @@ package com.kh69.passmath
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
-import com.kh69.passmath.data.source.DefaultQuestionsRepository
-import com.kh69.passmath.data.source.remote.QuestionsRemoteDataSource
-import com.kh69.passmath.data.source.QuestionsDataSource
-import com.kh69.passmath.data.source.QuestionsRepository
+import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.data.source.local.MathDatabase
-import com.kh69.passmath.data.source.local.QuestionsLocalDataSource
 import com.kh69.passmath.data.source.remote.APIUtils
 
 /**
- * A Service Locator for the [QuestionsRepository]. This is the mock version, with a
- * [QuestionsRemoteDataSource].
+ * A Service Locator for the [QtnRepository]
+ *
  */
 object ServiceLocator {
-
-    private val lock = Any()
     private var database: MathDatabase? = null
 
-
     @Volatile
-    var questionsRepository: QuestionsRepository? = null
+    var questionsRepository: QtnRepository? = null
         @VisibleForTesting set
 
-    fun provideQuestionsRepository(context: Context): QuestionsRepository {
+    fun provideQuestionsRepository(context: Context): QtnRepository {
         synchronized(this) {
             return questionsRepository ?: questionsRepository ?: createQuestionsRepository(context)
         }
     }
 
-    private fun createQuestionsRepository(context: Context): QuestionsRepository {
-        val newRepo = DefaultQuestionsRepository(
-            createQuestionRemoteDataSource(),
-            createQuestionLocalDataSource(context)
+    private fun createQuestionsRepository(context: Context): QtnRepository {
+        val newRepo = QtnRepository(
+            AppExecutors(),
+            db = database ?: createDataBase(context),
+            dao = (database ?: createDataBase(context)).questionDao(),
+            service = APIUtils.getMathService()
         )
         questionsRepository = newRepo
         return newRepo
-    }
-
-    private fun createQuestionLocalDataSource(context: Context): QuestionsDataSource {
-        val database = database ?: createDataBase(context)
-        return QuestionsLocalDataSource(database.questionDao())
-    }
-
-    private fun createQuestionRemoteDataSource(): QuestionsDataSource {
-        val service = APIUtils.getMathService()
-        return QuestionsRemoteDataSource(service)
     }
 
     @VisibleForTesting
@@ -86,19 +71,4 @@ object ServiceLocator {
         return result
     }
 
-//    @VisibleForTesting
-//    fun resetRepository() {
-//        synchronized(lock) {
-//            runBlocking {
-//                FakeQuestionsRemoteDataSource.deleteAllQuestions()
-//            }
-//            // Clear all data to avoid test pollution.
-//            database?.apply {
-//                clearAllTables()
-//                close()
-//            }
-//            database = null
-//            questionsRepository = null
-//        }
-//    }
 }
