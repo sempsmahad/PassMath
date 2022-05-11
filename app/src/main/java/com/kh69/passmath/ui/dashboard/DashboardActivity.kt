@@ -10,15 +10,14 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.kh69.passmath.R
 import com.kh69.passmath.Tools2
 import com.kh69.passmath.Tools2.setSystemBarColor
 import com.kh69.passmath.Tools2.setSystemBarLight
-import com.kh69.passmath.extensions.getViewModelFactory
 import com.kh69.passmath.extensions.launchSettings
+import com.kh69.passmath.extensions.viewModels
 import com.kh69.passmath.ui.questionCards.QuestionCards
 
 class DashboardActivity : AppCompatActivity() {
@@ -26,8 +25,7 @@ class DashboardActivity : AppCompatActivity() {
     private var nested_scroll_view: NestedScrollView? = null
     private var card_form_6: LinearLayout? = null
 
-    private val viewModel =
-        ViewModelProvider(this, getViewModelFactory())[DashboardViewModel::class.java]
+    val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

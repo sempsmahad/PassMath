@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kh69.passmath.data.Question;
-import com.kh69.passmath.data.cache.QuestionRepository;
 import com.kh69.passmath.data.source.remote.APIUtils;
 import com.kh69.passmath.data.source.remote.QuestionService;
 import com.kh69.passmath.ui.QuestionListViewModel;
@@ -29,7 +28,6 @@ public class QuizListActivity extends AppCompatActivity {
     private RecyclerView          rv_questions;
     private Toolbar               toolbar;
     private QuestionAdapter       mQuestionAdapter;
-    private QuestionRepository    mQuestionRepository;
     private QuestionListViewModel mQuestionListViewModel;
     private MainViewModel         mMainViewModel;
     private QuestionsViewModel    mQuestionsViewModel;
@@ -38,7 +36,7 @@ public class QuizListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mQuestionListViewModel.getQuestionListLiveData().observe(this, questions -> updateUI(questions));
+        mQuestionListViewModel.getQuestionListLiveData().observe(this, questions -> updateUI(questions.getData()));
     }
 
     private void updateUI(List<Question> questions) {

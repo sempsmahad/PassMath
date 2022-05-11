@@ -38,6 +38,8 @@ fun Activity.hideKeyboardSync() {
     currentFocus?.clearFocus()
 }
 
+
+
 /**
  * Returns a [Lazy] delegate to access the ComponentActivity's ViewModel, if [factoryProducer]
  * is specified then [ViewModelProvider.Factory] returned by it will be used

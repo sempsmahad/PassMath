@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.kh69.passmath.MathApp
 import com.kh69.passmath.MyViewPagerAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.databinding.ActivityCardWizardOverlapBinding
-import com.kh69.passmath.extensions.viewModels
-import com.kh69.passmath.ui.dashboard.DashboardViewModel
 
 class QuestionCards : AppCompatActivity() {
 
@@ -22,11 +22,13 @@ class QuestionCards : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityCardWizardOverlapBinding
-    val viewModel: QuestionCardsViewModel by viewModels()
+//    val viewModel: QuestionCardsViewModel by viewModels()
+
+//    private val viewModel by viewModels<QuestionCardsViewModel> { getViewModelFactory() }
 
 
-//    private val viewModel =
-//        ViewModelProvider(this, getViewModelFactory())[DashboardViewModel::class.java]
+    private val viewModel =
+        ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(MathApp))[QuestionCardsViewModel::class.java]
 
 //    private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
 //    private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }

@@ -1,12 +1,10 @@
 package com.kh69.passmath.ui.questionCards
 
-import android.text.TextUtils.isEmpty
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kh69.passmath.data.Question
-import com.kh69.passmath.data.QuestionInfoProvider.questionList
 import com.kh69.passmath.data.Resource
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.data.source.QtnRepository

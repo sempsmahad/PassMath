@@ -85,20 +85,20 @@ class QtnRepository constructor(
 //        }.asLiveData()
 //    }
 
-    fun deleteQuestion(id: String): LiveData<Resource<Int>> {
-        return object : NetworkBoundResource<Int, Question>(appExecutors) {
-            override fun saveCallResult(item: Question) {
-                dao.deleteQuestionById(item.id)
-            }
-
-            override fun shouldFetch(data: Int?) = data == 1
-
-            override fun loadFromDb() = dao.deleteQuestionById(id)
-
-            override fun createCall() = service.deleteQuestion(id)
-
-        }.asLiveData()
-    }
+//    fun deleteQuestion(id: String): LiveData<Resource<Int>> {
+//        return object : NetworkBoundResource<Int, Question>(appExecutors) {
+//            override fun saveCallResult(item: Question) {
+//                dao.deleteQuestionById(item.id)
+//            }
+//
+//            override fun shouldFetch(data: Int?) = data == 1
+//
+//            override fun loadFromDb() = dao.deleteQuestionById(id)
+//
+//            override fun createCall() = service.deleteQuestion(id)
+//
+//        }.asLiveData()
+//    }
 
 //    fun deleteQuestions(): LiveData<Resource<Int>> {
 //        return object : NetworkBoundResource<Int, List<Question>>(appExecutors) {
