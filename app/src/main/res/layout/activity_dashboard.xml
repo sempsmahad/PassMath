@@ -6,7 +6,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kh69.passmath.dashboard.DashboardViewModel" />
+            type="com.kh69.passmath.ui.dashboard.DashboardViewModel" />
     </data>
 
     <LinearLayout

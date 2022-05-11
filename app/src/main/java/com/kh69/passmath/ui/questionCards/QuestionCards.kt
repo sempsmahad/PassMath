@@ -1,4 +1,4 @@
-package com.kh69.passmath.ui
+package com.kh69.passmath.ui.questionCards
 
 import android.graphics.PorterDuff
 import android.os.Bundle

@@ -20,8 +20,7 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.kh69.passmath.dashboard.DashboardViewModel
-import com.kh69.passmath.dashboard.TaskDetailViewModel
+import com.kh69.passmath.ui.dashboard.DashboardViewModel
 import com.kh69.passmath.data.source.QuestionsRepository
 
 /**
@@ -40,9 +39,9 @@ class ViewModelFactory constructor(
         handle: SavedStateHandle
     ) = with(modelClass) {
         when {
-            isAssignableFrom(DashboardViewModel::class.java)   ->
+            isAssignableFrom(DashboardViewModel::class.java) ->
                 DashboardViewModel(questionsRepository)
-            else ->
+            else                                             ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     } as T

@@ -1,4 +1,4 @@
-package com.kh69.passmath.dashboard
+package com.kh69.passmath.ui.dashboard
 
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -13,14 +13,13 @@ import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.kh69.passmath.Event
 import com.kh69.passmath.R
 import com.kh69.passmath.Tools2
 import com.kh69.passmath.Tools2.setSystemBarColor
 import com.kh69.passmath.Tools2.setSystemBarLight
 import com.kh69.passmath.extensions.getViewModelFactory
 import com.kh69.passmath.extensions.launchSettings
-import com.kh69.passmath.ui.QuestionCards
+import com.kh69.passmath.ui.questionCards.QuestionCards
 
 class DashboardActivity : AppCompatActivity() {
     private var tab_layout: TabLayout? = null

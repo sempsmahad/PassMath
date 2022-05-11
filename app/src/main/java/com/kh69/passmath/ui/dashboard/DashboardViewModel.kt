@@ -1,17 +1,19 @@
-package com.kh69.passmath.dashboard
+package com.kh69.passmath.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.PorterDuff
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.android.material.tabs.TabLayout
 import com.kh69.passmath.Event
 import com.kh69.passmath.R
+import com.kh69.passmath.R.color
+import com.kh69.passmath.data.Question
+import com.kh69.passmath.data.Resource
+import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.data.source.QuestionsRepository
 import com.kh69.passmath.extensions.launchSettings
 import kotlinx.coroutines.launch
@@ -20,9 +22,7 @@ import kotlinx.coroutines.withContext
 /**
  * ViewModel for the Dashboard screen.
  */
-class DashboardViewModel(
-    private val questionsRepository: QuestionsRepository
-) : ViewModel() {
+class DashboardViewModel : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
@@ -30,10 +30,11 @@ class DashboardViewModel(
     private val _toastText = MutableLiveData<Event<Int>>()
     val toastText: LiveData<Event<Int>> = _toastText
 
+    @SuppressLint("ResourceAsColor")
     fun tabSelected(tab: TabLayout.Tab, activity: Activity) {
         tab.icon!!
             .setColorFilter(
-                R.color.blue_grey_400,
+                color.blue_grey_400,
                 PorterDuff.Mode.SRC_IN
             )
         tabClicked(tab, activity)
@@ -51,18 +52,12 @@ class DashboardViewModel(
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     fun tabUnselected(tab: TabLayout.Tab, activity: Activity) {
         tab.icon!!.setColorFilter(
-            R.color.grey_20,
+            color.grey_20,
             PorterDuff.Mode.SRC_IN
         )
-    }
-
-    fun clearCompletedTasks() {
-        viewModelScope.launch {
-            tasksRepository.clearCompletedTasks()
-            showSnackbarMessage(R.string.completed_tasks_cleared)
-        }
     }
 
     private fun showSnackbarMessage(message: Int) {

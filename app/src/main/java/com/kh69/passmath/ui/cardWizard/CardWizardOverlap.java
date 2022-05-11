@@ -1,4 +1,4 @@
-package com.kh69.passmath.ui;
+package com.kh69.passmath.ui.cardWizard;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

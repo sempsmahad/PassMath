@@ -1,19 +1,13 @@
-package com.kh69.passmath.view
+package com.kh69.passmath.ui.questions
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
-import android.widget.RadioButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kh69.passmath.QuestionAdapter
 import com.kh69.passmath.R
 import com.kh69.passmath.data.Repository
 import com.kh69.passmath.data.model.QuizState
-import com.kh69.passmath.databinding.ActivityQuestionListBinding
-import com.kh69.passmath.getViewModel
 import com.kh69.passmath.viewmodel.MainViewModel
 import com.kh69.passmath.viewmodel.QuestionsViewModel
 
