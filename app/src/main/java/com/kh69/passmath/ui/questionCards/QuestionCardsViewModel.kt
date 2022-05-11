@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kh69.passmath.data.Question
-import com.kh69.passmath.data.Resource
+import com.kh69.passmath.data.Status
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.data.source.QtnRepository
 
 class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel() {
-    val questions:LiveData<Resource<List<Question>>>  = repository.getQuestions()
+    val questions = repository.getQuestions()
     private val selectedQuestion = MutableLiveData<Int>()
     private val currentState = MediatorLiveData<QuizState>()
 
@@ -28,17 +27,19 @@ class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel(
 
         currentState.addSource(questions)
         { questions ->
-            if (questions.data?.isEmpty() == true) {
-                currentState.postValue(QuizState.EmptyState)
-            } else {
+            if (questions.status == Status.SUCCESS ) {
                 currentState.postValue(QuizState.DataState(questions.data!!))
+            } else if (questions.status == Status.LOADING){
+                currentState.postValue(QuizState.LoadingState)
+            }else {
+                currentState.postValue(QuizState.EmptyState)
             }
         }
     }
 
-    fun nextQuestion(position: Int) {
-        setSelectedQuestionTo(position)
-    }
+//    fun nextQuestion(position: Int) {
+//        setSelectedQuestionTo(position)
+//    }
 
 
     init {

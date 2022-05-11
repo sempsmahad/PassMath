@@ -18,11 +18,12 @@ package com.kh69.passmath.data.source
 
 import androidx.lifecycle.LiveData
 import com.kh69.passmath.AppExecutors
-import com.kh69.passmath.data.source.remote.MathService
 import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.Resource
 import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsDao
+import com.kh69.passmath.data.source.remote.APIUtils
+import com.kh69.passmath.data.source.remote.MathService
 
 /**
  * Repository that handles Repo instances.
@@ -35,7 +36,7 @@ class QtnRepository constructor(
     private val appExecutors: AppExecutors,
     private val db: MathDatabase,
     private val dao: QuestionsDao,
-    private val service: MathService
+    private val service: MathService = APIUtils.getMathService()
 ) {
 
     fun getQuestions(): LiveData<Resource<List<Question>>> {

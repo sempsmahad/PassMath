@@ -17,7 +17,7 @@ import com.kh69.passmath.Tools2
 import com.kh69.passmath.Tools2.setSystemBarColor
 import com.kh69.passmath.Tools2.setSystemBarLight
 import com.kh69.passmath.extensions.launchSettings
-import com.kh69.passmath.extensions.viewModels
+import com.kh69.passmath.getViewModel
 import com.kh69.passmath.ui.questionCards.QuestionCards
 
 class DashboardActivity : AppCompatActivity() {
@@ -25,7 +25,12 @@ class DashboardActivity : AppCompatActivity() {
     private var nested_scroll_view: NestedScrollView? = null
     private var card_form_6: LinearLayout? = null
 
-    val viewModel: DashboardViewModel by viewModels()
+    private val viewModel: DashboardViewModel by lazy {
+        getViewModel {
+            DashboardViewModel(
+            )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

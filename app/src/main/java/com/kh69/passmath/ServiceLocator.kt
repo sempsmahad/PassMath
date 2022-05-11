@@ -20,7 +20,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.data.source.local.MathDatabase
-import com.kh69.passmath.data.source.remote.APIUtils
 
 /**
  * A Service Locator for the [QtnRepository]
@@ -44,7 +43,7 @@ object ServiceLocator {
             AppExecutors(),
             db = database ?: createDataBase(context),
             dao = (database ?: createDataBase(context)).questionDao(),
-            service = APIUtils.getMathService()
+//            service = APIUtils.getMathService()
         )
         questionsRepository = newRepo
         return newRepo
