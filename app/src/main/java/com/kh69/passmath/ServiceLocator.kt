@@ -24,7 +24,7 @@ import com.kh69.passmath.data.source.QuestionsDataSource
 import com.kh69.passmath.data.source.QuestionsRepository
 import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsLocalDataSource
-import com.kh69.passmath.remote.APIUtils
+import com.kh69.passmath.data.source.remote.APIUtils
 
 /**
  * A Service Locator for the [QuestionsRepository]. This is the mock version, with a

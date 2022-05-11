@@ -17,15 +17,12 @@
 package com.kh69.passmath.data.source
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.switchMap
 import com.kh69.passmath.AppExecutors
-import com.kh69.passmath.api.ApiSuccessResponse
-import com.kh69.passmath.api.MathService
+import com.kh69.passmath.data.source.remote.MathService
 import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.Resource
 import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsDao
-import java.util.concurrent.TimeUnit
 
 /**
  * Repository that handles Repo instances.

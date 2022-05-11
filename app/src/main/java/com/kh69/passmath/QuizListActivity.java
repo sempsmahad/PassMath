@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kh69.passmath.data.Question;
 import com.kh69.passmath.data.cache.QuestionRepository;
-import com.kh69.passmath.remote.APIUtils;
-import com.kh69.passmath.remote.QuestionService;
+import com.kh69.passmath.data.source.remote.APIUtils;
+import com.kh69.passmath.data.source.remote.QuestionService;
 import com.kh69.passmath.ui.QuestionListViewModel;
 import com.kh69.passmath.viewmodel.MainViewModel;
 import com.kh69.passmath.viewmodel.QuestionsViewModel;

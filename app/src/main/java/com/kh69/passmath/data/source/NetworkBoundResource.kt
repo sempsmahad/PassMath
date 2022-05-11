@@ -21,10 +21,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.kh69.passmath.AppExecutors
-import com.kh69.passmath.api.ApiEmptyResponse
-import com.kh69.passmath.api.ApiErrorResponse
-import com.kh69.passmath.api.ApiResponse
-import com.kh69.passmath.api.ApiSuccessResponse
+import com.kh69.passmath.data.source.remote.ApiEmptyResponse
+import com.kh69.passmath.data.source.remote.ApiErrorResponse
+import com.kh69.passmath.data.source.remote.ApiResponse
+import com.kh69.passmath.data.source.remote.ApiSuccessResponse
 import com.kh69.passmath.data.Resource
 
 /**

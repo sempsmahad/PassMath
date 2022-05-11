@@ -7,7 +7,7 @@ import com.kh69.passmath.Response
 import com.kh69.passmath.data.QuestionInfoProvider
 import com.kh69.passmath.data.QuizRepository
 import com.kh69.passmath.data.Question
-import com.kh69.passmath.remote.APIUtils
+import com.kh69.passmath.data.source.remote.APIUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
