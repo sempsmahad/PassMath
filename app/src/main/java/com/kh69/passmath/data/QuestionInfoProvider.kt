@@ -2,7 +2,7 @@ package com.kh69.passmath.data
 
 import android.util.Log
 import com.kh69.passmath.Response
-import com.kh69.passmath.remote.APIUtils
+import com.kh69.passmath.data.source.remote.APIUtils
 import retrofit2.Call
 import retrofit2.Callback
 

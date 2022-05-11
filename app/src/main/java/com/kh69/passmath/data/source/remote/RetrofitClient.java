@@ -1,4 +1,4 @@
-package com.kh69.passmath.remote;
+package com.kh69.passmath.data.source.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

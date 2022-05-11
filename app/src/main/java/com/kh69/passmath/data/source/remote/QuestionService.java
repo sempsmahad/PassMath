@@ -1,4 +1,4 @@
-package com.kh69.passmath.remote;
+package com.kh69.passmath.data.source.remote;
 
 
 import com.kh69.passmath.data.Question;

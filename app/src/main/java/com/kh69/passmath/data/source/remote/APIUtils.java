@@ -1,6 +1,4 @@
-package com.kh69.passmath.remote;
-
-import com.kh69.passmath.api.MathService;
+package com.kh69.passmath.data.source.remote;
 
 public class APIUtils {
     private APIUtils() {

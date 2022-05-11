@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kh69.passmath.api
+package com.kh69.passmath.data.source.remote
 
 import retrofit2.Response
 import java.util.regex.Pattern

@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.kh69.passmath.api
+package com.kh69.passmath.data.source.remote
 
 import androidx.lifecycle.LiveData
 import com.kh69.passmath.data.Question
-import retrofit2.Call
 import retrofit2.http.*
 
 /**
