@@ -1,6 +1,7 @@
-package com.kh69.passmath.data.cache;
+package com.kh69.passmath.data;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,9 +9,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-@Entity
+@Entity(tableName = "questions")
 public class Question {
     @PrimaryKey
+    @ColumnInfo(name = "questionId")
     @SerializedName("_id")
     @Expose
     @NonNull

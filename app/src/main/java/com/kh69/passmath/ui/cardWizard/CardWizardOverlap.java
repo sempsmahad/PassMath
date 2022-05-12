@@ -1,4 +1,4 @@
-package com.kh69.passmath.ui;
+package com.kh69.passmath.ui.cardWizard;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -16,9 +16,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kh69.passmath.R;
-import com.kh69.passmath.Tools;
 import com.kh69.passmath.Tools2;
-import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.Question;
 import com.kh69.passmath.data.model.QuizState;
 
 import java.util.ArrayList;

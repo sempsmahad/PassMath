@@ -1,6 +1,6 @@
 package com.kh69.passmath.data.model
 
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 
 sealed class QuizState {
     object LoadingState : QuizState()

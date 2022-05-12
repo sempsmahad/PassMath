@@ -1,7 +1,8 @@
-package com.kh69.passmath.remote;
+package com.kh69.passmath.data.source.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh69.passmath.util.LiveDataCallAdapterFactory;
 
 import java.security.cert.CertificateException;
 
@@ -28,6 +29,7 @@ public class RetrofitClient {
         if(retrofit == null){
             retrofit = new Retrofit.Builder().baseUrl(url)
                     .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .client(getUnsafeOkHttpClient())
                     .build();
         }

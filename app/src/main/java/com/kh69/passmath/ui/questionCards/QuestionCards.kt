@@ -1,4 +1,4 @@
-package com.kh69.passmath.ui
+package com.kh69.passmath.ui.questionCards
 
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -7,15 +7,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.kh69.passmath.MathApp
 import com.kh69.passmath.MyViewPagerAdapter
 import com.kh69.passmath.R
-import com.kh69.passmath.data.Repository
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.databinding.ActivityCardWizardOverlapBinding
 import com.kh69.passmath.getViewModel
-import com.kh69.passmath.viewmodel.MainViewModel
-import com.kh69.passmath.viewmodel.QuestionsViewModel
 
 class QuestionCards : AppCompatActivity() {
 
@@ -24,19 +22,36 @@ class QuestionCards : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityCardWizardOverlapBinding
-    private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
-    private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }
+//    val viewModel: QuestionCardsViewModel by viewModels()
+
+//    private val viewModel by viewModels<QuestionCardsViewModel> { getViewModelFactory() }
+
+
+    private val viewModel: QuestionCardsViewModel by lazy {
+        getViewModel {
+            QuestionCardsViewModel(
+                MathApp.getContext().questionRepository
+            )
+        }
+    }
+//    private val viewModel =
+//        ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(MathApp.getContext()))[QuestionCardsViewModel::class.java]
+
+//    private val viewModel = ViewModelProvider(this)[QuestionCardsViewModel::class.java]
+//    private val viewModel by lazy { getViewModel { MainViewModel(Repository()) } }
+//    private val quizViewModel by lazy { getViewModel { QuestionsViewModel(Repository()) } }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_wizard_overlap)
 
+//        viewModel = ViewModelProvider(this)[QuestionCardsViewModel::class.java]
+
         binding = ActivityCardWizardOverlapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpViews()
-
         getQuestions()
     }
 
@@ -94,12 +109,12 @@ class QuestionCards : AppCompatActivity() {
         }
     }
 
-    private fun prepopulateQuestions() = viewModel.prepopulateQuestions()
+    private fun prepopulateQuestions() = viewModel.questions
 
 
     private fun getQuestions() {
         prepopulateQuestions()
-        quizViewModel.getCurrentState().observe(this)
+        viewModel.getCurrentState().observe(this)
         {
             render(it)
         }
@@ -108,7 +123,7 @@ class QuestionCards : AppCompatActivity() {
     private fun render(state: QuizState) {
         when (state) {
 //            is QuizState.EmptyState   -> renderEmptyState()
-            is QuizState.DataState -> renderDataState(state)
+            is QuizState.DataState    -> renderDataState(state)
             is QuizState.LoadingState -> renderLoadingState()
         }
     }
