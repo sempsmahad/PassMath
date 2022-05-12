@@ -1,4 +1,4 @@
-package com.kh69.passmath
+package com.kh69.passmath.ui.main
 
 import android.app.Activity
 import android.os.Build
@@ -10,10 +10,12 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.DataHelpers
+import com.kh69.passmath.QuestionAdapter
+import com.kh69.passmath.R
+import com.kh69.passmath.data.Question
 
 class MainActivity : AppCompatActivity() {
-    private var mQuestions = ArrayList<Question>()
     private lateinit var mQuestionRecyclerView: RecyclerView
 
 
@@ -21,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question_list) //TODO create question list activity separately
         initToolbar()
-        val formulas = DataHelpers.getFormulas(this)
         val questions_text = DataHelpers.getQuestions(this)
 
         mQuestionRecyclerView = findViewById(R.id.rv_question_list)
@@ -29,14 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val data = ArrayList<Question>()
         for (i in 0 until questions_text.size) {
-//            data.add(Question(i,formulas.get(i),1997,Paper.PAPER_ONE,Section.SECTION_A,"Alegebra",null))
-//            data.add(Question(i,question2,1997,Paper.PAPER_ONE,Section.SECTION_A,"Alegebra",Answer(text3)))
-//            data.add(
-//                Question(
-//                    i,("$\\mathrm{ ${i+1}\\space .\\space}$ " +questions_text[i]), 1997, Paper.PAPER_ONE, Section.SECTION_A, "Alegebra", Answer(text3)
-////            ((i+1).toString() + ". " +questions_text[i]), 1997, Paper.PAPER_ONE, Section.SECTION_A, "Alegebra", Answer(text3)
-//                )
-//            )
+
         }
 
         val adapter = QuestionAdapter(data)

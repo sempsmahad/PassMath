@@ -1,14 +1,15 @@
-package com.kh69.passmath.viewmodel
+package com.kh69.passmath.ui.questionCards
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kh69.passmath.data.QuizRepository
+import com.kh69.passmath.data.Status
 import com.kh69.passmath.data.model.QuizState
+import com.kh69.passmath.data.source.QtnRepository
 
-class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
-    private val questionList = repository.getSavedQuestions()
+class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel() {
+    val questions = repository.getQuestions()
     private val selectedQuestion = MutableLiveData<Int>()
     private val currentState = MediatorLiveData<QuizState>()
 
@@ -24,19 +25,25 @@ class QuestionsViewModel(repository: QuizRepository) : ViewModel() {
             currentState.postValue(QuizState.SelectedState(currentQuestionPosition))
         }
 
-        currentState.addSource(questionList)
+        currentState.addSource(questions)
         { questions ->
-            if (questions.isEmpty()) {
-                currentState.postValue(QuizState.EmptyState)
-            } else {
-                currentState.postValue(QuizState.DataState(questions))
+            when (questions.status) {
+                Status.SUCCESS -> {
+                    currentState.postValue(QuizState.DataState(questions.data!!))
+                }
+                Status.LOADING -> {
+                    currentState.postValue(QuizState.LoadingState)
+                }
+                else           -> {
+                    currentState.postValue(QuizState.EmptyState)
+                }
             }
         }
     }
 
-    fun nextQuestion(position: Int) {
-        setSelectedQuestionTo(position)
-    }
+//    fun nextQuestion(position: Int) {
+//        setSelectedQuestionTo(position)
+//    }
 
 
     init {

@@ -1,7 +1,7 @@
-package com.kh69.passmath.remote;
+package com.kh69.passmath.data.source.remote;
 
 
-import com.kh69.passmath.data.cache.Question;
+import com.kh69.passmath.data.Question;
 import com.kh69.passmath.Response;
 
 import retrofit2.Call;

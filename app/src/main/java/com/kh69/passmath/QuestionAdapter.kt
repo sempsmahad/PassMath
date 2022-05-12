@@ -6,7 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kh69.passmath.data.cache.Question
+import com.kh69.passmath.data.Question
 import katex.hourglass.`in`.mathlib.MathView
 
 class QuestionAdapter(private val mList: List<Question>) : RecyclerView.Adapter<QuestionAdapter.ViewHolder>() {

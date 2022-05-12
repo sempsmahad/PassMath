@@ -1,14 +1,13 @@
 package com.kh69.passmath.viewmodel
 
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kh69.passmath.Response
 import com.kh69.passmath.data.QuestionInfoProvider
 import com.kh69.passmath.data.QuizRepository
-import com.kh69.passmath.data.cache.Question
-import com.kh69.passmath.remote.APIUtils
+import com.kh69.passmath.data.Question
+import com.kh69.passmath.data.source.remote.APIUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -47,7 +46,7 @@ class MainViewModel(private val repository: QuizRepository) :
             for (question in questions) {
                 repository.saveQuestion(question)
             }
-            
+
         }
     }
 
