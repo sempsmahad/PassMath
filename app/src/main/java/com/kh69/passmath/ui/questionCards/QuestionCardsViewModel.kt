@@ -27,12 +27,16 @@ class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel(
 
         currentState.addSource(questions)
         { questions ->
-            if (questions.status == Status.SUCCESS ) {
-                currentState.postValue(QuizState.DataState(questions.data!!))
-            } else if (questions.status == Status.LOADING){
-                currentState.postValue(QuizState.LoadingState)
-            }else {
-                currentState.postValue(QuizState.EmptyState)
+            when (questions.status) {
+                Status.SUCCESS -> {
+                    currentState.postValue(QuizState.DataState(questions.data!!))
+                }
+                Status.LOADING -> {
+                    currentState.postValue(QuizState.LoadingState)
+                }
+                else           -> {
+                    currentState.postValue(QuizState.EmptyState)
+                }
             }
         }
     }

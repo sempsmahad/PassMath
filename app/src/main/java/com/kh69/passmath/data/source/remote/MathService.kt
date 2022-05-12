@@ -25,6 +25,9 @@ import retrofit2.http.*
  */
 interface MathService {
 
+//    @GET("questions")
+//    fun getQuestions(): LiveData<ApiResponse<Response>>
+
     @GET("questions")
     fun getQuestions(): LiveData<ApiResponse<List<Question>>>
 
