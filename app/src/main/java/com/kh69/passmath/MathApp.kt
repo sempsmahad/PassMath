@@ -4,7 +4,6 @@ import android.app.Application
 import com.kh69.passmath.data.source.QtnRepository
 
 class MathApp : Application() {
-//    private val DB_NAME = "quiz_database"
 
     companion object {
         private var instance: MathApp? = null
@@ -14,19 +13,11 @@ class MathApp : Application() {
         }
     }
 
-    // Depends on the flavor,
     val questionRepository: QtnRepository
         get() = ServiceLocator.provideQuestionsRepository(this)
     
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-//        database = Room.databaseBuilder(
-//            this,
-//            QuestionDatabase::class.java,
-//            DB_NAME
-//        )
-//            .build()
     }
 }

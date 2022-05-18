@@ -8,7 +8,9 @@ import com.kh69.passmath.data.Status
 import com.kh69.passmath.data.model.QuizState
 import com.kh69.passmath.data.source.QtnRepository
 
-class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel() {
+class QuestionCardsViewModel(
+    private val repository: QtnRepository
+) : ViewModel() {
     val questions = repository.getQuestions()
     private val selectedQuestion = MutableLiveData<Int>()
     private val currentState = MediatorLiveData<QuizState>()
@@ -40,11 +42,6 @@ class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel(
             }
         }
     }
-
-//    fun nextQuestion(position: Int) {
-//        setSelectedQuestionTo(position)
-//    }
-
 
     init {
         currentState.postValue(QuizState.LoadingState)

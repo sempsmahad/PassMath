@@ -3,26 +3,22 @@ package com.kh69.passmath.ui.dashboard
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.PorterDuff
-import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.android.material.tabs.TabLayout
 import com.kh69.passmath.Event
 import com.kh69.passmath.R
 import com.kh69.passmath.R.color
-import com.kh69.passmath.data.Question
-import com.kh69.passmath.data.Resource
-import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.data.source.QuestionsRepository
 import com.kh69.passmath.extensions.launchSettings
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * ViewModel for the Dashboard screen.
  */
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(
+    private val questionsRepository: QuestionsRepository
+)  : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
