@@ -20,7 +20,7 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.kh69.passmath.data.source.QuestionsRepository
+import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.ui.dashboard.DashboardViewModel
 
 /**
@@ -28,7 +28,7 @@ import com.kh69.passmath.ui.dashboard.DashboardViewModel
  */
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
-    private val repository: QuestionsRepository,
+    private val repository: QtnRepository,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {

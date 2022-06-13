@@ -4,6 +4,8 @@ buildscript {
     versions.android_room = '2.3.0'
     ext.versions = versions
     ext.navigationVersion = '2.4.1'
+    apply from: 'versions.gradle'
+    addRepos(repositories)
 
     repositories {
         google()
@@ -22,6 +24,7 @@ buildscript {
     }
 }
 allprojects {
+    addRepos(repositories)
     repositories {
         google()
         mavenCentral()

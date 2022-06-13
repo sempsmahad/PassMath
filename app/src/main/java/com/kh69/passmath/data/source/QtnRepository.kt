@@ -8,6 +8,8 @@ import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsDao
 import com.kh69.passmath.data.source.remote.APIUtils
 import com.kh69.passmath.data.source.remote.MathService
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Repository that handles Repo instances.
@@ -16,7 +18,8 @@ import com.kh69.passmath.data.source.remote.MathService
  * Repo - value object name
  * Repository - type of this class.
  */
-class QtnRepository constructor(
+@Singleton
+class QtnRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val db: MathDatabase,
     private val dao: QuestionsDao,

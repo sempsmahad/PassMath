@@ -1,121 +1,161 @@
 package com.kh69.passmath.ui.dashboard
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.os.IBinder
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.kh69.passmath.binding.FragmentDataBindingComponent
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.kh69.passmath.AppExecutors
 import com.kh69.passmath.R
 import com.kh69.passmath.Tools2
 import com.kh69.passmath.Tools2.setSystemBarColor
 import com.kh69.passmath.Tools2.setSystemBarLight
+import com.kh69.passmath.data.source.QtnRepository
+import com.kh69.passmath.di.Injectable
 import com.kh69.passmath.extensions.launchSettings
-import com.kh69.passmath.getViewModel
 import com.kh69.passmath.ui.questionCards.QuestionCards
+import com.kh69.passmath.util.autoCleared
+import javax.inject.Inject
 
-class DashboardActivity : AppCompatActivity() {
-    private var tab_layout: TabLayout? = null
-    private var nested_scroll_view: NestedScrollView? = null
-    private var card_form_6: LinearLayout? = null
 
-    private val viewModel: DashboardViewModel by lazy {
-        getViewModel {
-            DashboardViewModel(
+
+class DashboardFragment2 : Fragment(), Injectable{
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+}
+class SearchFragment : Fragment(), Injectable {
+
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+
+    var binding by autoCleared<SearchFragmentBinding>()
+
+    var adapter by autoCleared<RepoListAdapter>()
+
+    val searchViewModel: SearchViewModel by viewModels {
+        viewModelFactory
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.search_fragment,
+            container,
+            false,
+            dataBindingComponent
+        )
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.lifecycleOwner = viewLifecycleOwner
+        initRecyclerView()
+        val rvAdapter = RepoListAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors,
+            showFullName = true
+        ) { repo ->
+            findNavController().navigate(
+                SearchFragmentDirections.showRepo(repo.owner.login, repo.name)
             )
         }
-    }
+        binding.query = searchViewModel.query
+        binding.repoList.adapter = rvAdapter
+        adapter = rvAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.dashboard_fragment)
-        initComponent()
-    }
+        initSearchInputListener()
 
-    private fun initComponent() {
-        nested_scroll_view = findViewById(R.id.nested_scroll_view)
-        tab_layout = findViewById(R.id.tab_layout)
-
-        card_form_6 = findViewById(R.id.card_form_6)
-
-        card_form_6?.setOnClickListener { view: View? ->
-            startActivity(
-                Intent(
-                    this,
-                    QuestionCards::class.java
-                )
-            )
-        }
-        tab_layout?.let {
-            it.addTab(it.newTab().setIcon(R.drawable.ic_home), 0)
-            it.addTab(it.newTab().setIcon(R.drawable.ic_data_usage), 1)
-            it.addTab(it.newTab().setIcon(R.drawable.ic_chat), 2)
-            it.addTab(it.newTab().setIcon(R.drawable.ic_settings), 3)
-
-            // set icon color pre-selected
-            it.getTabAt(0)!!
-                .icon!!.setColorFilter(
-                    resources.getColor(R.color.blue_grey_400),
-                    PorterDuff.Mode.SRC_IN
-                )
-            it.getTabAt(1)!!
-                .icon!!.setColorFilter(resources.getColor(R.color.grey_20), PorterDuff.Mode.SRC_IN)
-            it.getTabAt(2)!!
-                .icon!!.setColorFilter(resources.getColor(R.color.grey_20), PorterDuff.Mode.SRC_IN)
-            it.getTabAt(3)!!
-                .icon!!.setColorFilter(resources.getColor(R.color.grey_20), PorterDuff.Mode.SRC_IN)
-            it.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    viewModel.tabSelected(tab, this@DashboardActivity)
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    tab.icon!!.setColorFilter(
-                        resources.getColor(R.color.grey_20),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    onTabClicked(tab)
-                }
-            })
-        }
-        setSystemBarColor(this, R.color.grey_5)
-        setSystemBarLight(this)
-    }
-
-    private fun onTabClicked(tab: TabLayout.Tab) {
-        when (tab.position) {
-            0 -> Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
-            1 -> Toast.makeText(applicationContext, "Statistics", Toast.LENGTH_SHORT).show()
-            2 -> Toast.makeText(applicationContext, "Communication", Toast.LENGTH_SHORT).show()
-            3 -> {
-                Toast.makeText(applicationContext, "Settings", Toast.LENGTH_SHORT).show()
-                launchSettings()
+        binding.callback = object : RetryCallback {
+            override fun retry() {
+                searchViewModel.refresh()
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_search_setting, menu)
-        Tools2.changeMenuIconColor(menu, resources.getColor(R.color.grey_60))
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        } else {
-            Toast.makeText(applicationContext, item.title, Toast.LENGTH_SHORT).show()
+    private fun initSearchInputListener() {
+        binding.input.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                doSearch(view)
+                true
+            } else {
+                false
+            }
         }
-        return super.onOptionsItemSelected(item)
+        binding.input.setOnKeyListener { view: View, keyCode: Int, event: KeyEvent ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                doSearch(view)
+                true
+            } else {
+                false
+            }
+        }
     }
 
+    private fun doSearch(v: View) {
+        val query = binding.input.text.toString()
+        // Dismiss keyboard
+        dismissKeyboard(v.windowToken)
+        searchViewModel.setQuery(query)
+    }
+
+    private fun initRecyclerView() {
+
+        binding.repoList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastPosition = layoutManager.findLastVisibleItemPosition()
+                if (lastPosition == adapter.itemCount - 1) {
+                    searchViewModel.loadNextPage()
+                }
+            }
+        })
+        binding.searchResult = searchViewModel.results
+        searchViewModel.results.observe(viewLifecycleOwner, Observer { result ->
+            adapter.submitList(result?.data)
+        })
+
+        searchViewModel.loadMoreStatus.observe(viewLifecycleOwner, Observer { loadingMore ->
+            if (loadingMore == null) {
+                binding.loadingMore = false
+            } else {
+                binding.loadingMore = loadingMore.isRunning
+                val error = loadingMore.errorMessageIfNotHandled
+                if (error != null) {
+                    Snackbar.make(binding.loadMoreBar, error, Snackbar.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun dismissKeyboard(windowToken: IBinder) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(windowToken, 0)
+    }
 }

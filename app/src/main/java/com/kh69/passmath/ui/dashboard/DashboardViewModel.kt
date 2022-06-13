@@ -10,14 +10,14 @@ import com.google.android.material.tabs.TabLayout
 import com.kh69.passmath.Event
 import com.kh69.passmath.R
 import com.kh69.passmath.R.color
-import com.kh69.passmath.data.source.QuestionsRepository
+import com.kh69.passmath.data.source.QtnRepository
 import com.kh69.passmath.extensions.launchSettings
 
 /**
  * ViewModel for the Dashboard screen.
  */
 class DashboardViewModel(
-    private val questionsRepository: QuestionsRepository
+    private val questionsRepository: QtnRepository
 )  : ViewModel() {
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
