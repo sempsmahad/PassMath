@@ -139,6 +139,8 @@
     <string name="BACK">BACK</string>
     <string name="SKIP">SKIP</string>
     <string name="question_of">Question %1$d of %2$d</string>
+    <string name="a_level">A LEVEL</string>
+    <string name="o_level">O LEVEL</string>
 
 
 </resources>
