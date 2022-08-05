@@ -23,21 +23,30 @@ class QtnRepository constructor(
     private val service: MathService = APIUtils.getMathService()
 ) {
 
-    fun getQuestions(): LiveData<Resource<List<Question>>> {
-        return object : NetworkBoundResource<List<Question>, List<Question>>(appExecutors) {
-            override fun saveCallResult(item: List<Question>) {
-                dao.insertQuestions(item)
-            }
+    // old method
+//    fun getQuestions(): LiveData<Resource<List<Question>>> {
+//        return object : NetworkBoundResource<List<Question>, List<Question>>(appExecutors) {
+//            override fun saveCallResult(item: List<Question>) {
+//                dao.insertQuestions(item)
+//            }
+//
+//            override fun shouldFetch(data: List<Question>?): Boolean {
+//                return data == null || data.isEmpty()
+//            }
+//
+//            override fun loadFromDb() = dao.observeQuestions()
+//
+//            override fun createCall() = service.getQuestions()
+//
+//        }.asLiveData()
+//    }
 
-            override fun shouldFetch(data: List<Question>?): Boolean {
-                return data == null || data.isEmpty()
-            }
-
-            override fun loadFromDb() = dao.observeQuestions()
-
-            override fun createCall() = service.getQuestions()
-
-        }.asLiveData()
+    fun getQuestions(): List<Question> {
+        //check if db has questions
+        //if it does return those questions
+        //else fetch questions from network (extra -- check if network is available else return msg)
+        //save in db
+        //repeat call
     }
 
     fun getQuestion(id: String): LiveData<Resource<Question>> {
