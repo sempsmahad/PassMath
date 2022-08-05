@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.item_card_question.*
 class QuestionCards : AppCompatActivity() {
 
     companion object {
-        const val MAX_QUESTIONS = 8
+        const val MAX_QUESTIONS = 4
     }
 
     private var currentQtn = 1
