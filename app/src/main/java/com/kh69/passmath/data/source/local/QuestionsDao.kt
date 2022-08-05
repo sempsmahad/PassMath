@@ -3,7 +3,7 @@ package com.kh69.passmath.data.source.local
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.kh69.passmath.data.Question
-import com.kh69.passmath.util.AbsentLiveData
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -32,7 +32,7 @@ interface QuestionsDao {
      * @return all questions.
      */
     @Query("SELECT * FROM Questions")
-    suspend fun getQuestions(): List<Question>
+    fun getQuestions(): Flow<List<Question>>
 
     /**
      * Select a question by id.

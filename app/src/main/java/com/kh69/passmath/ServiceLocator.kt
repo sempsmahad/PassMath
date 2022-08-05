@@ -18,28 +18,28 @@ package com.kh69.passmath
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
-import com.kh69.passmath.data.source.QtnRepository
+import com.kh69.passmath.data.source.QtnRepositoryImpl
 import com.kh69.passmath.data.source.local.MathDatabase
 
 /**
- * A Service Locator for the [QtnRepository]
+ * A Service Locator for the [QtnRepositoryImpl]
  *
  */
 object ServiceLocator {
     private var database: MathDatabase? = null
 
     @Volatile
-    var questionsRepository: QtnRepository? = null
+    var questionsRepository: QtnRepositoryImpl? = null
         @VisibleForTesting set
 
-    fun provideQuestionsRepository(context: Context): QtnRepository {
+    fun provideQuestionsRepository(context: Context): QtnRepositoryImpl {
         synchronized(this) {
             return questionsRepository ?: questionsRepository ?: createQuestionsRepository(context)
         }
     }
 
-    private fun createQuestionsRepository(context: Context): QtnRepository {
-        val newRepo = QtnRepository(
+    private fun createQuestionsRepository(context: Context): QtnRepositoryImpl {
+        val newRepo = QtnRepositoryImpl(
             AppExecutors(),
             db = database ?: createDataBase(context),
             dao = (database ?: createDataBase(context)).questionDao(),

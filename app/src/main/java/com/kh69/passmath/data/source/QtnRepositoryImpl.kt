@@ -8,6 +8,7 @@ import com.kh69.passmath.data.source.local.MathDatabase
 import com.kh69.passmath.data.source.local.QuestionsDao
 import com.kh69.passmath.data.source.remote.APIUtils
 import com.kh69.passmath.data.source.remote.MathService
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Repository that handles Repo instances.
@@ -16,7 +17,7 @@ import com.kh69.passmath.data.source.remote.MathService
  * Repo - value object name
  * Repository - type of this class.
  */
-class QtnRepository constructor(
+class QtnRepositoryImpl constructor(
     private val appExecutors: AppExecutors,
     private val db: MathDatabase,
     private val dao: QuestionsDao,
@@ -41,8 +42,10 @@ class QtnRepository constructor(
 //        }.asLiveData()
 //    }
 
-    fun getQuestions(): List<Question> {
+    fun getQuestions(): Flow<List<Question>> {
         //check if db has questions
+        val questions = db.questionDao().getQuestions()
+        if (questions.)
         //if it does return those questions
         //else fetch questions from network (extra -- check if network is available else return msg)
         //save in db
