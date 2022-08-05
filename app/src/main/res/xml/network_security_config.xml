@@ -8,6 +8,7 @@
         <domain includeSubdomains="true">192.168.43.122</domain>
         <domain includeSubdomains="true">192.168.43.28</domain>
         <domain includeSubdomains="true">192.168.43.76</domain>
+        <domain includeSubdomains="true">passmath-api.herokuapp.com</domain>
     </domain-config>
 
 </network-security-config>

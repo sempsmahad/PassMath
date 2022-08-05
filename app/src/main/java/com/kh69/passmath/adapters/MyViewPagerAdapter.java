@@ -1,4 +1,4 @@
-package com.kh69.passmath;
+package com.kh69.passmath.adapters;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.kh69.passmath.R;
 import com.kh69.passmath.data.Question;
 import com.kh69.passmath.ui.questionCards.QuestionCards;
 
@@ -35,7 +36,6 @@ public class MyViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Question question = mQuestions.get(position);
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 
         View            view             = layoutInflater.inflate(R.layout.item_card_question, container, false);
         MathView        questionView     = view.findViewById(R.id.kv_question);
