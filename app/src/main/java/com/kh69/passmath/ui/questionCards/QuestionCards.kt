@@ -75,32 +75,6 @@ class QuestionCards : AppCompatActivity() {
         status.text = str_progress
 
         bottomProgressDots(0)
-//        binding.viewPager.offscreenPageLimit = 4
-//        binding.btnNext.setOnClickListener {
-//            val current = binding.viewPager.currentItem + 1
-//            if (current < MAX_QUESTIONS) {
-//                binding.viewPager.currentItem = current
-//            } else {
-//                finish()
-//            }
-//
-//        }
-//        binding.viewPager.addOnPageChangeListener(object : OnPageChangeListener {
-//            override fun onPageScrolled(
-//                position: Int,
-//                positionOffset: Float,
-//                positionOffsetPixels: Int
-//            ) {
-//            }
-//
-//            override fun onPageSelected(position: Int) {
-//                bottomProgressDots(position)
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//            }
-//
-//        })
     }
 
     private fun nextStep(progress: Int) {
@@ -191,7 +165,7 @@ class QuestionCards : AppCompatActivity() {
             answerIsVisible[0] = !answerIsVisible[0]
             toggleAnswerVisibility(
                 arrayOf(image_to_blur, kv_answer),
-                answerIsVisible.get(0),
+                answerIsVisible[0],
                 show_answer
             )
         }
