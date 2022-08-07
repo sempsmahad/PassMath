@@ -41,10 +41,6 @@ class QuestionCardsViewModel constructor(repository: QtnRepository) : ViewModel(
         }
     }
 
-//    fun nextQuestion(position: Int) {
-//        setSelectedQuestionTo(position)
-//    }
-
 
     init {
         currentState.postValue(QuizState.LoadingState)
