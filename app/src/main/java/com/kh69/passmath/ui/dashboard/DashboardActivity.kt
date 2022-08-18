@@ -46,6 +46,7 @@ class DashboardActivity : AppCompatActivity() {
         card_form_6 = findViewById(R.id.card_form_6)
 
         card_form_6?.setOnClickListener { view: View? ->
+
             startActivity(
                 Intent(
                     this,

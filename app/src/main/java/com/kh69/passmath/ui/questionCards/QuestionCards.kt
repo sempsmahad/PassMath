@@ -49,9 +49,6 @@ class QuestionCards : AppCompatActivity() {
 
         initToolbar()
 
-//        binding = ActivityCardWizardOverlapBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
         setUpViews()
         getQuestions()
     }
