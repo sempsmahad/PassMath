@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ASMSmaliIdeaPluginConfiguration">
+    <asm skipDebug="true" skipFrames="true" skipCode="false" expandFrames="false" />
+    <groovy codeStyle="LEGACY" />
+  </component>
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
@@ -59,6 +63,7 @@
         <entry key="..\:/Users/amuka/Documents/GitHub/PassMath/app/src/main/res/menu/menu_search_setting.xml" value="0.25" />
         <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/drawable/ic_chevron_left.xml" value="0.2485" />
         <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/drawable/ic_chevron_right.xml" value="0.2485" />
+        <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/drawable/ic_menu.xml" value="0.2575" />
         <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/font/montserrat.xml" value="0.40208333333333335" />
         <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/layout/activity_card_wizard_overlap.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/semps/Documents/GitHub/GitHub_sempsmahad/PassMath/app/src/main/res/layout/activity_dashboard.xml" value="0.36770833333333336" />
