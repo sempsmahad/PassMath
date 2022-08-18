@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 
+import com.google.android.gms.maps.GoogleMap;
+
 public class Tools2 {
     public static void setSystemBarColor(Activity act) {
         Window window = act.getWindow();
@@ -40,6 +42,25 @@ public class Tools2 {
             drawable.mutate();
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         }
+    }
+
+    public static GoogleMap configActivityMaps(GoogleMap googleMap) {
+        // set map type
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        // Enable / Disable zooming controls
+        googleMap.getUiSettings().setZoomControlsEnabled(false);
+
+        // Enable / Disable Compass icon
+        googleMap.getUiSettings().setCompassEnabled(true);
+        // Enable / Disable Rotate gesture
+        googleMap.getUiSettings().setRotateGesturesEnabled(true);
+        // Enable / Disable zooming functionality
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setMapToolbarEnabled(true);
+
+        return googleMap;
     }
 
 }

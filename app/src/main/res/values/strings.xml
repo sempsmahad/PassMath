@@ -141,6 +141,9 @@
     <string name="question_of">Question %1$d of %2$d</string>
     <string name="a_level">A LEVEL</string>
     <string name="o_level">O LEVEL</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyC3SrcUtXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    </string>
 
 
 </resources>
