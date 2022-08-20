@@ -8,3 +8,4 @@
 //}
 rootProject.name = "PassMath"
 include ':app'
+include ':logging'
