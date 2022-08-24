@@ -2,7 +2,7 @@ package com.kh69.passmath.common.data.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.time.Instant
+import org.threeten.bp.Instant
 
 @JsonClass(generateAdapter = true)
 data class ApiToken(
