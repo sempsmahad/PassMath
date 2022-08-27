@@ -1,21 +1,15 @@
 package com.kh69.passmath.common.data.cache
 
 import com.kh69.passmath.common.data.cache.daos.QuestionsDao
-import com.raywenderlich.android.petsave.common.data.cache.daos.OrganizationsDao
-import com.raywenderlich.android.petsave.common.data.cache.model.cachedorganization.CachedOrganization
+import com.kh69.passmath.common.data.cache.model.cachedquestion.CachedQuestion
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class RoomCache @Inject constructor(
-    private val questionsDao: QuestionsDao,
-    private val organizationsDao: OrganizationsDao
+    private val questionsDao: QuestionsDao
 ) : Cache {
 
-  override suspend fun storeOrganizations(organizations: List<CachedOrganization>) {
-    organizationsDao.insert(organizations)
-  }
-
-  override fun getQuestions(): Flowable<List<CachedAnimalAggregate>> {
+  override fun getQuestions(): Flowable<List<CachedQuestion>> {
     return questionsDao.getAllAnimals()
   }
 
