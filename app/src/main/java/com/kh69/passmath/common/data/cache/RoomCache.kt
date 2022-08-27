@@ -2,7 +2,6 @@ package com.kh69.passmath.common.data.cache
 
 import com.kh69.passmath.common.data.cache.daos.QuestionsDao
 import com.raywenderlich.android.petsave.common.data.cache.daos.OrganizationsDao
-import com.raywenderlich.android.petsave.common.data.cache.model.cachedanimal.CachedAnimalAggregate
 import com.raywenderlich.android.petsave.common.data.cache.model.cachedorganization.CachedOrganization
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -16,7 +15,7 @@ class RoomCache @Inject constructor(
     organizationsDao.insert(organizations)
   }
 
-  override fun getNearbyAnimals(): Flowable<List<CachedAnimalAggregate>> {
+  override fun getQuestions(): Flowable<List<CachedAnimalAggregate>> {
     return questionsDao.getAllAnimals()
   }
 

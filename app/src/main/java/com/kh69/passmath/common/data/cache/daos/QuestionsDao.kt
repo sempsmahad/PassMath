@@ -1,7 +1,7 @@
 package com.kh69.passmath.common.data.cache.daos
 
 import androidx.room.*
-import com.kh69.passmath.common.data.cache.model.cachedquestion.CachedTag
+import com.kh69.passmath.common.data.cache.model.cachedquestion.CachedQuestion
 import com.raywenderlich.android.petsave.common.data.cache.model.cachedanimal.*
 import io.reactivex.Flowable
 
@@ -14,7 +14,7 @@ abstract class QuestionsDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   abstract suspend fun insertAnimalAggregate(
-      animal: CachedAnimalWithDetails,
+      animal: CachedQuestion,
       photos: List<CachedPhoto>,
       videos: List<CachedVideo>,
       tags: List<CachedTag>
