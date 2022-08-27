@@ -10,7 +10,7 @@ abstract class QuestionsDao {
 
     @Transaction
     @Query("SELECT * FROM questions ORDER BY questionId DESC")
-    abstract fun getAllQuestions(): Flowable<List<Question>>
+    abstract fun getAllQuestions(): Flowable<List<CachedQuestion>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertQuestion(

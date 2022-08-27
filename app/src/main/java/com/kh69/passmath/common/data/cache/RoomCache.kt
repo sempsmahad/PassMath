@@ -9,23 +9,11 @@ class RoomCache @Inject constructor(
     private val questionsDao: QuestionsDao
 ) : Cache {
 
-  override fun getQuestions(): Flowable<List<CachedQuestion>> {
-    return questionsDao.getAllAnimals()
-  }
+    override fun getQuestions(): Flowable<List<CachedQuestion>> {
+        return questionsDao.getAllQuestions()
+    }
 
-  override suspend fun storeNearbyAnimals(animals: List<CachedAnimalAggregate>) {
-    questionsDao.insertAnimalsWithDetails(animals)
-  }
-
-  override suspend fun getAllTypes(): List<String> {
-    return questionsDao.getAllTypes()
-  }
-
-  override fun searchAnimalsBy(
-      name: String,
-      age: String,
-      type: String
-  ): Flowable<List<CachedAnimalAggregate>> {
-    return questionsDao.searchAnimalsBy(name, age, type)
-  }
+    override suspend fun storeQuestions(animals: List<CachedQuestion>) {
+        questionsDao.insertQuestions(animals)
+    }
 }
