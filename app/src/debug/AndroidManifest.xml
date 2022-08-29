@@ -5,14 +5,13 @@
     android:installLocation="auto">
 
     <application
-        android:name=".legacy.MathApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_debug"
         android:label="${app_debug_label}"
         android:roundIcon="@drawable/ic_debug"
-        tools:replace="android:icon,android:roundIcon,android:label,android:name">
+        tools:replace="android:icon,android:roundIcon,android:label">
 
-        <activity android:name="com.kh69.passmath.legacy.ui.dashboard.DashboardActivity" />
+<!--        <activity android:name="com.kh69.passmath.legacy.ui.dashboard.DashboardActivity" />-->
 
     </application>
 </manifest>

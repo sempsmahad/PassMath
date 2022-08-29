@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
-
+    id 'dagger.hilt.android.plugin'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -69,12 +69,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     dataBinding {
         enabled = true
         enabledForTests = true
+    }
+
+    sourceSets {
+        androidTest {
+            assets.srcDirs = ["src/debug/assets"]
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
     }
 }
 
