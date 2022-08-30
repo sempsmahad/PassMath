@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,8 +17,6 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
     private var _binding: FragmentDashboardBinding? = null
 
-    private var tab_layout: TabLayout? = null
-    private var nested_scroll_view: NestedScrollView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
