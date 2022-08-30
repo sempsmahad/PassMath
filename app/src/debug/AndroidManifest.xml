@@ -11,7 +11,7 @@
         android:roundIcon="@drawable/ic_debug"
         tools:replace="android:icon,android:roundIcon,android:label">
 
-<!--        <activity android:name="com.kh69.passmath.legacy.ui.dashboard.DashboardActivity" />-->
+<!--        <activity android:name="com.kh69.passmath.questions.presentation.DashboardActivity" />-->
 
     </application>
 </manifest>

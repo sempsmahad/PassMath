@@ -142,5 +142,12 @@
     <string name="a_level">A LEVEL</string>
     <string name="o_level">O LEVEL</string>
 
+    <string name="home">Home</string>
+    <string name="chat">Chat</string>
+    <string name="data_usage">Data Usage</string>
+    <string name="settings">Settings</string>
+
+
+
 
 </resources>
