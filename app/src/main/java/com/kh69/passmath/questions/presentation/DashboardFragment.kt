@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.tabs.TabLayout
 import com.kh69.passmath.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
+
+
     private val binding get() = _binding!!
     private var _binding: FragmentDashboardBinding? = null
 
@@ -32,7 +33,6 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUI()
-        requestInitialAnimalsList()
     }
 
     private fun setupUI() {
@@ -41,10 +41,6 @@ class DashboardFragment : Fragment() {
             findNavController().navigate(action)
 
         }
-    }
-
-    private fun requestInitialAnimalsList() {
-//        TODO("Not yet implemented")
     }
 
 

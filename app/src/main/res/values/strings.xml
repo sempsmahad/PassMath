@@ -147,6 +147,9 @@
     <string name="data_usage">Data Usage</string>
     <string name="settings">Settings</string>
 
+    <string name="an_error_occurred">An error occurred. Please try again later.</string>
+
+
 
 
 
