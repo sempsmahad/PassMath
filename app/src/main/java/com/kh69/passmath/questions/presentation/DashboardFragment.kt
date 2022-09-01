@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kh69.passmath.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
@@ -36,7 +34,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupUI() {
-        card_form_6?.setOnClickListener {
+        binding.cardForm6.setOnClickListener {
             val action = DashboardFragmentDirections.actionDashboardFragmentToQuizFragment()
             findNavController().navigate(action)
 

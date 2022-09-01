@@ -38,7 +38,7 @@ class QuizFragmentViewModel @Inject constructor(
     }
 
     val state: LiveData<QuizViewState> get() = _state
-    var isLoadingMoreAnimals: Boolean = false
+    var isLoadingMoreQuestions: Boolean = false
     var isLastPage = false
 
     private val _state = MutableLiveData<QuizViewState>()
@@ -53,6 +53,24 @@ class QuizFragmentViewModel @Inject constructor(
         when (event) {
             is QuizEvent.RequestInitialQuestionsList -> loadQuestions()
             is QuizEvent.RequestMoreQuestions -> loadNextQuestionPage()
+            is QuizEvent.GoToNextQuestion -> loadNextQuestionCard()
+            is QuizEvent.GoToPreviousQuestion -> loadPreviousQuestionCard()
+        }
+    }
+
+    private fun loadPreviousQuestionCard() {
+        var progress = state.value!!.currentQuestionIndex
+        if (progress > 1) {
+            progress--
+            _state.value = state.value!!.copy(currentQuestionIndex = progress)
+        }
+    }
+
+    private fun loadNextQuestionCard() {
+        var progress = state.value!!.currentQuestionIndex
+        if (progress < UI_PAGE_SIZE) {
+            progress++
+            _state.value = state.value!!.copy(currentQuestionIndex = progress)
         }
     }
 
@@ -85,9 +103,9 @@ class QuizFragmentViewModel @Inject constructor(
     }
 
     private fun loadNextQuestionPage() {
-        isLoadingMoreAnimals = true
+        isLoadingMoreQuestions = true
 
-        val errorMessage = "Failed to fetch nearby animals"
+        val errorMessage = "Failed to fetch questions"
         val exceptionHandler = viewModelScope.createExceptionHandler(errorMessage) { onFailure(it) }
 
         viewModelScope.launch(exceptionHandler) {
@@ -97,7 +115,7 @@ class QuizFragmentViewModel @Inject constructor(
             }
 
             onPaginationInfoObtained(pagination)
-            isLoadingMoreAnimals = false
+            isLoadingMoreQuestions = false
         }
     }
 
