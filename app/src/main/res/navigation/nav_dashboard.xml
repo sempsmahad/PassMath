@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/quiz"
-        android:name="com.kh69.passmath.quiz.presentation.QuizFragment"
+        android:name="com.kh69.passmath.questionlist.presentation.QuestionListFragment"
         android:label="QuizFragment"
         tools:layout="@layout/fragment_quiz" />
 
