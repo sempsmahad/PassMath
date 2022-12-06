@@ -15,4 +15,6 @@ class PassMathApplication : Application() {
     private fun initLogger() {
         Logger.init()
     }
+
+
 }
