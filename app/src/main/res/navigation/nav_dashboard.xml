@@ -11,15 +11,15 @@
         android:label="DashboardFragment"
         tools:layout="@layout/fragment_dashboard">
         <action
-            android:id="@+id/action_dashboardFragment_to_quizFragment"
-            app:destination="@id/quiz" />
+            android:id="@+id/action_dashboardFragment_to_questionListFragment"
+            app:destination="@id/list" />
     </fragment>
 
     <fragment
-        android:id="@+id/quiz"
+        android:id="@+id/list"
         android:name="com.kh69.passmath.questionlist.presentation.QuestionListFragment"
-        android:label="QuizFragment"
-        tools:layout="@layout/fragment_quiz" />
+        android:label="QuestionListFragment"
+        tools:layout="@layout/fragment_question_list" />
 
     <fragment
         android:id="@+id/settings"

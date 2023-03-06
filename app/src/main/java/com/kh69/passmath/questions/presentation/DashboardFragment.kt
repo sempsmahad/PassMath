@@ -35,7 +35,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupUI() {
         binding.cardForm6.setOnClickListener {
-            val action = DashboardFragmentDirections.actionDashboardFragmentToQuizFragment()
+            val action = DashboardFragmentDirections.actionDashboardFragmentToQuestionListFragment()
             findNavController().navigate(action)
 
         }

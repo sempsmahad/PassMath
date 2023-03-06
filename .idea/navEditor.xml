@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_dashboardFragment_to_quizFragment">
+                            <entry key="action_dashboardFragment_to_questionListFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -29,13 +29,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="quiz">
+                  <entry key="list">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="10" />
-                            <option name="y" value="48" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
